@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.bbiao.me/say/index.html</loc>
+    
+    <lastmod>2017-10-16T14:04:35.510Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.bbiao.me/2017/10/16/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BD%91%E7%9B%98-owncloud/</loc>
     
     <lastmod>2017-10-16T10:02:32.399Z</lastmod>
@@ -159,13 +166,6 @@
     <loc>http://www.bbiao.me/2017/07/16/%E4%BD%BF%E7%94%A8linux-apache-mysql-php-lamp%E6%90%AD%E5%BB%BAwordpress/</loc>
     
     <lastmod>2017-10-13T09:34:15.065Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.bbiao.me/say/index.html</loc>
-    
-    <lastmod>2017-10-12T15:12:12.789Z</lastmod>
     
   </url>
   

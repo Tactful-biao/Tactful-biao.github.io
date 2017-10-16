@@ -3,6 +3,7 @@
 
 
     
+    
   <url>
     <loc>http://www.bbiao.me/2017/10/16/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BD%91%E7%9B%98-owncloud/</loc>
     <lastmod>2017-10-16T10:02:32.399Z</lastmod>
@@ -282,9 +283,9 @@
         <title>爬虫神器 ——requests</title>
         <pubTime>2017-08-30T11:45:48.000Z</pubTime>
         
-        <tag>爬虫</tag>
-         
         <tag>requests</tag>
+         
+        <tag>爬虫</tag>
          
          
            
@@ -304,11 +305,11 @@
         <title>使用Python对账单进行分析（续）</title>
         <pubTime>2017-07-24T11:20:30.000Z</pubTime>
         
-        <tag>Matplotlib</tag>
-         
         <tag>Python</tag>
          
         <tag>数据分析</tag>
+         
+        <tag>Matplotlib</tag>
          
          
            
@@ -356,9 +357,9 @@
         
         <tag>Python</tag>
          
-        <tag>数据分析</tag>
-         
         <tag>Mateplotlib</tag>
+         
+        <tag>数据分析</tag>
          
          
            
@@ -402,9 +403,9 @@
         <title>爬取糗事百科</title>
         <pubTime>2017-09-01T05:48:53.000Z</pubTime>
         
-        <tag>爬虫</tag>
-         
         <tag>requests</tag>
+         
+        <tag>爬虫</tag>
          
          
            
@@ -503,7 +504,6 @@
     </data>
     </url>
 
-    
     
     
   <url>
