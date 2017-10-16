@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="OwnCloud,网盘,LAMP,SSL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="简介 现在网盘，云存储等一些虚拟存储技术越来越发达，但是不是空间受限制就是网速受限制，而且随着网络监管越来越严，自己的数据放在别人那里终究不保险，还动不动就被和谐。既然这样何不自己撘一个网盘？ 网盘的搭建并没有大家想的那么难，我们并不需要实现底层的东西，直接利用现成的东西就可以搭建完成。  自己搭建网盘有什么好处？  自己的东西用着放心 自己搭建的，网速不受限制 我的地盘，我做主，自己想存什么东">
+<meta name="keywords" content="OwnCloud,网盘,LAMP,SSL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建自己的网盘 owncloud">
+<meta property="og:url" content="http://www.bbiao.me/2017/10/16/搭建自己的网盘-owncloud/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="简介 现在网盘，云存储等一些虚拟存储技术越来越发达，但是不是空间受限制就是网速受限制，而且随着网络监管越来越严，自己的数据放在别人那里终究不保险，还动不动就被和谐。既然这样何不自己撘一个网盘？ 网盘的搭建并没有大家想的那么难，我们并不需要实现底层的东西，直接利用现成的东西就可以搭建完成。  自己搭建网盘有什么好处？  自己的东西用着放心 自己搭建的，网速不受限制 我的地盘，我做主，自己想存什么东">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/1.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/2.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/3.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/4.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/6.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/7.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/8.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/10.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/11.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/9.PNG">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/12.PNG">
+<meta property="og:updated_time" content="2017-10-16T10:02:32.399Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建自己的网盘 owncloud">
+<meta name="twitter:description" content="简介 现在网盘，云存储等一些虚拟存储技术越来越发达，但是不是空间受限制就是网速受限制，而且随着网络监管越来越严，自己的数据放在别人那里终究不保险，还动不动就被和谐。既然这样何不自己撘一个网盘？ 网盘的搭建并没有大家想的那么难，我们并不需要实现底层的东西，直接利用现成的东西就可以搭建完成。  自己搭建网盘有什么好处？  自己的东西用着放心 自己搭建的，网速不受限制 我的地盘，我做主，自己想存什么东">
+<meta name="twitter:image" content="http://oxwgzg29g.bkt.clouddn.com/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/10/16/搭建自己的网盘-owncloud/"/>
+
+
+
+
+
+  <title>搭建自己的网盘 owncloud | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/10/16/搭建自己的网盘-owncloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">搭建自己的网盘 owncloud</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-16T12:16:40+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/10/16/搭建自己的网盘-owncloud/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/10/16/搭建自己的网盘-owncloud/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2></blockquote>
+<p>现在网盘，云存储等一些虚拟存储技术越来越发达，但是不是空间受限制就是网速受限制，而且随着网络监管越来越严，自己的数据放在别人那里终究不保险，还动不动就被和谐。既然这样何不自己撘一个网盘？</p>
+<p>网盘的搭建并没有大家想的那么难，我们并不需要实现底层的东西，直接利用现成的东西就可以搭建完成。</p>
+<blockquote>
+<h3 id="自己搭建网盘有什么好处？"><a href="#自己搭建网盘有什么好处？" class="headerlink" title="自己搭建网盘有什么好处？"></a>自己搭建网盘有什么好处？</h3></blockquote>
+<ol>
+<li>自己的东西用着放心</li>
+<li>自己搭建的，网速不受限制</li>
+<li>我的地盘，我做主，自己想存什么东西就存什么东西(违法的东西不要存)！</li>
+</ol>
+<blockquote>
+<h3 id="都需要用到哪些东西"><a href="#都需要用到哪些东西" class="headerlink" title="都需要用到哪些东西"></a>都需要用到哪些东西</h3></blockquote>
+<ul>
+<li>需要有一台服务器(用来存储)</li>
+<li><a href="https://baike.baidu.com/item/ownCloud%E4%B8%AA%E4%BA%BA%E4%BA%91%E6%9C%8D%E5%8A%A1/16116850?fr=aladdin" target="_blank" rel="external">OwnCloud 个人云服务</a></li>
+<li>LAMP环境：Linux-Apache-MySQL-PHP</li>
+<li><a href="https://baike.baidu.com/item/ssl/320778?fr=aladdin" target="_blank" rel="external">SSL</a>: 安全套接字</li>
+</ul>
+<p>上面就是我们搭建个人云服务所需要的环境已经一些配置要求，不理解的可以百度，或者给博主留言，这里就不再细讲了。</p>
+<blockquote>
+<h2 id="安装流程"><a href="#安装流程" class="headerlink" title="安装流程"></a>安装流程</h2></blockquote>
+<h3 id="第一步：选择服务器"><a href="#第一步：选择服务器" class="headerlink" title="第一步：选择服务器"></a>第一步：选择服务器</h3><p>我个人使用的是Digital Ocean上购买的虚拟主机，5$一个月20G SSD，1T流量。个人用我感觉已经够了，当然如果你的需求较高，当然是有更高的配置，同时价钱也会更加的高。如果你想要在Digital Ocean上购买虚拟主机，可以参考我的这篇文章《<a href="http://bbiao.me/2017/07/15/digitalocean%E6%B3%A8%E5%86%8C%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_blank" rel="external">digitalocean注册和虚拟主机的创建</a>》</p>
+<p>我选择的是CentOS 7.4 进行搭建的，关于虚拟主机的创建等在这里不再介绍了，在上面提到的文章中都有。我们直接开始配置。</p>
+<h3 id="第二步：LAMP-环境的搭建"><a href="#第二步：LAMP-环境的搭建" class="headerlink" title="第二步：LAMP 环境的搭建"></a>第二步：LAMP 环境的搭建</h3><p>连接上服务器之后使用:<font color="Lime">yum update</font></p>
+<blockquote>
+<h4 id="安装Apache"><a href="#安装Apache" class="headerlink" title="安装Apache"></a>安装Apache</h4></blockquote>
+<p>通过yum源进行安装：<font color="Lime">yum -y install httpd</font></p>
+<p>然后启动我们的Apache：<font color="Lime">systemctl start httpd.service</font></p>
+<p>输入：<font color="Lime"><a href="http://你的服务器的ip地址/" target="_blank" rel="external">http://你的服务器的ip地址/</a></font></p>
+<p>可以通过该命令查看你的IP地址：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ip</span> addr show eth0 | grep inet | awk <span class="string">'&#123; print <span class="variable">$2</span>; &#125;'</span> | sed <span class="string">'s/\/.*$//'</span></div></pre></td></tr></table></figure></p>
+<p>如果看到如下画面则表示Apache安装成功</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/1.PNG" alt="4"></p>
+<p>最后一步是把启动设置为开机自动启动：<font color="Lime">systemctl enable httpd.service</font></p>
+<blockquote>
+<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4></blockquote>
+<p>使用如下命令：<font color="Lime">yum -y install mariadb-server mariadb</font></p>
+<p>重启一下MySQL服务：<font color="Lime">systemctl start mariadb</font></p>
+<p>紧接着对MySQL进行一些安全设置：<font color="Lime">mysql_secure_installation</font></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Enter current password <span class="keyword">for</span> root (enter <span class="keyword">for</span> none):</div><div class="line">OK, successfully used password, moving on<span class="built_in">..</span>.</div><div class="line"></div><div class="line">Setting the root password ensures that nobody can log into the MariaDB</div><div class="line">root<span class="built_in"> user </span>without the proper authorization.</div><div class="line"></div><div class="line">New password: password</div><div class="line">Re-enter new password: password</div><div class="line">Password updated successfully!</div><div class="line">Reloading privilege tables<span class="built_in">..</span></div><div class="line"> Success!</div></pre></td></tr></table></figure>
+<p> 你可以看到上面的这些设置，其中只有在password的地方输入你自己喜欢的密码，其他的地方之间按回车就可以了。</p>
+<p>最后一步是把MySQL也写入开机自启:<font color="Lime">systemctl enable mariadb.service</font></p>
+<blockquote>
+<h4 id="安装PHP-7"><a href="#安装PHP-7" class="headerlink" title="安装PHP 7"></a>安装PHP 7</h4></blockquote>
+<p>先导入php 7的安装源：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh <span class="symbol">https:</span>/<span class="regexp">/dl.fedoraproject.org/pub</span><span class="regexp">/epel/epel</span>-release-latest-<span class="number">7</span>.noarch.rpm</div><div class="line">rpm -Uvh <span class="symbol">https:</span>/<span class="regexp">/mirror.webtatic.com/yum</span><span class="regexp">/el7/webtatic</span>-release.rpm</div></pre></td></tr></table></figure></p>
+<p>安装php 7：<font color="Lime">yum -y install php70w</font></p>
+<p>安装php 7 的一些模板：<font color="Lime">yum -y install php70w-mysql php70w-xml php70w-soap php70w-xmlrpc php70w-mbstring php70w-json php70w-gd php70w-mcrypt</font></p>
+<p>查看php的版本: <font color="Lime">php -v</font><br>显示如下，则表示安装成功：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PHP 7.0.24 (cli) (built: Sep 30 2017 10:10:28) ( NTS )</div><div class="line">Copyright (c) 1997-2017 The PHP Group</div><div class="line">Zend Engine v3.0.0, Copyright (c) 1998-2017 Zend Technologies</div><div class="line">    with Zend OPcache v7.0.24, Copyright (c) 1999-2017, by Zend Technologies</div></pre></td></tr></table></figure></p>
+<p>重启一下Apache服务：<font color="Lime">systemctl restart httpd.service</font></p>
+<blockquote>
+<h2 id="配置SSL证书"><a href="#配置SSL证书" class="headerlink" title="配置SSL证书"></a>配置SSL证书</h2></blockquote>
+<p>大家都知道，无论什么服务安全性永远是第一位，如果不能够提供安全保障，肯定不会有人使用。OwnCloud也是，你的访问必须要能够提供安全保障，才能够使用，所有必须要配置SSL。SSL一般有专门的认证机构，只有这些官方的认证机构认证的网址才会显示正确，当然还有一种就是自认证方式，我自己给我自己认证，我同样能够提供安全连接，但是浏览器是不认的。如果没有域名并且不想通过官方认证的话，我们也可以用，下面我们就使用这种方法进行配置我们的字签名证书：</p>
+<blockquote>
+<h3 id="第一步：安装mod-ssl"><a href="#第一步：安装mod-ssl" class="headerlink" title="第一步：安装mod_ssl"></a>第一步：安装mod_ssl</h3></blockquote>
+<p>安装命令：<font color="Lime">yum -y install mod_ssl</font></p>
+<blockquote>
+<h3 id="第二步：-创建新证书"><a href="#第二步：-创建新证书" class="headerlink" title="第二步： 创建新证书"></a>第二步： 创建新证书</h3></blockquote>
+<p>创建文件夹：<font color="Lime">mkdir /etc/ssl/private</font></p>
+<p>修改权限(此文件夹必须严格保密，所以权限设置成这样)：<font color="Lime">chmod 700 /etc/ssl/private</font></p>
+<p>创建SSL秘钥和证书文件OpenSSL：<font color="Lime">openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt</font></p>
+<blockquote>
+<ul>
+<li>openssl：这是创建和管理OpenSSL证书，密钥和其他文件的基本命令行工具。</li>
+<li>req -x509：这指定我们要使用X.509证书签名请求（CSR）管理。“X.509”是SSL和TLS坚持用于密钥和证书管理的公钥基础架构标准。<br>节点：这将告诉OpenSSL跳过使用密码保护证书的选项。当服务器启动时，我们需要Apache无需用户干预才能读取该文件。密码短语会阻止这种情况发生，因为每次重启后都必须输入密码。</li>
+<li>days 365：此选项设置证书被认为有效的时间长度。我们在这里设置了一年。</li>
+<li>newkey rsa：2048：这指定我们要同时生成一个新的证书和一个新的密钥。我们没有创建在上一步中签署证书所需的密钥，因此我们需要与证书一起创建证书。该rsa:2048部分告诉它制作一个2048位长的RSA密钥。</li>
+<li>keyout：此行告诉OpenSSL放置我们正在创建的生成的私钥文件。</li>
+<li>out：这告诉OpenSSL放置我们正在创建的证书的位置。</li>
+</ul>
+</blockquote>
+<p>完整的提示列表将如下所示：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">Country</span> <span class="selector-tag">Name</span> (<span class="number">2</span> letter code) <span class="selector-attr">[XX]</span><span class="selector-pseudo">:US</span></div><div class="line"><span class="selector-tag">State</span> <span class="selector-tag">or</span> <span class="selector-tag">Province</span> <span class="selector-tag">Name</span> (full name) <span class="selector-attr">[]</span><span class="selector-pseudo">:Example</span></div><div class="line"><span class="selector-tag">Locality</span> <span class="selector-tag">Name</span> (eg, city) <span class="selector-attr">[Default City]</span><span class="selector-pseudo">:Example</span> </div><div class="line"><span class="selector-tag">Organization</span> <span class="selector-tag">Name</span> (eg, company) <span class="selector-attr">[Default Company Ltd]</span><span class="selector-pseudo">:Example</span> <span class="selector-tag">Inc</span></div><div class="line"><span class="selector-tag">Organizational</span> <span class="selector-tag">Unit</span> <span class="selector-tag">Name</span> (eg, section) <span class="selector-attr">[]</span><span class="selector-pseudo">:Example</span> <span class="selector-tag">Dept</span></div><div class="line"><span class="selector-tag">Common</span> <span class="selector-tag">Name</span> (eg, your name or your server's hostname) <span class="selector-attr">[]</span><span class="selector-pseudo">:example.com</span></div><div class="line"><span class="selector-tag">Email</span> <span class="selector-tag">Address</span> <span class="selector-attr">[]</span><span class="selector-pseudo">:webmaster</span>@<span class="selector-tag">example</span><span class="selector-class">.com</span></div></pre></td></tr></table></figure>
+<p>上面的内容可以不写，一直回车，内容就为空。</p>
+<p>您创建的两个文件将被放置在/etc/ssl目录的相应子目录中。</p>
+<p>当我们使用OpenSSL时，我们还应该创建一个强大的Diffie-Hellman组<br>接着输入：<font color="Lime">openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048</font></p>
+<p>由于CentOS 7附带的Apache版本不包括该SSLOpenSSLConfCmd指令，所以我们必须手动将生成的文件附加到我们的自签名证书的末尾.<br>输入：<font color="Lime">cat /etc/ssl/certs/dhparam.pem | sudo tee -a /etc/ssl/certs/apache-selfsigned.crt</font></p>
+<blockquote>
+<h3 id="第三步：设置证书"><a href="#第三步：设置证书" class="headerlink" title="第三步：设置证书"></a>第三步：设置证书</h3></blockquote>
+<p>打开Apache的SSL配置文件：<font color="Lime">vi /etc/httpd/conf.d/ssl.conf</font></p>
+<p>找到开头的部分<virtualhost _default_:443="">。我们需要在这里进行一些修改，以确保我们的SSL证书正确地应用到我们的站点。</virtualhost></p>
+<p>首先，取消注释DocumentRoot行<br>接下来，取消注释ServerName行，并www.example.com用您的域名或服务器IP地址替换(如下):<br><img src="http://oxwgzg29g.bkt.clouddn.com/2.PNG" alt="5"></p>
+<p>把下图中圈出来的地方注释掉：<br><img src="http://oxwgzg29g.bkt.clouddn.com/3.png" alt="6"></p>
+<p>找到SSLCertificateFile和SSLCertificateKeyFile，并改变他们在我们所做的目录/etc/httpd/ssl：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SSLCertificateFile <span class="regexp">/etc/</span>ssl<span class="regexp">/certs/</span>apache-selfsigned.crt</div><div class="line">SSLCertificateKeyFile <span class="regexp">/etc/</span>ssl<span class="regexp">/private/</span>apache-selfsigned.key</div></pre></td></tr></table></figure></p>
+<p>如图：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/4.png" alt="7"></p>
+<p>在VirtualHost后(配置文件最后)加上如下内容：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Begin copied text</span></div><div class="line"><span class="comment"># from https://cipherli.st/</span></div><div class="line"><span class="comment"># and https://raymii.org/s/tutorials/Strong_SSL_Security_On_Apache2.html</span></div><div class="line"></div><div class="line"><span class="attribute">SSLCipherSuite</span> EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH</div><div class="line"><span class="attribute">SSLProtocol</span> <span class="literal">All</span> -SSLv2 -SSLv3</div><div class="line"><span class="attribute">SSLHonorCipherOrder</span> <span class="literal">On</span></div><div class="line"><span class="comment"># Disable preloading HSTS for now.  You can use the commented out header line that includes</span></div><div class="line"><span class="comment"># the "preload" directive if you understand the implications.</span></div><div class="line"><span class="comment">#Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"</span></div><div class="line"><span class="attribute"><span class="nomarkup">Header</span></span> always set Strict-Transport-Security <span class="string">"max-age=63072000; includeSubdomains"</span></div><div class="line"><span class="attribute"><span class="nomarkup">Header</span></span> always set X-Frame-Options DENY</div><div class="line"><span class="attribute"><span class="nomarkup">Header</span></span> always set X-Content-Type-Options nosniff</div><div class="line"><span class="comment"># Requires Apache &gt;= 2.4</span></div><div class="line"><span class="attribute">SSLCompression</span> <span class="literal">off</span> </div><div class="line"><span class="attribute">SSLUseStapling</span> <span class="literal">on</span> </div><div class="line"><span class="attribute">SSLStaplingCache</span> <span class="string">"shmcb:logs/stapling-cache(150000)"</span> </div><div class="line"><span class="comment"># Requires Apache &gt;= 2.4.11</span></div><div class="line"><span class="comment"># SSLSessionTickets Off</span></div></pre></td></tr></table></figure>
+<p>完成这些更改后，可以保存并关闭文件。</p>
+<blockquote>
+<h3 id="修改未加密的虚拟主机文件重定向到HTTPS"><a href="#修改未加密的虚拟主机文件重定向到HTTPS" class="headerlink" title="修改未加密的虚拟主机文件重定向到HTTPS"></a>修改未加密的虚拟主机文件重定向到HTTPS</h3></blockquote>
+<p>命令：<font color="Lime">vi /etc/httpd/conf.d/non-ssl.conf</font></p>
+<p>加入如下内容：其中如果你有域名就把example.com换成你的域名，这里我们讲一下没有域名的操作：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="section">&lt;VirtualHost *:80&gt;</span></div><div class="line">        <span class="attribute"><span class="nomarkup">ServerName</span></span> www.example.com</div><div class="line">        <span class="attribute">Redirect</span> <span class="string">"/"</span> <span class="string">"https://www.example.com/"</span></div><div class="line"><span class="section">&lt;/VirtualHost&gt;</span></div></pre></td></tr></table></figure></p>
+<p>如下图，改成你自己的IP地址：<br><img src="http://oxwgzg29g.bkt.clouddn.com/6.PNG" alt="8"></p>
+<blockquote>
+<h3 id="最后一步：激活证书"><a href="#最后一步：激活证书" class="headerlink" title="最后一步：激活证书"></a>最后一步：激活证书</h3></blockquote>
+<p>输入：<font color="Lime">apachectl configtest</font></p>
+<p>输出如下则表示正确：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">. </span>. .</div><div class="line">Syntax OK</div></pre></td></tr></table></figure>
+<p>重新启动Apache服务器以通过以下命令以应用您的更改：<font color="Lime">systemctl restart httpd.service</font></p>
+<p>安装防火墙(CentOS 7)：<font color="Lime">yum -y install firewalld</font></p>
+<p>启动防火墙：<font color="Lime">systemctl start firewalld</font></p>
+<p>打开如下端口：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">firewall-<span class="keyword">cmd</span><span class="bash"> --add-service=http</span></div><div class="line"><span class="bash">firewall-cmd --add-service=https</span></div><div class="line"><span class="bash">firewall-cmd --runtime-to-permanent</span></div></pre></td></tr></table></figure></p>
+<pre><code>输入https://你的IP地址，然后可以看到如图所示：
+</code></pre><p><img src="http://oxwgzg29g.bkt.clouddn.com/7.PNG" alt="9"></p>
+<p>可以看到提示我们的https不安全，这是因为我们的自签名证书得不到浏览器的承认，但是不影响我们用。</p>
+<blockquote>
+<h2 id="安装Owncloud"><a href="#安装Owncloud" class="headerlink" title="安装Owncloud"></a>安装Owncloud</h2></blockquote>
+<p>前面准备了这么多，都是准备，现在才开始正式安装。。</p>
+<p>首先，导入rpm包源：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm --import https:<span class="regexp">//</span>download.owncloud.org<span class="regexp">/download/</span>repositories<span class="regexp">/stable/</span>CentOS_7<span class="regexp">/repodata/</span>repomd.xml.key</div></pre></td></tr></table></figure></p>
+<p>使用curl命令下载ownCloud存储库文件：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -L https:<span class="regexp">//</span>download.owncloud.org<span class="regexp">/download/</span>repositories<span class="regexp">/stable/</span>CentOS_7<span class="regexp">/ce:stable.repo -o /</span>etc<span class="regexp">/yum.repos.d/</span>ownCloud.repo</div></pre></td></tr></table></figure></p>
+<p>清空一下缓存：<font color="Lime">yum clean expire-cache</font></p>
+<p>输出如下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Loaded plugin<span class="variable">s:</span> fastestmirror</div><div class="line">Cleaning repo<span class="variable">s:</span> base ce_production epel extras updates webtatic</div><div class="line"><span class="number">9</span> metadata <span class="keyword">files</span> removed</div></pre></td></tr></table></figure></p>
+<p>安装OwnCloud：<font color="Lime">yum -y install owncloud</font></p>
+<blockquote>
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3></blockquote>
+<p>登录数据库：<font color="Lime">mysql -u root -p</font><br>输入你之前设置的MySQL的密码<br>创建数据库：<font color="Lime">CREATE DATABASE owncloud;</font><br>为该数据库设置密码：<font color="Lime">GRANT ALL ON owncloud.* to ‘owncloud’@’localhost’ IDENTIFIED BY ‘set_database_password’;</font><br>其中set_datebase_password设置成你自己喜欢的密码</p>
+<p>刷新一下权限：<font color="Lime">FLUSH PRIVILEGES;</font></p>
+<p>退出：<font color="Lime">exit</font></p>
+<blockquote>
+<h3 id="配置Owncloud"><a href="#配置Owncloud" class="headerlink" title="配置Owncloud"></a>配置Owncloud</h3></blockquote>
+<pre><code>在浏览器输入： https://你的服务器ip/owncloud
+</code></pre><p>如果出现如图所示错误：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/8.PNG" alt="10"></p>
+<p>使用如下方法进行处理：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> <span class="string">/var/www/html</span></div><div class="line">chown apache owncloud -Rf</div><div class="line">chmod 770 owncloud -Rf</div></pre></td></tr></table></figure></p>
+<p>另外设置：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/selinux/config</div><div class="line">将其中<span class="attribute">SELINUX</span>=enforcing</div><div class="line">改为<span class="attribute">SELINUX</span>=disabled</div></pre></td></tr></table></figure>
+<p>设置完这些之后需要重启一下服务器</p>
+<p>然后刷新刚才的网页就可以看到：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/10.PNG" alt="11"></p>
+<p>设置管理员账号和密码：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/11.PNG" alt="12"></p>
+<p>紧接着就配置完成了，用你刚刚设置的账号密码进行登录：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/9.PNG" alt="13"></p>
+<p>然后你的个人网盘就搭建完成了：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/12.PNG" alt="14"></p>
+<blockquote>
+<p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏！</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/10/16/搭建自己的网盘-owncloud/" title="搭建自己的网盘 owncloud">http://www.bbiao.me/2017/10/16/搭建自己的网盘-owncloud/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OwnCloud/" rel="tag"># OwnCloud</a>
+          
+            <a href="/tags/网盘/" rel="tag"># 网盘</a>
+          
+            <a href="/tags/LAMP/" rel="tag"># LAMP</a>
+          
+            <a href="/tags/SSL/" rel="tag"># SSL</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/15/博客迁移/" rel="next" title="博客迁移">
+                <i class="fa fa-chevron-left"></i> 博客迁移
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自己搭建网盘有什么好处？"><span class="nav-number">1.1.</span> <span class="nav-text">自己搭建网盘有什么好处？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#都需要用到哪些东西"><span class="nav-number">1.2.</span> <span class="nav-text">都需要用到哪些东西</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装流程"><span class="nav-number">2.</span> <span class="nav-text">安装流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：选择服务器"><span class="nav-number">2.1.</span> <span class="nav-text">第一步：选择服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：LAMP-环境的搭建"><span class="nav-number">2.2.</span> <span class="nav-text">第二步：LAMP 环境的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Apache"><span class="nav-number">2.2.1.</span> <span class="nav-text">安装Apache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装MySQL"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装PHP-7"><span class="nav-number">2.2.3.</span> <span class="nav-text">安装PHP 7</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置SSL证书"><span class="nav-number">3.</span> <span class="nav-text">配置SSL证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：安装mod-ssl"><span class="nav-number">3.1.</span> <span class="nav-text">第一步：安装mod_ssl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：-创建新证书"><span class="nav-number">3.2.</span> <span class="nav-text">第二步： 创建新证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：设置证书"><span class="nav-number">3.3.</span> <span class="nav-text">第三步：设置证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改未加密的虚拟主机文件重定向到HTTPS"><span class="nav-number">3.4.</span> <span class="nav-text">修改未加密的虚拟主机文件重定向到HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后一步：激活证书"><span class="nav-number">3.5.</span> <span class="nav-text">最后一步：激活证书</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Owncloud"><span class="nav-number">4.</span> <span class="nav-text">安装Owncloud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库"><span class="nav-number">4.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Owncloud"><span class="nav-number">4.2.</span> <span class="nav-text">配置Owncloud</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

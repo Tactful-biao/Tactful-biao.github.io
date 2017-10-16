@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,pyinstaller,QT5,天气查询," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="背景简介 这个小程序是博主之前突然灵感爆发的产物。为什么这样说呢？是因为博主本意是打算利用python写一个对账单进行分析画图的程序，在实际的操作过程中，遇到问题，在寻找解决办法的时候，突发灵感才有了这个小程序。  环境 开发语言及版本：Python 3.6图形化工具：QT5EXE打包工具：pyinstaller  原理 主要利用api接口，获得json数据，对数据进行整理，然后再提取我们想要的">
+<meta name="keywords" content="Python,pyinstaller,QT5,天气查询">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用python编写天气查询小程序">
+<meta property="og:url" content="http://www.bbiao.me/2017/07/21/使用python编写天气查询小程序/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="背景简介 这个小程序是博主之前突然灵感爆发的产物。为什么这样说呢？是因为博主本意是打算利用python写一个对账单进行分析画图的程序，在实际的操作过程中，遇到问题，在寻找解决办法的时候，突发灵感才有了这个小程序。  环境 开发语言及版本：Python 3.6图形化工具：QT5EXE打包工具：pyinstaller  原理 主要利用api接口，获得json数据，对数据进行整理，然后再提取我们想要的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/1.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/2.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/3.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/4.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/5.png">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/10.png">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/11.png">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/12.png">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/13.png">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/7.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/8.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/14.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/15.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/16.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/17.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/18.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/19.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/20.PNG">
+<meta property="og:image" content="http://otfmjzrrt.bkt.clouddn.com/21.PNG">
+<meta property="og:updated_time" content="2017-10-14T08:31:53.101Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用python编写天气查询小程序">
+<meta name="twitter:description" content="背景简介 这个小程序是博主之前突然灵感爆发的产物。为什么这样说呢？是因为博主本意是打算利用python写一个对账单进行分析画图的程序，在实际的操作过程中，遇到问题，在寻找解决办法的时候，突发灵感才有了这个小程序。  环境 开发语言及版本：Python 3.6图形化工具：QT5EXE打包工具：pyinstaller  原理 主要利用api接口，获得json数据，对数据进行整理，然后再提取我们想要的">
+<meta name="twitter:image" content="http://otfmjzrrt.bkt.clouddn.com/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/07/21/使用python编写天气查询小程序/"/>
+
+
+
+
+
+  <title>使用python编写天气查询小程序 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/07/21/使用python编写天气查询小程序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用python编写天气查询小程序</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T15:39:24+08:00">
+                2017-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/21/使用python编写天气查询小程序/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/21/使用python编写天气查询小程序/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h2 id="背景简介"><a href="#背景简介" class="headerlink" title="背景简介"></a>背景简介</h2></blockquote>
+<p>这个小程序是博主之前突然灵感爆发的产物。为什么这样说呢？是因为博主本意是打算利用python写一个对账单进行分析画图的程序，在实际的操作过程中，遇到问题，在寻找解决办法的时候，突发灵感才有了这个小程序。</p>
+<blockquote>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2></blockquote>
+<p>开发语言及版本：Python 3.6<br>图形化工具：QT5<br>EXE打包工具：pyinstaller</p>
+<blockquote>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2></blockquote>
+<p>主要利用api接口，获得json数据，对数据进行整理，然后再提取我们想要的数据，通过图形化展示出来，最后再连图形化一块打包成可执行文件。</p>
+<p>让你做一个天气查询的可执行程序（可以直接在Windows 10上点击就可以运行），听起来感觉很难，但是其实一点都不难，真正去做的时候，你就能发现了。从零到一很难，但是从一到二就会简单很多，当你下定决心去做一件事情的时候，你就已经成功三分之一了。<br>废话不多说，下面开始我们的小程序</p>
+<blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2></blockquote>
+<p>第一步：我们需要先用代码实现基本功能。<br>第二步：给我们的程序穿上衣服（图形化）<br>第三步：打包成可执行文件。</p>
+<hr>
+<p>大思路就上面三步，然后我们再一步一步的去实现。</p>
+<h3 id="第一步：使用基本代码实现"><a href="#第一步：使用基本代码实现" class="headerlink" title="第一步：使用基本代码实现"></a>第一步：使用基本代码实现</h3><figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python3           #这行代码在<span class="symbol">Windows</span>平台会自动忽略，写这行代码主要是考虑到linux平台</div><div class="line"># -*- encoding:utf<span class="number">-8</span> -*-          #这行是对代码的编码方式，python3对这个要求不是很严格，但是还是希望大家能够保持住这个习惯</div><div class="line"> </div><div class="line">import json           #导入json模块，因为我们接收到的数据是以json类型返回的，所以对json数据进行处理，需要导入相应的模块</div><div class="line">import requests    #我们利用api接口进行编程的时候，需要对该接口进行访问，需要使用requests库</div><div class="line">import datetime    #datetime模块是一个时间处理的模块，因为天气处理的时候，我们要返回时间</div><div class="line"> </div><div class="line">keyword = input(<span class="string">'请输入您要查询的城市：'</span>)     # 接收用户查询的城市名称</div><div class="line"> </div><div class="line">try:</div><div class="line">    api = requests.get(<span class="string">"http://www.xxxxx.com/open/api/weather/json.shtml?city="</span> + keyword)      # api接口</div><div class="line">    data = api.json()            </div><div class="line">    datainfo = data[<span class="string">'data'</span>]</div><div class="line">    forecast = datainfo[<span class="string">'forecast'</span>]</div><div class="line">    wendu = datainfo[<span class="string">'wendu'</span>]</div><div class="line">    tishi = datainfo[<span class="string">'ganmao'</span>]</div><div class="line">    today = datetime.date.today()</div><div class="line">    today_high = forecast[<span class="number">0</span>][<span class="string">'high'</span>]</div><div class="line">    today_low = forecast[<span class="number">0</span>][<span class="string">'low'</span>]</div><div class="line">    tomorrow_high = forecast[<span class="number">1</span>][<span class="string">'high'</span>]</div><div class="line">    tomorrow_low = forecast[<span class="number">1</span>][<span class="string">'low'</span>]</div><div class="line">    the_day_after_tomorrow_high = forecast[<span class="number">2</span>][<span class="string">'high'</span>]</div><div class="line">    the_day_after_tomorrow_low = forecast[<span class="number">2</span>][<span class="string">'low'</span>]</div><div class="line">    </div><div class="line">    </div><div class="line">    print(<span class="string">'城市：'</span>,datainfo[<span class="string">'city'</span>])</div><div class="line">    print(<span class="string">'今天的天气情况:'</span>)</div><div class="line">    print(<span class="string">'时间：'</span>,today)</div><div class="line">    print(<span class="string">'天气类型：'</span>,forecast[<span class="number">0</span>][<span class="string">'type'</span>])</div><div class="line">    print(<span class="string">'风力：'</span>,forecast[<span class="number">0</span>][<span class="string">'fengli'</span>])</div><div class="line">    print(<span class="string">'温度：'</span>,today_high[<span class="number">3</span>:],<span class="string">'-'</span>,today_low[<span class="number">3</span>:])</div><div class="line">    print(<span class="string">'当前温度：'</span>,wendu)</div><div class="line">    print(<span class="string">'最高温度：'</span>,forecast[<span class="number">0</span>][<span class="string">'high'</span>])</div><div class="line">    print(<span class="string">'最低温度：'</span>,forecast[<span class="number">0</span>][<span class="string">'low'</span>])</div><div class="line">    print(<span class="string">'风向：'</span>,forecast[<span class="number">0</span>][<span class="string">'fengxiang'</span>])</div><div class="line">    print(<span class="string">''</span>)</div><div class="line">    print(<span class="string">'明天的天气情况:'</span>)</div><div class="line">    print(<span class="string">'时间：'</span>,today + datetime.timedelta(days=<span class="number">1</span>))</div><div class="line">    print(<span class="string">'天气类型：'</span>,forecast[<span class="number">1</span>][<span class="string">'type'</span>])</div><div class="line">    print(<span class="string">'风力：'</span>,forecast[<span class="number">1</span>][<span class="string">'fengli'</span>])</div><div class="line">    print(<span class="string">'温度：'</span>,tomorrow_high[<span class="number">3</span>:],<span class="string">'-'</span>,tomorrow_low[<span class="number">3</span>:])</div><div class="line">    print(<span class="string">'最高温度：'</span>,forecast[<span class="number">1</span>][<span class="string">'high'</span>])</div><div class="line">    print(<span class="string">'最低温度：'</span>,forecast[<span class="number">1</span>][<span class="string">'low'</span>])</div><div class="line">    print(<span class="string">'风向：'</span>,forecast[<span class="number">1</span>][<span class="string">'fengxiang'</span>])</div><div class="line">    print(<span class="string">''</span>)</div><div class="line">    print(<span class="string">'后天的天气情况:'</span>)</div><div class="line">    print(<span class="string">'时间：'</span>,today + datetime.timedelta(days=<span class="number">2</span>))</div><div class="line">    print(<span class="string">'天气类型：'</span>,forecast[<span class="number">2</span>][<span class="string">'type'</span>])</div><div class="line">    print(<span class="string">'风力：'</span>,forecast[<span class="number">2</span>][<span class="string">'fengli'</span>])</div><div class="line">    print(<span class="string">'温度：'</span>,the_day_after_tomorrow_high[<span class="number">3</span>:],<span class="string">'-'</span>,the_day_after_tomorrow_low[<span class="number">3</span>:])</div><div class="line">    print(<span class="string">'最高温度：'</span>,forecast[<span class="number">2</span>][<span class="string">'high'</span>])</div><div class="line">    print(<span class="string">'最低温度：'</span>,forecast[<span class="number">2</span>][<span class="string">'low'</span>])</div><div class="line">    print(<span class="string">'风向：'</span>,forecast[<span class="number">2</span>][<span class="string">'fengxiang'</span>])</div><div class="line">    print(<span class="string">''</span>)</div><div class="line">    print(<span class="string">'温馨提示：'</span>,tishi)</div><div class="line">except <span class="symbol">KeyError</span> as e:</div><div class="line">    print(<span class="string">'请输入正确的中文名称进行查询！'</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>代码解读<br>关于<a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p02_read-write_json_data.html" target="_blank" rel="external">json模块</a>的详细介绍；<br>关于<a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="external">pythonrequests库</a>的详细介绍；<br>关于<a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/c03/p12_convert_days_to_seconds_and_others.html" target="_blank" rel="external">datetime模块</a>的详细介绍；<br>代码的第12到23行是对接收到的json数据进行处理，分别把风力，温度，当前温度，最高温度，最低温度，风向，和温馨提示提取出来。第26行到55行只是对数据进行一个打印输出。<br>这样，一个简单的天气查询的程序就写出来了，代码总共57行，核心代码就13行，是不是特别简单。<br>运行一下，会得到如下结果：</p>
+</blockquote>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/1.PNG" alt="4"></p>
+<p>当然，有句话叫永远不能相信用户。因为你永远不知道用户会输入什么，我们想让客户输入城市进行查询，可能客户会输入一些其他的乱七八糟的东西，如果我们不做处理，这样程序的客户体验就不是很好，所以我们在代码里加入了try catch语句块，对那些非法的值就行检测，当用户输入的不是正确的城市的时候，就会告诉用户“请输入正确的中文名称进行查询！”。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/2.PNG" alt="5"></p>
+<blockquote>
+<h3 id="第二步：给程序穿上衣服（图形化）"><a href="#第二步：给程序穿上衣服（图形化）" class="headerlink" title="第二步：给程序穿上衣服（图形化）"></a>第二步：给程序穿上衣服（图形化）</h3></blockquote>
+<h3 id="python做GUI的库有很多，比较常用的有："><a href="#python做GUI的库有很多，比较常用的有：" class="headerlink" title="python做GUI的库有很多，比较常用的有："></a>python做GUI的库有很多，比较常用的有：</h3><ol>
+<li>PyQt：PyQt是Python语言的GUI编程解决方案之一。可以用来代替Python内置的Tkinter。其它替代者还有PyGTK、wxPython等。与Qt一样，PyQt是一个自由软件。PyQt是PyKDE的基础。</li>
+<li>Tkinter： Tkinter模块(“Tk 接口”)是Python的标准Tk GUI工具包的接口.Tk和Tkinter可以在大多数的Unix平台下使用,同样可以应用在Windows和Macintosh系统里.,Tk8.0的后续版本可以实现本地窗口风格,并良好地运行在绝大多数平台中。</li>
+<li>wxPython：wxPython 是一款开源软件，是 Python 语言的一套优秀的 GUI 图形库，允许 Python 程序员很方便的创建完整的、功能键全的 GUI 用户界面。<br>Jython：Jython程序可以和Java无缝集成。除了一些标准模块，Jython使用Java的模块。Jython几乎拥有标准的Python中不依赖于C语言的全部模块。比如，Jython的用户界面将使用Swing，AWT或者SWT。Jython可以被动态或静态地编译成Java字节码。<br>以上是python最常用的做图形化的库函数了。<br>这里我们使用PyQT直接进行设计，我认为PyQt是最简单的，直接就可以上手，如果不是经常做图形化，我感觉pyqt就够用了，因为它操作简单。<br>这里提供QT所有支持平台的下载链接：<a href="https://www.qt.io/download-open-source/#section-2" target="_blank" rel="external">这里</a><br>可以根据自己的操作系统下载相应的版本，下载安装就不多说了。<br>我们直接开始使用。</li>
+</ol>
+<p>打开qt designer.exe可以看到如下画面：</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/3.PNG" alt="6"></p>
+<p>我们接下来就需要通过使用qt designer进行设计，直接通过拖动窗口部件进行GUI设计，几分钟就可以设计一个十分复杂的GUI界面。<br>直接点击上一步的创建，即可看到如下画面：<br><img src="http://otfmjzrrt.bkt.clouddn.com/4.PNG" alt="8"></p>
+<p>首先我们心中要清楚我们要设计一个什么样的GUI，就跟盖房子的一样，首先要有图纸，不然也没法去盖。<br>我们设计的是一个天气查询的GUI，你可以添加一个标签用来写你的程序是干什么的，要有一个用户输入城市的输入框以及一个输入完之后进行确认的按钮，还要有一个显示查询结果的输出框，只需要有这四个部件即可。<br>既然清楚了我们的目标，下一步就是进行设计。<br>这是我们设计的界面其中Widget Box这一列都是部件，你需要什么样的部件，直接把该部件拖出来放在画布上就行了，拖出来的部件都是默认大小的，你可以根据自己的习惯调整（我相信使用过Word编辑过图片的人都能够直接搞定），字体大小在右侧的属性那里进行调整：</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/5.png" alt="9"></p>
+<p>下面我们还需要对按钮进行链接，不然你按按钮之后，按钮怎么知道下一步该干什么，这里就用到了<a href="https://wiki.qt.io/How_to_Use_Signals_and_Slots/zh" target="_blank" rel="external">QT的信号与槽的处理机制</a>，感兴趣的可以自己去了解。<br>这里首先对输入框进行处理，一般很多人输入完成之后喜欢直接按回车键进行确认操作而不喜欢再通过鼠标按按钮进行确认，我们这一步的处理就是对回车操作进行定义。这里我们还需要定义自己的函数，因为我们最终的结果是当用户输入完城市之后，无论是回车还是点击按钮，能够显示查询的结果。所以我们需要定义一个show_weather的函数。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/10.png" alt="11"></p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/11.png" alt="12"></p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/12.png" alt="13"></p>
+<p>下面再对按钮进行连接就可以了。跟回车连接一样，这里就不再赘述。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/13.png" alt="14"></p>
+<p>设计完成之后，保存成.ui的文件，我们的GUI设计就完成了。<br>当然，我们也可以给我们的GUI界面设计背景图片，都是可以的，这里我就不介绍了，感兴趣的朋友可以自己研究研究，或者在下面留言，自己动手收获才能更大。<br>然后把.ui文件通过pyuic5 直接转换成.py的文件</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/7.PNG" alt="14"></p>
+<p>然后就可以看到该目录下会多出来一个python文件，该文件就是刚刚生成的。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/8.PNG" alt="16"></p>
+<p>打开后可以看到如下内容（目前还没法直接运行）：</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/14.PNG" alt="17"></p>
+<p>下面我们需要添加我们的自定义函数show_weather：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">def show_weather(self):</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        keyword = self.lineEdit.<span class="built_in">text</span>()</div><div class="line">        api = requests.<span class="built_in">get</span>(<span class="string">"http://www.sojson.com/open/api/weather/json.shtml?city="</span> + keyword)</div><div class="line">        data = api.json()</div><div class="line">        datainfo = data[<span class="string">'data'</span>]</div><div class="line">        forecast = datainfo[<span class="string">'forecast'</span>]</div><div class="line">        wendu = datainfo[<span class="string">'wendu'</span>]</div><div class="line">        tishi = datainfo[<span class="string">'ganmao'</span>]</div><div class="line">        today = datetime.date.today()</div><div class="line">        today_high = forecast[<span class="number">0</span>][<span class="string">'high'</span>]</div><div class="line">        today_low = forecast[<span class="number">0</span>][<span class="string">'low'</span>]</div><div class="line">        tomorrow_high = forecast[<span class="number">1</span>][<span class="string">'high'</span>]</div><div class="line">        tomorrow_low = forecast[<span class="number">1</span>][<span class="string">'low'</span>]</div><div class="line">        the_day_after_tomorrow_high = forecast[<span class="number">2</span>][<span class="string">'high'</span>]</div><div class="line">        the_day_after_tomorrow_low = forecast[<span class="number">2</span>][<span class="string">'low'</span>]</div><div class="line">        tomorrow = today + datetime.timedelta(days=<span class="number">1</span>)</div><div class="line">        the_day_after_tomorrow = today + datetime.timedelta(days=<span class="number">2</span>)</div><div class="line">    except KeyError as e:</div><div class="line">        self.textEdit.<span class="built_in">clear</span>()</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'请输入正确的中文城市名称！'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        self.textEdit.<span class="built_in">clear</span>()</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'城市：'</span> + datainfo[<span class="string">'city'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'今天的天气情况:'</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'时间：'</span>+ <span class="built_in">str</span>(today.<span class="built_in">year</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(today.<span class="built_in">month</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(today.<span class="built_in">day</span>))</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'天气类型：'</span>+ forecast[<span class="number">0</span>][<span class="string">'type'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'温度：'</span>+ today_low[<span class="number">3</span>:<span class="number">6</span>] + <span class="string">'-'</span>+ today_high[<span class="number">3</span>:<span class="number">6</span>])            </div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'当前温度：'</span> + wendu)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最高温度：'</span> + forecast[<span class="number">0</span>][<span class="string">'high'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最低温度：'</span> + forecast[<span class="number">0</span>][<span class="string">'low'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风力：'</span> + forecast[<span class="number">0</span>][<span class="string">'fengli'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风向：'</span> + forecast[<span class="number">0</span>][<span class="string">'fengxiang'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">''</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'明天的天气情况:'</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'时间：'</span>+ <span class="built_in">str</span>(tomorrow.<span class="built_in">year</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(tomorrow.<span class="built_in">month</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(tomorrow.<span class="built_in">day</span>))</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'天气类型：'</span> + forecast[<span class="number">1</span>][<span class="string">'type'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'温度：'</span>+ tomorrow_low[<span class="number">3</span>:<span class="number">6</span>] + <span class="string">'-'</span> + tomorrow_high[<span class="number">3</span>:<span class="number">6</span>])            </div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最高温度：'</span> + forecast[<span class="number">1</span>][<span class="string">'high'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最低温度：'</span> + forecast[<span class="number">1</span>][<span class="string">'low'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风力：'</span> + forecast[<span class="number">1</span>][<span class="string">'fengli'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风向：'</span> + forecast[<span class="number">1</span>][<span class="string">'fengxiang'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">''</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'后天的天气情况:'</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'时间：'</span> + <span class="built_in">str</span>(the_day_after_tomorrow.<span class="built_in">year</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(the_day_after_tomorrow.<span class="built_in">month</span>) + <span class="string">'-'</span> + <span class="built_in">str</span>(the_day_after_tomorrow.<span class="built_in">day</span>))</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'天气类型：'</span> + forecast[<span class="number">2</span>][<span class="string">'type'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'温度：'</span>+ the_day_after_tomorrow_low[<span class="number">3</span>:<span class="number">6</span>] + <span class="string">'-'</span> + the_day_after_tomorrow_high[<span class="number">3</span>:<span class="number">6</span>])            </div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最高温度：'</span> + forecast[<span class="number">2</span>][<span class="string">'high'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'最低温度：'</span> + forecast[<span class="number">2</span>][<span class="string">'low'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风力：'</span> + forecast[<span class="number">2</span>][<span class="string">'fengli'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'风向：'</span> + forecast[<span class="number">2</span>][<span class="string">'fengxiang'</span>])</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">''</span>)</div><div class="line">        self.textEdit.<span class="built_in">append</span>(<span class="string">'温馨提示：'</span> + tishi)</div><div class="line">def <span class="built_in">clear</span>(self):</div><div class="line">    self.textEdit.<span class="built_in">clear</span>()</div></pre></td></tr></table></figure>
+<p>还需要在最下面添加如下内容，就可以运行了</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">   import sys</div><div class="line">   app = QtWidgets.QApplication(sys.argv)</div><div class="line">   widget = QtWidgets.QWidget()</div><div class="line">   ui = Ui_Form()</div><div class="line">   ui.setupUi(widget)</div><div class="line">   widget.show()</div><div class="line">   sys.<span class="keyword">exit</span>(app.exec_())</div></pre></td></tr></table></figure>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/15.PNG" alt="18"></p>
+<p>这里有我之前做的一个带有背景图片的（是不是感觉顺眼了很多):</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/16.PNG" alt="19"></p>
+<blockquote>
+<h3 id="最后一步：-打包成exe的文件"><a href="#最后一步：-打包成exe的文件" class="headerlink" title="最后一步： 打包成exe的文件"></a>最后一步： 打包成exe的文件</h3></blockquote>
+<p>使用python的pyinstaller模块，首次使用需要安装：<br>直接在cmd窗口下输入（前提是你安装python的时候加入到了环境变量）：<font color="Lime">pip install pyinstaller</font><br>如果没有添加环境变量，你需要到你的python安装目录下再运行：<font color="Lime">pip install pyinstaller</font><br>pyinstaller的<a href="https://www.bbsmax.com/A/gVdnmL775W/" target="_blank" rel="external">详细参数</a></p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/17.PNG" alt="21"></p>
+<blockquote>
+<p>这里我们只介绍一下我们经常用到的参数:<br>-F : 打包成一个单独的可执行文件，这个文件可以单独拿出来使用<br>-p : 导入配置文件的路径，有些py文件比如qt设计的就需要导入PyQt的配置文件<br>-w： 这个参数如果不加的话，每次运行可执行文件，就会弹出来Windows的cmd窗口，加上就不会弹出<br>-i ：可以给你对可执行文件设置图标，就是通过这个参数（icon）<br>下面我们就使用如下命令进行打包就可以了（其中pyth是你的PyQt5的bin文件的绝对路径）：<br>pyinstaller –path D:\Python_windows\Lib\site-packages\PyQt5\Qt\bin -F -w weacher.py<br>稍等片刻，如果出现如下画面，即表示已经成功了。</p>
+</blockquote>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/18.PNG" alt="22"></p>
+<p>会在你的目录下生成三个文件夹，你的可执行文件就在dist这个文件夹里面。可以单独拿出来在其他地方运行，当然也可以在任何Windows10系统下运行（其他Windows系列的系统中没有进行测试）。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/19.PNG" alt="23"></p>
+<p>打开dist文件夹即可看到我们的可执行程序：</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/20.PNG" alt="24"></p>
+<p>双击我们的可执行文件，和我们的图形化界面是一样的，唯一不同的地方，是在其他没有安装python环境的Windows机器上，也可以直接运行。</p>
+<p><img src="http://otfmjzrrt.bkt.clouddn.com/21.PNG" alt="25"></p>
+<p>到这里，文章就要结束了，是不是感觉很简单。思路很重要，只有思路清晰，一步一步往下做就是了。有问题可以在文章下面评论，大家一起交流。</p>
+<p>完整的项目我已经提交在<a href="https://github.com/Tactful-biao/weather_forecast" target="_blank" rel="external">我的GitHub</a>上了，感兴趣的朋友可以参考一下。<br>生成的可执行文件点击下载即可下载：</p>
+<p><a href="http://otfmjzrrt.bkt.clouddn.com/forecast.exe" target="_blank" rel="external">点击下载</a></p>
+<blockquote>
+<p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/07/21/使用python编写天气查询小程序/" title="使用python编写天气查询小程序">http://www.bbiao.me/2017/07/21/使用python编写天气查询小程序/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/pyinstaller/" rel="tag"># pyinstaller</a>
+          
+            <a href="/tags/QT5/" rel="tag"># QT5</a>
+          
+            <a href="/tags/天气查询/" rel="tag"># 天气查询</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/20/人生苦短，我用Python/" rel="next" title="人生苦短，我用Python">
+                <i class="fa fa-chevron-left"></i> 人生苦短，我用Python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/22/xml-rpc攻击/" rel="prev" title="xml-rpc攻击">
+                xml-rpc攻击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景简介"><span class="nav-number">1.</span> <span class="nav-text">背景简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">4.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：使用基本代码实现"><span class="nav-number">4.1.</span> <span class="nav-text">第一步：使用基本代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：给程序穿上衣服（图形化）"><span class="nav-number">4.2.</span> <span class="nav-text">第二步：给程序穿上衣服（图形化）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python做GUI的库有很多，比较常用的有："><span class="nav-number">4.3.</span> <span class="nav-text">python做GUI的库有很多，比较常用的有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后一步：-打包成exe的文件"><span class="nav-number">4.4.</span> <span class="nav-text">最后一步： 打包成exe的文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

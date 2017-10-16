@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="爬虫," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前提随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取豆瓣电影TOP 250">
+<meta property="og:url" content="http://www.bbiao.me/2017/08/29/爬取豆瓣电影TOP-250/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="前提随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/1.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/2.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/2.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/3.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/4.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/5.png">
+<meta property="og:updated_time" content="2017-10-14T04:38:07.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬取豆瓣电影TOP 250">
+<meta name="twitter:description" content="前提随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入">
+<meta name="twitter:image" content="http://ovfqn6f2x.bkt.clouddn.com/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/08/29/爬取豆瓣电影TOP-250/"/>
+
+
+
+
+
+  <title>爬取豆瓣电影TOP 250 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/08/29/爬取豆瓣电影TOP-250/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">爬取豆瓣电影TOP 250</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-29T12:10:22+08:00">
+                2017-08-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">网络爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/29/爬取豆瓣电影TOP-250/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/08/29/爬取豆瓣电影TOP-250/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><h3 id="随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K-15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。"><a href="#随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K-15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。" class="headerlink" title="随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。"></a>随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。</h3><h2 id="环境以及相关的库"><a href="#环境以及相关的库" class="headerlink" title="环境以及相关的库"></a>环境以及相关的库</h2><blockquote>
+<h3 id="系统：-Ubuntu-16-04"><a href="#系统：-Ubuntu-16-04" class="headerlink" title="系统： Ubuntu 16.04"></a>系统： Ubuntu 16.04</h3><h3 id="Python环境：python-3-5"><a href="#Python环境：python-3-5" class="headerlink" title="Python环境：python 3.5"></a>Python环境：python 3.5</h3><h3 id="库：requests，BeautifulSoup，codecs"><a href="#库：requests，BeautifulSoup，codecs" class="headerlink" title="库：requests，BeautifulSoup，codecs"></a>库：requests，BeautifulSoup，codecs</h3></blockquote>
+<p>以上只是我个人的环境，系统的话可以根据自己的习惯进行选择。</p>
+<h2 id="正题部分"><a href="#正题部分" class="headerlink" title="正题部分"></a>正题部分</h2><blockquote>
+<h3 id="这里我们爬取豆瓣电影Top-250的电影名称，网址是：https-movie-douban-com-top250"><a href="#这里我们爬取豆瓣电影Top-250的电影名称，网址是：https-movie-douban-com-top250" class="headerlink" title="这里我们爬取豆瓣电影Top 250的电影名称，网址是：https://movie.douban.com/top250"></a>这里我们爬取豆瓣电影Top 250的电影名称，网址是：<a href="https://movie.douban.com/top250" target="_blank" rel="external">https://movie.douban.com/top250</a></h3></blockquote>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/1.png" alt="1"></p>
+<h3 id="首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。"><a href="#首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。" class="headerlink" title="首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。"></a>首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。</h3><p>在chrome浏览器下按F12打开开发者工具，就可以看到网页的源代码：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/2.png" alt="2"><br><img src="http://ovfqn6f2x.bkt.clouddn.com/2.png" alt="3"></p>
+<p>可以看到这个页面有25条电影信息，可以通过在任意一个电影上面点击鼠标右键–&gt;检查看到其HTML的结构。可以看到这一页的所有的电影都在class为”grid_view“的ol标签里面，每个电影对应一个li，在li下面的a标签下class为“title”的span对应的就是电影名称，也就是我们需要的内容，我们下面要做的就是告诉我们的爬虫，把这里的内容提取并且保存到文件就可以了。<br><img src="http://ovfqn6f2x.bkt.clouddn.com/3.png" alt="4"></p>
+<h3 id="到目前为止，我们得到的内容有："><a href="#到目前为止，我们得到的内容有：" class="headerlink" title="到目前为止，我们得到的内容有："></a>到目前为止，我们得到的内容有：</h3><blockquote>
+<ol>
+<li>每页有25条电影，共有10页。</li>
+<li>电影列表在页面的位置为一个class属性为grid_view的ol标签里。</li>
+<li>每条电影都放在这个ol标签的li标签里</li>
+</ol>
+</blockquote>
+<p>上面简单分析了一下网页结构，网页结构分析哪些东西呢？<br>需要手动的找到我们需要的东西，然后找到其对应的标签，这些标签的作用就跟路标一样，爬虫不想人类这样有智慧，你需要把这些路标告诉它，然后它就可以通过这些路标找到我们想要的东西。(当然这是简单爬虫的思路，如果是复杂的爬虫可能还需要构造请求，cookie，首部，IP等等一些东西，后面我们遇到了再一起学，现在还用不到)</p>
+<p>找到标签之后该怎么办，第一步是通过python的requests库构造请求，就跟我们浏览网页一样，我们也是想服务器发送到请求，服务器收到我们的请求之后进行处理，如果没问题就好把我们所请求的内容发给我们，请求的方式有很多，最常见的两种是GET、POST，这两者具体有什么区别，请参考这篇文章：<a href="http://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html" target="_blank" rel="external">浅谈HTTP中Get与Post的区别 – hyddd – 博客园</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python3</div><div class="line"># encoding=utf-8</div><div class="line"></div><div class="line">import requests</div><div class="line"> </div><div class="line">url = &apos;https://movie.douban.com/top250&apos;</div><div class="line"> </div><div class="line">def get_html(url):</div><div class="line">    date = requests.get(url).content</div><div class="line">    return date</div><div class="line"> </div><div class="line">def main():</div><div class="line">    print(get_html(url))</div><div class="line"> </div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>上面的代码首先导入了requests模块，然后定义了一个url的变量用了放链接地址，然后定义了一个get_html的函数这个函数的作用就是返回网页所对应的HTML代码。main函数用来打印输出请求的结果，上面的代码运行后得到如下内容：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">b'<span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-cmn-Hans"</span> <span class="attr">class</span>=<span class="string">""</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"renderer"</span> <span class="attr">content</span>=<span class="string">"webkit"</span>&gt;</span>\n    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"referrer"</span> <span class="attr">content</span>=<span class="string">"always"</span>&gt;</span></div><div class="line">......</div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">....</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">.....</div></pre></td></tr></table></figure></p>
+<p>返回了一大堆的东西，这些都是HTML源代码。<br>下一步就是对这么多HTML的内容进行筛选和清洗，因为里面的绝大多数的内容都是我们不需要的。查找我们想要的内容有三种方法.</p>
+<blockquote>
+<h3 id="第一种是使用正则表达式"><a href="#第一种是使用正则表达式" class="headerlink" title="第一种是使用正则表达式"></a>第一种是使用正则表达式</h3></blockquote>
+<p>这是一把万能钥匙，再大再乱的内容，哪怕是大海捞针，只要告诉我这个针长什么样子，就可以使用正则表达式提取你想要的数据。</p>
+<blockquote>
+<h3 id="第二种使用BeautifulSoup"><a href="#第二种使用BeautifulSoup" class="headerlink" title="第二种使用BeautifulSoup"></a>第二种使用BeautifulSoup</h3></blockquote>
+<p>由于第一种方法相对要复杂一些，我们还有第二种方法，就是使用BeautifulSoup库，我们只需要把原始数据和我们想要的数据都扔个这个BeautifulSoup，然后让它给我们去寻找，这也是一个很不错的方案，但是论灵活性，第二种方法还是略微逊色于第一种方法</p>
+<blockquote>
+<p>第三种方法 双剑合璧</p>
+</blockquote>
+<p>最厉害的一种方法就是把这两种方法结合起来使用，具体怎么结合，后面我们用到了再说。</p>
+<p><strong> 这里我们只需要使用BeautifulSoup就可以很轻松的完成：</strong><br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"> </div><div class="line"><span class="keyword">def</span> parse_html(html):</div><div class="line">    </div><div class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">    movie_list_soup = soup.<span class="keyword">find</span>(<span class="string">'ol'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'grid_view'</span>&#125;)</div><div class="line">    <span class="keyword">for</span> movie_li in movie_list_soup.find_all(<span class="string">'li'</span>):</div><div class="line">        detail = movie_li.<span class="keyword">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'hd'</span>&#125;)</div><div class="line">        movie_name = detail.<span class="keyword">find</span>(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;).<span class="keyword">getText</span>()</div><div class="line">        <span class="keyword">print</span>(movie_name)</div></pre></td></tr></table></figure></p>
+<p>上面的代码就是我们爬虫的核心代码，首先我们导入了BeautifulSoup，然后我们定义了一个parse_html函数，它接受一个HTML源码作为输出，然后我们把我们的获取到的HTML代码丢给通过BeautifulSoup操作丢给soup变量，然后通过BeautifulSoup的find属性，在这一堆HTML源代码中找到我们让它找的标签(class为grid_view的ol标签)，这一步我们的爬虫就能够找到文章列表。下一步是通过循环让它依次遍历每一个li标签内的内容(因为每一个电影都是单独放在一个li标签里面的)。然后在for循环内部进行同样的查找操作，最后再把得到的文本内容(电影名称)打印出来.</p>
+<blockquote>
+<p>到目前为止，我们已经能够获得当前页面的所有电影的名称了，但是我们要的是提取所有页的电影名称，我们人知道看完这一页翻到下一页，但是爬虫很笨，你如果不告诉它怎么翻页，它是不会处理翻页的。<br>一般来说的话因为HTML代码具有很强的规律性，当我们知道网址的格式之后可以把页面跳转写死，因为页面的变化仅仅只是数字的变化，其他的内容几乎不会有改变，这样就可以把链接固定，只改变数字就可以进行翻页处理。这里为了让我们的爬虫更像爬虫，我们让它找到代码导航的下一页的链接，然后进行跳转，也就是说把链接的构造方式告诉我们的爬虫，然后让构造出不同页。以此实现页面跳转。</p>
+</blockquote>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/4.png" alt="6"></p>
+<p>通过把页面拉到最下面，鼠标放在后页的位置点击右键–&gt;检查可以看到上面的图片中的不同的页面的url的区别，每一页都有在一个a标签下，而class为next的span标签里面的link就是当前的url，我们通过从soup中find该属性下的a标签，就可以定位所有的页。最后一页之后就没有a标签了，只需要把next_page作为if的判断条件，就可以遍历所有的页，根据这样的思路我们修改一下上面的代码：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">def</span> parse_html(html):</div><div class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">    movie_list = soup.<span class="keyword">find</span>(<span class="string">'ol'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'grid_view'</span>&#125;)</div><div class="line"> </div><div class="line">    movie_name_list = []</div><div class="line">    <span class="keyword">for</span> movie_li in movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">        detail = movie_li.<span class="keyword">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'hd'</span>&#125;)</div><div class="line">        movie_name = detail.<span class="keyword">find</span>(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;).<span class="keyword">getText</span>()</div><div class="line">        movie_name_list.<span class="keyword">append</span>(movie_name)</div><div class="line">        </div><div class="line">    next_page = soup.<span class="keyword">find</span>(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>, <span class="string">'next'</span>&#125;).<span class="keyword">find</span>(<span class="string">'a'</span>)</div><div class="line">    <span class="keyword">if</span> next_page:</div><div class="line">        <span class="keyword">return</span> movie_name_list, url + next_page[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">return</span> movie_name_list, None</div></pre></td></tr></table></figure>
+<p>上面的代码我们构造了完整的页面链接，我们通过标签获取的内容只是完整链接的一部分，这时候我们就需要加上我们的url构造完整的链接，上面的代码就可以返回一个包含电影名的list，以及下一页的链接，如果到了最后一页就返回None。</p>
+<p>到这里，我们的爬虫以及完成了绝大部分，接下来就只需要把这个list写入文件，把上面的函数组装起来就是一个完整的程序了：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> codecs</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    </div><div class="line">    relurl = url</div><div class="line">    <span class="keyword">with</span> codecs.open(<span class="string">'movies'</span>, <span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> fp:</div><div class="line">        <span class="keyword">while</span> relurl:</div><div class="line">            html = get_html(relurl)</div><div class="line">            movies, relurl = parse_html(html)</div><div class="line">            fp.write(<span class="string">u'&#123;movies&#125;\n'</span>.format(movies=<span class="string">'\n'</span>.join(movies)))</div></pre></td></tr></table></figure></p>
+<p>上面的代码中我们引入了codecs模块，这个模块是为了更方便的处理中文，文件写入的时候通过codecs.open写入并且指定编码格式，这样所有的数据都会进行统一编码，这里把reurl(页面)作为循环条件，当所有的页面遍历完，reurl就会变成None，这时候就可以跳出循环。最后把名称写入名为movies的文件中，整个程序就完成了。</p>
+<blockquote>
+<h2 id="小结部分："><a href="#小结部分：" class="headerlink" title="小结部分："></a>小结部分：</h2></blockquote>
+<h3 id="这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。"><a href="#这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。" class="headerlink" title="这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。"></a>这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。</h3><h3 id="这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等"><a href="#这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等" class="headerlink" title="这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等.."></a>这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等..</h3><h3 id="爬虫的路还很长，这才刚刚开始"><a href="#爬虫的路还很长，这才刚刚开始" class="headerlink" title="爬虫的路还很长，这才刚刚开始"></a>爬虫的路还很长，这才刚刚开始</h3><blockquote>
+<h2 id="完整代码如下："><a href="#完整代码如下：" class="headerlink" title="完整代码如下："></a>完整代码如下：</h2></blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment"># encoding=utf-8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">import</span> codecs</div><div class="line"> </div><div class="line">url = <span class="string">'https://movie.douban.com/top250'</span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html</span><span class="params">(url)</span>:</span></div><div class="line">    date = requests.get(url).content</div><div class="line">    <span class="keyword">return</span> date</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_html</span><span class="params">(html)</span>:</span></div><div class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">    movie_list = soup.find(<span class="string">'ol'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'grid_view'</span>&#125;)</div><div class="line"> </div><div class="line">    movie_name_list = []</div><div class="line">    <span class="keyword">for</span> movie_li <span class="keyword">in</span> movie_list.find_all(<span class="string">'li'</span>):</div><div class="line">        detail = movie_li.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'hd'</span>&#125;)</div><div class="line">        movie_name = detail.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'title'</span>&#125;).getText()</div><div class="line">        movie_name_list.append(movie_name)</div><div class="line"> </div><div class="line">    next_page = soup.find(<span class="string">'span'</span>, attrs=&#123;<span class="string">'class'</span>, <span class="string">'next'</span>&#125;).find(<span class="string">'a'</span>)</div><div class="line">    <span class="keyword">if</span> next_page:</div><div class="line">        <span class="keyword">return</span> movie_name_list, url + next_page[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">return</span> movie_name_list, <span class="keyword">None</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"> </div><div class="line">    relurl = url</div><div class="line">    <span class="keyword">with</span> codecs.open(<span class="string">'movies'</span>, <span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> fp:</div><div class="line">        <span class="keyword">while</span> relurl:</div><div class="line">            html = get_html(relurl)</div><div class="line">            movies, relurl = parse_html(html)</div><div class="line">            fp.write(<span class="string">u'&#123;movies&#125;\n'</span>.format(movies=<span class="string">'\n'</span>.join(movies)))</div><div class="line"> </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>所有的电影名称就安静的躺在了我们的电脑里面了。</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/5.png" alt="7"></p>
+<blockquote>
+<p>文章如有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/08/29/爬取豆瓣电影TOP-250/" title="爬取豆瓣电影TOP 250">http://www.bbiao.me/2017/08/29/爬取豆瓣电影TOP-250/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/08/使用python制作词云/" rel="next" title="使用python制作词云">
+                <i class="fa fa-chevron-left"></i> 使用python制作词云
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/30/爬虫神器-——requests/" rel="prev" title="爬虫神器 ——requests">
+                爬虫神器 ——requests <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提"><span class="nav-number">1.</span> <span class="nav-text">前提</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K-15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。"><span class="nav-number">1.1.</span> <span class="nav-text">随着大数据的爆发，数据分析越来越火。数据收集就变得十分重要，爬虫就是为数据收集而生的，Python刚好又有很强大的爬虫相关的库。Python在爬虫这方面是十分强大的。市面上一般的Python爬虫工程师工资每月都在10K~15K之间，而懂得一些框架的资深工程师工资都在30K以上，所以做爬虫这方面还是十分吃香的。万事开头难，只有迈开第一步，后面才能够大步往前走，博主也是初入爬虫这一行，并且打算深入学习它，一步一步往下走吧。说再多都没有用，想学好计算机相关的东西，光靠说是没有用到，手上功夫要跟上，不打代码是学不会计算机的。只有不段的打代码，代码量积累到一定程度之后，由一个量到质的变化。今天，就开始一个简单爬虫项目来对爬虫有一个初步的认识。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境以及相关的库"><span class="nav-number">2.</span> <span class="nav-text">环境以及相关的库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统：-Ubuntu-16-04"><span class="nav-number">2.1.</span> <span class="nav-text">系统： Ubuntu 16.04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python环境：python-3-5"><span class="nav-number">2.2.</span> <span class="nav-text">Python环境：python 3.5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#库：requests，BeautifulSoup，codecs"><span class="nav-number">2.3.</span> <span class="nav-text">库：requests，BeautifulSoup，codecs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正题部分"><span class="nav-number">3.</span> <span class="nav-text">正题部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里我们爬取豆瓣电影Top-250的电影名称，网址是：https-movie-douban-com-top250"><span class="nav-number">3.1.</span> <span class="nav-text">这里我们爬取豆瓣电影Top 250的电影名称，网址是：https://movie.douban.com/top250</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。"><span class="nav-number">3.2.</span> <span class="nav-text">首先我们要对网页的结构进行分析，爬虫很笨的，你必须清清楚楚的告诉它每一步该干什么，它才能知道做什么，所以我们先来分析网页结构，找到我们想要的内容，然后告诉爬虫让它给我们提取出来，这就是我们写爬虫的目的。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#到目前为止，我们得到的内容有："><span class="nav-number">3.3.</span> <span class="nav-text">到目前为止，我们得到的内容有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种是使用正则表达式"><span class="nav-number">3.4.</span> <span class="nav-text">第一种是使用正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种使用BeautifulSoup"><span class="nav-number">3.5.</span> <span class="nav-text">第二种使用BeautifulSoup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结部分："><span class="nav-number">4.</span> <span class="nav-text">小结部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。"><span class="nav-number">4.1.</span> <span class="nav-text">这是我们写的一个简单的爬虫，麻雀虽小，五脏俱全。这里我们简单的使用了BeautifulSoup的使用，其中关于find的使用我在这里介绍对你用处也不大，真的想要掌握还需要自己去练习，不断地敲代码巩固才是王道。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等"><span class="nav-number">4.2.</span> <span class="nav-text">这里我们没有遇到阻碍，如果目标站点加入了反爬虫机制，我们的爬虫就需要构造UA，以及面对更加复杂的网页结构，使用数据库来存储我们爬取的内容，等等..</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#爬虫的路还很长，这才刚刚开始"><span class="nav-number">4.3.</span> <span class="nav-text">爬虫的路还很长，这才刚刚开始</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码如下："><span class="nav-number">5.</span> <span class="nav-text">完整代码如下：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

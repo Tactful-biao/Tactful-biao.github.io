@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="爬虫,requests," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="今天我们来介绍一下requests库，这可是python在爬虫方面的神器，有了它在使用python进行爬虫方面的操作的时候简直不能太爽。requests号称“HTTP for Human”，它的功能十分强大，而它的操作却十分简单。  python提供的http库有很多，包括自带的urllib和urllib2都提供了强大的HTTP支持，但是API借口太难用了，requests就简单很多。  req">
+<meta name="keywords" content="爬虫,requests">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫神器 ——requests">
+<meta property="og:url" content="http://www.bbiao.me/2017/08/30/爬虫神器-——requests/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="今天我们来介绍一下requests库，这可是python在爬虫方面的神器，有了它在使用python进行爬虫方面的操作的时候简直不能太爽。requests号称“HTTP for Human”，它的功能十分强大，而它的操作却十分简单。  python提供的http库有很多，包括自带的urllib和urllib2都提供了强大的HTTP支持，但是API借口太难用了，requests就简单很多。  req">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-14T12:16:11.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫神器 ——requests">
+<meta name="twitter:description" content="今天我们来介绍一下requests库，这可是python在爬虫方面的神器，有了它在使用python进行爬虫方面的操作的时候简直不能太爽。requests号称“HTTP for Human”，它的功能十分强大，而它的操作却十分简单。  python提供的http库有很多，包括自带的urllib和urllib2都提供了强大的HTTP支持，但是API借口太难用了，requests就简单很多。  req">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/08/30/爬虫神器-——requests/"/>
+
+
+
+
+
+  <title>爬虫神器 ——requests | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/08/30/爬虫神器-——requests/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">爬虫神器 ——requests</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-30T19:45:48+08:00">
+                2017-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/08/30/爬虫神器-——requests/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/08/30/爬虫神器-——requests/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>今天我们来介绍一下requests库，这可是python在爬虫方面的神器，有了它在使用python进行爬虫方面的操作的时候简直不能太爽。requests号称“HTTP for Human”，它的功能十分强大，而它的操作却十分简单。</p>
+</blockquote>
+<p>python提供的http库有很多，包括自带的urllib和urllib2都提供了强大的HTTP支持，但是API借口太难用了，requests就简单很多。</p>
+<blockquote>
+<h2 id="requests库安装"><a href="#requests库安装" class="headerlink" title="requests库安装"></a>requests库安装</h2></blockquote>
+<p>可以使用下面的方法进行安装：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip <span class="keyword">install</span> requests</div></pre></td></tr></table></figure>
+<blockquote>
+<h2 id="requests的使用方法："><a href="#requests的使用方法：" class="headerlink" title="requests的使用方法："></a>requests的使用方法：</h2></blockquote>
+<h3 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">r = request.get(<span class="string">'http://bbiao.me'</span>)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(type(r)</span></span>)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.status_code)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.encoding)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.coolies)</span></span></div></pre></td></tr></table></figure>
+<p>上面的代码运行后得到如下结果：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="section">&lt;class 'requests.models.Response'&gt;</span></div><div class="line"><span class="attribute">200</span></div><div class="line"><span class="attribute">UTF</span>-8</div><div class="line"><span class="section">&lt;RequestsCookieJar[]&gt;</span></div></pre></td></tr></table></figure>
+<p>只需要使用上面的代码就可以获得一个网址的类型、状态码、编码、cookies等内容，是不是很方便呢？后面还有更方便的呢。</p>
+<p>除了get请求，基本请求有以下几种：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">r</span> = requests.post(<span class="string">'http://httpbin.org/post'</span>)</div><div class="line"><span class="attr">r</span> = requests.put(<span class="string">'http://httpbin.org/put'</span>)</div><div class="line"><span class="attr">r</span> = requests.delete(<span class="string">'http://httpbin.org/delete'</span>)</div><div class="line"><span class="attr">r</span> = requests.hrad(<span class="string">'http://httpbin.orh/head'</span>)</div><div class="line"><span class="attr">r</span> = request.options(<span class="string">"http://httpbin.org/get"</span>)</div></pre></td></tr></table></figure></p>
+<p>针对不同的请求同样只需要一句话就可以。</p>
+<p>在爬虫的使用过程中最常用的就是get请求方法，当然GET请求方法就使用get方法。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">r</span> = requests.get(<span class="string">'http://bbiao.me'</span>)</div></pre></td></tr></table></figure>
+<p>如果请求的时候想加上参数，可以使用params参数：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>, <span class="string">'value2'</span>&#125;</div><div class="line">r = requests.<span class="built_in">get</span>(<span class="string">'http://bbiao.me/get'</span>, params=payload)</div><div class="line"><span class="built_in">print</span>(r.url)</div></pre></td></tr></table></figure>
+<p>运行的话请求的url就是：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span><span class="comment">//bbiao.me/get?key2=value2&amp;key1=value1</span></div></pre></td></tr></table></figure>
+<p>当我们写爬虫的时候有时候需要我们构造请求，有很多的参数需要我们构造，这时候我们就可以把这些参数写入一个列表或者json文件里面：<br>例如写一个json文件命名为a.json，内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="string">"foo"</span>, <span class="string">"bar"</span>, &#123;</div><div class="line">    <span class="attr">"foo"</span>: <span class="string">"bar"</span></div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<p>使用requests进行解析：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">r = requests.<span class="builtin-name">get</span>(<span class="string">"a.json"</span>)</div><div class="line"><span class="builtin-name">print</span>(r.text)</div><div class="line"><span class="builtin-name">print</span>(r.json())</div></pre></td></tr></table></figure>
+<p>运行之后会看到如下结果(其中一个是直接输出内容，另外一个方法是利用json()方法解析)：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[<span class="string">"foo"</span>, <span class="string">"bar"</span>, &#123;</div><div class="line"> <span class="string">"foo"</span>: <span class="string">"bar"</span></div><div class="line"> &#125;]</div><div class="line"> [<span class="string">u'foo'</span>, <span class="string">u'bar'</span>, &#123;<span class="string">u'foo'</span>: <span class="string">u'bar'</span>&#125;]</div></pre></td></tr></table></figure>
+<p>在面对反爬虫机制的时候，我们可能需要构造请求头部，如果想要想要传入headers，可以传入headers参数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">payload = &#123;<span class="symbol">'key</span>1': <span class="symbol">'value</span>1', <span class="symbol">'key</span>2':<span class="symbol">'value</span>2'&#125;</div><div class="line">headers = &#123;<span class="symbol">'content</span>-<span class="class"><span class="keyword">type</span>'</span>: <span class="symbol">'application</span>/json'&#125;</div><div class="line">r = requests.get(<span class="symbol">'http</span>:<span class="comment">//httpbin.org/get', params=payload, headers=headers)</span></div><div class="line">print(r.url)</div></pre></td></tr></table></figure>
+<blockquote>
+<h3 id="基本的post请求"><a href="#基本的post请求" class="headerlink" title="基本的post请求"></a>基本的post请求</h3></blockquote>
+<p>对于post请求来说，我们一般需要为它增加一些参数，最基本的传参方法可以利用data这个参数：</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>:<span class="string">'value2'</span>&#125;</div><div class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>,<span class="keyword">data</span>=payload)</div><div class="line">print(r.<span class="keyword">text</span>)</div></pre></td></tr></table></figure>
+<p>运行之后可以得到如下内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"args"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"data"</span>: <span class="string">""</span>, </div><div class="line">  <span class="attr">"files"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"form"</span>: &#123;</div><div class="line">    <span class="attr">"key1"</span>: <span class="string">"value1"</span>, </div><div class="line">    <span class="attr">"key2"</span>: <span class="string">"value2"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"headers"</span>: &#123;</div><div class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="attr">"Connection"</span>: <span class="string">"close"</span>, </div><div class="line">    <span class="attr">"Content-Length"</span>: <span class="string">"23"</span>, </div><div class="line">    <span class="attr">"Content-Type"</span>: <span class="string">"application/x-www-form-urlencoded"</span>, </div><div class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"python-requests/2.18.4"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"json"</span>: <span class="literal">null</span>,  </div><div class="line">  <span class="attr">"url"</span>: <span class="string">"http://httpbin.org/post"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到参数已经上传成功了，然后服务器返回了我们传的数据</p>
+<p>如果我们想要传入json格式的数据，可以使用json.dumps()方法把表单数据序列化：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> json</div><div class="line"> </div><div class="line"><span class="title">url</span> = <span class="string">"http://httpbin.org/post"</span></div><div class="line"><span class="title">payload</span> = &#123;'some': '<span class="class"><span class="keyword">data</span>'&#125;</span></div><div class="line"><span class="title">r</span> = requests.post(url, <span class="class"><span class="keyword">data</span>=json.dumps(<span class="title">payload</span>))</span></div><div class="line"><span class="title">print</span>(r.text)</div></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"args"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"data"</span>: <span class="string">"&#123;\"some\": \"data\"&#125;"</span>, </div><div class="line">  <span class="attr">"files"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"form"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"headers"</span>: &#123;</div><div class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="attr">"Connection"</span>: <span class="string">"close"</span>, </div><div class="line">    <span class="attr">"Content-Length"</span>: <span class="string">"16"</span>, </div><div class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"python-requests/2.18.4"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"json"</span>: &#123;</div><div class="line">    <span class="attr">"some"</span>: <span class="string">"data"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"url"</span>: <span class="string">"http://httpbin.org/post"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的方法，我们可以传入json格式的数据，如果想要上传文件可以使用files参数，新建一个a.txt的文件，内容写上hello word！</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">url = <span class="string">"http://httpbin.org/post"</span></div><div class="line"><span class="keyword">files</span> = &#123;<span class="string">'file'</span> :<span class="keyword">open</span>(<span class="string">'a.txt'</span>, <span class="string">'rb'</span>)&#125;</div><div class="line">r = requests.post(url, <span class="keyword">files</span>=<span class="keyword">files</span>)</div><div class="line"><span class="keyword">print</span>(r.text)</div></pre></td></tr></table></figure>
+<p>运行之后可以看到如下结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"args"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"data"</span>: <span class="string">""</span>, </div><div class="line">  <span class="attr">"files"</span>: &#123;</div><div class="line">    <span class="attr">"file"</span>: <span class="string">"hello word!\n"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"form"</span>: &#123;&#125;, </div><div class="line">  <span class="attr">"headers"</span>: &#123;</div><div class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="attr">"Connection"</span>: <span class="string">"close"</span>, </div><div class="line">    <span class="attr">"Content-Length"</span>: <span class="string">"153"</span>, </div><div class="line">    <span class="attr">"Content-Type"</span>: <span class="string">"multipart/form-data; boundary=91d3dfe3cd4e4f8094644cee3445b4eb"</span>, </div><div class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"python-requests/2.18.4"</span></div><div class="line">  &#125;, </div><div class="line">  <span class="attr">"json"</span>: <span class="literal">null</span>, </div><div class="line">  <span class="attr">"url"</span>: <span class="string">"http://httpbin.org/post"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过结果可以看到我们上传的file内容等等，说明我们的文件已经上传成功了。<br>另外requests是支持流式上传的，这允许你发送大的数据流或文件而无需先把它们读入内存。要使用流式上传，仅需要你的请求提供一个类文件对象即可：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">'massive-body'</span>) <span class="keyword">as</span> f:</div><div class="line">    requests.<span class="built_in">post</span>(<span class="string">'http://some.url/streamed'</span>, data=f)</div></pre></td></tr></table></figure>
+<p>这是一个非常方便的功能。</p>
+<blockquote>
+<h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h3></blockquote>
+<p>什么是cookies这里就不介绍了，不懂的自己去查一下。<br>如果一个响应中包含了cookies，那么我们可以利用cookies变量拿到</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">url = <span class="string">"http:example.com"</span></div><div class="line">r = requests.get(url)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.cookies)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.cookies[<span class="string">'example_cookie_name'</span>])</span></span></div></pre></td></tr></table></figure>
+<p>上面的代码只是个样例，可以用cookies变量来得到站点的cookies，另外可以利用cookies变量向服务器发送cookies信息</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">url = <span class="string">"http://httpbin.org/cookies"</span></div><div class="line">cookies = dict(<span class="attribute">cookies_are</span>=<span class="string">'working'</span>)</div><div class="line">r = requests.<span class="builtin-name">get</span>(url,  <span class="attribute">cookies</span>=cookies)</div><div class="line"><span class="builtin-name">print</span>(r.text)</div></pre></td></tr></table></figure>
+<p>运行之后可以得到如下结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"cookies"</span>: &#123;</div><div class="line">    <span class="attr">"cookies_are"</span>: <span class="string">"working"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到已经向服务器发送了cookies。</p>
+<blockquote>
+<h3 id="超时配置"><a href="#超时配置" class="headerlink" title="超时配置"></a>超时配置</h3></blockquote>
+<p>可以通过timeout变量来配置最大请求时间<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requests.<span class="built_in">get</span>(<span class="string">'http://githum.com'</span>, timeout=<span class="number">0.001</span>)</div></pre></td></tr></table></figure></p>
+<p>需要额外注意的是这个timeout不是说你设置了你的访问就会变快，这个没有一毛钱的关系，timeout仅对链接过程有效，与响应体的下载无关，也就是说，这个时间只是限制请求时间，返回的内容有多大该花多少时间还是多少时间。</p>
+<blockquote>
+<h3 id="会话对象"><a href="#会话对象" class="headerlink" title="会话对象"></a>会话对象</h3></blockquote>
+<p>在上面的请求中，每次请求都相当于发起了一个新的请求。也就是相当于我们每个请求都用了不同的浏览器单独打开的效果。也就是它并不是指的一个会话，即使请求相同的网址，例如：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">requests.<span class="builtin-name">get</span>(<span class="string">"http://httpbin.org/cookies/set/sessioncookie/123456789"</span>)</div><div class="line">r = requests.<span class="builtin-name">get</span>(<span class="string">"http://httpbin.org/cookies"</span>)</div><div class="line"><span class="builtin-name">print</span>(r.text)</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"cookies"</span>: &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从返回的结果可以看到，这不在一个会话中，这种情况就好比，我们登录知乎，来到知乎主页，然后我们点击一篇文章又让我们登录一次，如果不能保持会话就会导致我们没进行一步操作都会让我们重新输入密码进行身份验证，这显然不符合逻辑和用户体验，所以建立持久会话是必要的，那么该怎样建立持久会话呢？</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">s = requests.Session()</div><div class="line">s .<span class="builtin-name">get</span>(<span class="string">"http://httpbin.org/cookies/set/sessioncookie/123456789"</span>)</div><div class="line">r = s.<span class="builtin-name">get</span>(<span class="string">"http://httpbin.org/cookies"</span>)</div><div class="line"><span class="builtin-name">print</span>(r.text)</div></pre></td></tr></table></figure>
+<p>在这里我们同样请求了两次，一次是设置cookies，一次是获得cookies</p>
+<p>运行结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"cookies"</span>: &#123;</div><div class="line">    <span class="attr">"sessioncookie"</span>: <span class="string">"123456789"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，我们成功获取到cookies了，这就是建立一个会话的作用和方法，体会一下。</p>
+<p>既然会话是全局变量，那么我们肯定可以用来全局的配置。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">s = requests.Session()</div><div class="line">s<span class="selector-class">.headers</span><span class="selector-class">.update</span>(&#123;<span class="string">'x-text'</span>: <span class="string">'true'</span>&#125;)</div><div class="line">r = s.get(<span class="string">'http://httpbin.org/headers'</span>, headers=&#123;<span class="string">'x-text2'</span> :<span class="string">'true'</span>&#125;)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.text)</span></span></div></pre></td></tr></table></figure>
+<p>通过s.headers.update方法设置了headers的变量。然后我们又在请求中设置一个headers，那么会出现什么结果呢？</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"headers"</span>: &#123;</div><div class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="attr">"Connection"</span>: <span class="string">"close"</span>, </div><div class="line">    <span class="attr">"Cookie"</span>: <span class="string">"sessioncookie=123456789"</span>, </div><div class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"python-requests/2.18.4"</span>, </div><div class="line">    <span class="attr">"X-Text"</span>: <span class="string">"true"</span>, </div><div class="line">    <span class="attr">"X-Text2"</span>: <span class="string">"true"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到两个变量都传送过去了。</p>
+<p>如果使用GET方法传的headers ，结果会一样吗？</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">r</span> = s.get(<span class="string">'http://httpbin.org/headers'</span>, headers=&#123;<span class="string">'x-text'</span>: <span class="string">'true'</span>&#125;)</div></pre></td></tr></table></figure>
+<p>运行结果可以看到，它会覆盖掉全局的配置：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"headers"</span>: &#123;</div><div class="line">    <span class="attr">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="attr">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="attr">"Connection"</span>: <span class="string">"close"</span>, </div><div class="line">    <span class="attr">"Cookie"</span>: <span class="string">"sessioncookie=123456789"</span>, </div><div class="line">    <span class="attr">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="attr">"User-Agent"</span>: <span class="string">"python-requests/2.18.4"</span>, </div><div class="line">    <span class="attr">"X-Text"</span>: <span class="string">"true"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果你不想要全局配置中的变量了，可以把他对应的值设置为None，就可以了：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">r</span> = s.get(<span class="string">'http://httpbin.org/headers'</span>, headers=&#123;<span class="string">'x-test'</span>: None&#125;)</div></pre></td></tr></table></figure></p>
+<p>运行结果：</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  <span class="string">"headers"</span>: &#123;</div><div class="line">    <span class="string">"Accept"</span>: <span class="string">"*/*"</span>, </div><div class="line">    <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip, deflate"</span>, </div><div class="line">    <span class="string">"Host"</span>: <span class="string">"httpbin.org"</span>, </div><div class="line">    <span class="string">"User-Agent"</span>: <span class="string">"python-requests/2.9.1"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上就是session会话的基本用法。</p>
+<blockquote>
+<h3 id="SSL-证书验证"><a href="#SSL-证书验证" class="headerlink" title="SSL 证书验证"></a>SSL 证书验证</h3></blockquote>
+<p>现在很多网址都是以https开头的，requests可以为https请求验证SSL证书，就像web浏览器一样。想要检查某个主机的SSL证书，可以使用verify参数</p>
+<p>我们知道12306的证书无效了，我们测试一下：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">r = requests.<span class="built_in">get</span>(<span class="string">'https://kyfw.12306.cn/otn/'</span>, verify=True)</div><div class="line"><span class="built_in">print</span>(r.<span class="built_in">text</span>)</div></pre></td></tr></table></figure>
+<p>结果可以看出来它果然出问题了：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requests.exceptions.SSLError: HTTPSConnectionPool(<span class="attribute">host</span>=<span class="string">'kyfw.12306.cn'</span>, <span class="attribute">port</span>=443)</div></pre></td></tr></table></figure></p>
+<p>我们再来测试一下github的<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">r = requests.<span class="built_in">get</span>(<span class="string">'https://github.com'</span>, verify=True)</div><div class="line"><span class="built_in">print</span>(r.<span class="built_in">text</span>)</div></pre></td></tr></table></figure></p>
+<p>可以正常访问，返回的都是HTML代码，太多了，我就不贴出来了。</p>
+<p>12306的网址证书无效，我们只需要把verify设置为False就可以跳过验证了：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">r = requests.<span class="built_in">get</span>(<span class="string">'https://kyfw.12306.cn/otn/'</span>, verify=False)</div><div class="line"><span class="built_in">print</span>(r.<span class="built_in">text</span>)</div></pre></td></tr></table></figure>
+<p>就可以正常请求返回的也是HTML代码，在默认情况下verify是True，但是就跟上面的12306的网站，就可以手动更改一下这个变量。</p>
+<blockquote>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3></blockquote>
+<p>有些时候，我们在写爬虫程序的时候，有些网址对请求有限制，如果一个IP频繁的访问或者发送请求，这个网站就可能把你的ip给封掉，这个时候为了防止这种事情的发生，我们就可以使用代理：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line"> </div><div class="line">proxies = &#123;</div><div class="line">   <span class="string">"https"</span>: <span class="string">"http://41.118.132.69:4433"</span></div><div class="line">&#125;</div><div class="line">r = requests.post(<span class="string">"http://httpbin.org/post"</span>, proxies=proxies)</div><div class="line">print(r.text)</div></pre></td></tr></table></figure>
+<p>也可以通过环境变量HTTP_PROXY和HTTPS_PROXY来配置代理：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="builtin-name">export</span> <span class="attribute">HTTP_PROXY</span>=<span class="string">"http://10.10.1.10:3128"</span></div><div class="line"><span class="builtin-name">export</span> <span class="attribute">HTTPS_PROXY</span>=<span class="string">"http://10.10.1.10:1080"</span></div></pre></td></tr></table></figure></p>
+<p>通过以上方式，可以方便地设置代理。</p>
+<blockquote>
+<h3 id="官方文档API"><a href="#官方文档API" class="headerlink" title="官方文档API"></a>官方文档API</h3></blockquote>
+<p>上面简单介绍了requests中最常用的参数，如果还需要更多的了解，可以参考<a href="http://docs.python-requests.org/en/master/api/" target="_blank" rel="external">官方文档API</a></p>
+<blockquote>
+<p>文章如有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/08/30/爬虫神器-——requests/" title="爬虫神器 ——requests">http://www.bbiao.me/2017/08/30/爬虫神器-——requests/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/requests/" rel="tag"># requests</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/29/爬取豆瓣电影TOP-250/" rel="next" title="爬取豆瓣电影TOP 250">
+                <i class="fa fa-chevron-left"></i> 爬取豆瓣电影TOP 250
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/31/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#requests库安装"><span class="nav-number">1.</span> <span class="nav-text">requests库安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests的使用方法："><span class="nav-number">2.</span> <span class="nav-text">requests的使用方法：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送请求"><span class="nav-number">2.1.</span> <span class="nav-text">发送请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本的post请求"><span class="nav-number">2.2.</span> <span class="nav-text">基本的post请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookies"><span class="nav-number">2.3.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时配置"><span class="nav-number">2.4.</span> <span class="nav-text">超时配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话对象"><span class="nav-number">2.5.</span> <span class="nav-text">会话对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-证书验证"><span class="nav-number">2.6.</span> <span class="nav-text">SSL 证书验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理"><span class="nav-number">2.7.</span> <span class="nav-text">代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档API"><span class="nav-number">2.8.</span> <span class="nav-text">官方文档API</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

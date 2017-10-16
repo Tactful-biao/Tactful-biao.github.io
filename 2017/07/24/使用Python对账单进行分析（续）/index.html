@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,Matplotlib,数据分析," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前两天给自己挖过坑之后，今天就来填上。上篇文章《使用Python对账单进行分析》，这篇文章里面写了使用python对账单进行分析，并画出了饼图。这里我们再进一步分析，饼图可以清晰的看出不同种类的消费所占的比例，但是具体的数额不是很清晰。这里我们使用柱状图来对账单进行进一步的分析。数据还是使用的上篇文章所给数据。 要用到的库函数  json库：json模块是一个非常好用的模块，上篇文章也对json">
+<meta name="keywords" content="Python,Matplotlib,数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Python对账单进行分析（续）">
+<meta property="og:url" content="http://www.bbiao.me/2017/07/24/使用Python对账单进行分析（续）/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="前两天给自己挖过坑之后，今天就来填上。上篇文章《使用Python对账单进行分析》，这篇文章里面写了使用python对账单进行分析，并画出了饼图。这里我们再进一步分析，饼图可以清晰的看出不同种类的消费所占的比例，但是具体的数额不是很清晰。这里我们使用柱状图来对账单进行进一步的分析。数据还是使用的上篇文章所给数据。 要用到的库函数  json库：json模块是一个非常好用的模块，上篇文章也对json">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://othwobwlu.bkt.clouddn.com/1.PNG">
+<meta property="og:image" content="http://othwobwlu.bkt.clouddn.com/%E6%9F%B1%E7%8A%B6%E5%9B%BE.PNG">
+<meta property="og:image" content="http://othwobwlu.bkt.clouddn.com/%E6%9C%88%E4%BB%BD%E7%BB%9F%E8%AE%A1%E5%9B%BE.png">
+<meta property="og:updated_time" content="2017-10-14T11:38:48.616Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Python对账单进行分析（续）">
+<meta name="twitter:description" content="前两天给自己挖过坑之后，今天就来填上。上篇文章《使用Python对账单进行分析》，这篇文章里面写了使用python对账单进行分析，并画出了饼图。这里我们再进一步分析，饼图可以清晰的看出不同种类的消费所占的比例，但是具体的数额不是很清晰。这里我们使用柱状图来对账单进行进一步的分析。数据还是使用的上篇文章所给数据。 要用到的库函数  json库：json模块是一个非常好用的模块，上篇文章也对json">
+<meta name="twitter:image" content="http://othwobwlu.bkt.clouddn.com/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/07/24/使用Python对账单进行分析（续）/"/>
+
+
+
+
+
+  <title>使用Python对账单进行分析（续） | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/07/24/使用Python对账单进行分析（续）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用Python对账单进行分析（续）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T19:20:30+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/24/使用Python对账单进行分析（续）/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/24/使用Python对账单进行分析（续）/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前两天给自己挖过坑之后，今天就来填上。上篇文章《<a href="http://bbiao.me/2017/07/23/%E4%BD%BF%E7%94%A8Python%E5%AF%B9%E8%B4%A6%E5%8D%95%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90/" target="_blank" rel="external">使用Python对账单进行分析</a>》，这篇文章里面写了使用python对账单进行分析，并画出了饼图。<br>这里我们再进一步分析，饼图可以清晰的看出不同种类的消费所占的比例，但是具体的数额不是很清晰。这里我们使用柱状图来对账单进行进一步的分析。<br>数据还是使用的上篇文章所给数据。</p>
+<h2 id="要用到的库函数"><a href="#要用到的库函数" class="headerlink" title="要用到的库函数"></a>要用到的库函数</h2></blockquote>
+<ol>
+<li>json库：<a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p02_read-write_json_data.html" target="_blank" rel="external">json模块</a>是一个非常好用的模块，上篇文章也对json模块进行了简单的介绍，这里就不再多说了。</li>
+<li>numpy库：NumPy是Python语言的一个扩充程序库。支持高级大量的维度数组与矩阵运算，此外也针对数组运算提供大量的数学函数库。可以说numpy就是一个专门用来做数学的一个函数库。</li>
+<li>matplotlib模块：是一个python专门用来画图的库函数（上篇文章有介绍）</li>
+</ol>
+<blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2></blockquote>
+<p>可以看到只要涉及到编程的文章，我大部分会把思路列出了，只有思路清晰，才能够一步步实现目标。<br>这里我们要画柱状图，当然这里和我们上篇文章里画饼图的思路差不多。</p>
+<ul>
+<li>第一步：对数据进行处理</li>
+<li>第二步：把数据读取进来</li>
+<li>第三步，对数据进行分析</li>
+<li>第四步：画图</li>
+</ul>
+<p>有了思路，下面就可以一步一步的进行实现了。</p>
+<blockquote>
+<h3 id="前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析："><a href="#前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析：" class="headerlink" title="前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析："></a>前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析：</h3></blockquote>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">path = <span class="string">'D:/交流账单.txt'</span></div><div class="line">records = [json.loads(<span class="built_in">line</span>) <span class="keyword">for</span> <span class="built_in">line</span> <span class="keyword">in</span> <span class="built_in">open</span>(path)]</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">705</span>):</div><div class="line">    <span class="keyword">items</span> = records[i]</div><div class="line">    <span class="keyword">if</span> <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'餐饮'</span>:</div><div class="line">        food += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'花钱'</span>:</div><div class="line">        spend_money += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'交通'</span>:</div><div class="line">        traffic += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'水果'</span>:</div><div class="line">        fruit += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'电影'</span>:</div><div class="line">        movies += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'话费'</span>:</div><div class="line">        bill += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'零食'</span>:</div><div class="line">        snacks += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'服饰'</span>:</div><div class="line">        clothes += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'日用品'</span>:</div><div class="line">        daily_necessities += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div></pre></td></tr></table></figure>
+<p>上面通过json.loads()把账单一行一行的读取进来并放在python的列表中，并把这个列表赋值给records变量。<br>这样我们就可以通过records[i]来访问具体的行：</p>
+<p><img src="http://othwobwlu.bkt.clouddn.com/1.PNG" alt="3"></p>
+<p>然后通过一个简单的循环，把每一行都通过遍历的方式进行访问。<br>我们首先是按照账目分类进行统计，如果该行的“账目分类”是“餐饮”，我们就把该行的账目金额进行累加。<br>其他分类同理，所以我们需要把每一行的“账目分类”单拿出来。<br>我们使用变量 items[‘账目分类’] ，把records[i]下的“账目分类”单拿出来。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'餐饮'</span>:</div><div class="line">        food += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div></pre></td></tr></table></figure>
+<p>如果账目分类是“餐饮”，那么该行的“账目金额”就进行累加，并赋值给food变量。使用float是把字符型强制转换成浮点型，读进来的是文本内容，不进行转换是没办法计算的。<br>其他的类型与这个同理。</p>
+<blockquote>
+<p>第三步的分析，我们都做了哪些东西：</p>
+</blockquote>
+<ul>
+<li><p>首先把数据按行读取赋给records，并且把每一行的“账目分类”通过items进行访问.</p>
+</li>
+<li><p>然后使用for循环对没一行的数据进行统计，如果它属于某一个分类，就把它的“账目金额”累加到这个分类里面。</p>
+</li>
+<li>最终会把所有的分类的具体金额统计出来，下一步就是使用这里统计的数据进行画图。</li>
+</ul>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] </div><div class="line"># plt.rcParams[<span class="string">'axes.unicode_minus'</span>]=False   #如果有负号，加上这一行代码</div><div class="line"><span class="keyword">size</span> = <span class="number">9</span></div><div class="line">x = np.arange(<span class="keyword">size</span>)</div><div class="line">labels = [<span class="string">'餐饮'</span>,<span class="string">'其他'</span>,<span class="string">'交通'</span>,<span class="string">'电影'</span>,<span class="string">'话费'</span>,<span class="string">'零食'</span>,<span class="string">'水果'</span>,<span class="string">'服饰'</span>,<span class="string">'日用品'</span>]</div><div class="line">y = [<span class="keyword">abs</span>(<span class="keyword">int</span>(food)),<span class="keyword">abs</span>(<span class="keyword">int</span>(spend_money)),<span class="keyword">abs</span>(<span class="keyword">int</span>(traffic)),<span class="keyword">abs</span>(<span class="keyword">int</span>(movies)),<span class="keyword">abs</span>(<span class="keyword">int</span>(bill)),<span class="keyword">abs</span>(<span class="keyword">int</span>(snacks)),<span class="keyword">abs</span>(<span class="keyword">int</span>(fruit)),<span class="keyword">abs</span>(<span class="keyword">int</span>(clothes)),<span class="keyword">abs</span>(<span class="keyword">int</span>(daily_necessities))]</div><div class="line">colors = [<span class="string">'blue'</span>,<span class="string">'green'</span>,<span class="string">'yellowgreen'</span>,<span class="string">'gold'</span>,<span class="string">'lightskyblue'</span>,<span class="string">'lightcoral'</span>,<span class="string">'lightgray'</span>,<span class="string">'lime'</span>,<span class="string">'skyblue'</span>]</div><div class="line">plt.title(u<span class="string">'交流消费账单统计图\n'</span>)</div><div class="line">plt.bar(range(len(y)),y,width=<span class="number">0.8</span>,tick_label=labels,<span class="keyword">color</span>=colors)</div><div class="line"><span class="keyword">for</span> a,b <span class="keyword">in</span> zip(x,y):</div><div class="line">    plt.<span class="keyword">text</span>(a, b+<span class="number">0.8</span>, <span class="string">'%.0f元'</span> %b, ha=<span class="string">'center'</span>, va = <span class="string">'bottom'</span>, fontsize=<span class="number">10</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>matplotlib默认是不支持中文的，如果想使用中文的标签，需要加上第一行行代码。</p>
+</blockquote>
+<hr>
+<blockquote>
+<h3 id="画柱状图需要的一些参数"><a href="#画柱状图需要的一些参数" class="headerlink" title="画柱状图需要的一些参数"></a>画柱状图需要的一些参数</h3></blockquote>
+<p>size ： 设置有几个柱状，就是你分类的个数<br>labels :标签，显示在柱状图下面<br>y ：这个y是变量，可以换成其他字母，但是一般用y表示纵轴范围，x表示横轴范围<br>title :图的标题<br>color :柱状的颜色，也可以使用’rgb’来表示“red”，‘green’，‘blue’<br>bar ：柱状图的函数(x的范围,y的范围,柱状图的宽度，使用自定义的标签，使用自定义的颜色)，如果是饼图的话就是pie。<br>zip()函数：这个是用来在柱状图上面添加文字信息的，比如把具体的数额显示在柱状图上方，其中plt.text()就是自定义内容，(a,b+0.8, ‘%.0f元’ %b, ha=’center’, va = ‘bottom’, fontsize=10)表示在x轴每个柱状图上方上移0.8的位置处，添加上具体的数据，居中显示，字号是10）<br>show :如果想让图显示出来，需要加上show</p>
+<p>附上效果图：<br><img src="http://othwobwlu.bkt.clouddn.com/%E6%9F%B1%E7%8A%B6%E5%9B%BE.PNG" alt="4"></p>
+<blockquote>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3></blockquote>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env <span class="keyword">python3</span></div><div class="line"># -*- codin<span class="variable">g:utf</span>-<span class="number">8</span> -*-</div><div class="line"> </div><div class="line">import json</div><div class="line">import numpy <span class="keyword">as</span> np</div><div class="line">import matplotlib.pyplot <span class="keyword">as</span> plt </div><div class="line"> </div><div class="line">food = spend_money = traffic = fruit = movies = bill = snacks = clothes = daily_necessities = <span class="number">0</span></div><div class="line"> </div><div class="line">path = <span class="string">'D:/交流账单.txt'</span></div><div class="line">records = [json.loads(<span class="built_in">line</span>) <span class="keyword">for</span> <span class="built_in">line</span> in <span class="keyword">open</span>(path)]</div><div class="line"><span class="keyword">for</span> i in <span class="built_in">range</span>(<span class="number">705</span>):</div><div class="line">    <span class="built_in">items</span> = records[i]</div><div class="line">    <span class="keyword">if</span> <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'餐饮'</span>:</div><div class="line">        food += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'花钱'</span>:</div><div class="line">        spend_money += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'交通'</span>:</div><div class="line">        traffic += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'水果'</span>:</div><div class="line">        fruit += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'电影'</span>:</div><div class="line">        movies += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'话费'</span>:</div><div class="line">        bill += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'零食'</span>:</div><div class="line">        snacks += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'服饰'</span>:</div><div class="line">        clothes += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">items</span>[<span class="string">'账目分类'</span>] == <span class="string">'日用品'</span>:</div><div class="line">        daily_necessities += float(<span class="built_in">items</span>[<span class="string">'账目金额'</span>])</div><div class="line"> </div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] </div><div class="line">size = <span class="number">9</span></div><div class="line"><span class="keyword">x</span> = np.arange(size)</div><div class="line">labels = [<span class="string">'餐饮'</span>,<span class="string">'其他'</span>,<span class="string">'交通'</span>,<span class="string">'电影'</span>,<span class="string">'话费'</span>,<span class="string">'零食'</span>,<span class="string">'水果'</span>,<span class="string">'服饰'</span>,<span class="string">'日用品'</span>]</div><div class="line"><span class="keyword">y</span> = [<span class="built_in">abs</span>(<span class="keyword">int</span>(food)),<span class="built_in">abs</span>(<span class="keyword">int</span>(spend_money)),<span class="built_in">abs</span>(<span class="keyword">int</span>(traffic)),<span class="built_in">abs</span>(<span class="keyword">int</span>(movies)),<span class="built_in">abs</span>(<span class="keyword">int</span>(bill)),<span class="built_in">abs</span>(<span class="keyword">int</span>(snacks)),<span class="built_in">abs</span>(<span class="keyword">int</span>(fruit)),<span class="built_in">abs</span>(<span class="keyword">int</span>(clothes)),<span class="built_in">abs</span>(<span class="keyword">int</span>(daily_necessities))]</div><div class="line">colors = [<span class="string">'blue'</span>,<span class="string">'green'</span>,<span class="string">'yellowgreen'</span>,<span class="string">'gold'</span>,<span class="string">'lightskyblue'</span>,<span class="string">'lightcoral'</span>,<span class="string">'lightgray'</span>,<span class="string">'lime'</span>,<span class="string">'skyblue'</span>]</div><div class="line">plt.title(<span class="keyword">u</span><span class="string">'交流消费账单统计图\n'</span>)</div><div class="line">plt.bar(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="keyword">y</span>)),<span class="keyword">y</span>,width=<span class="number">0.8</span>,tick_label=labels,color=colors)</div><div class="line"><span class="keyword">for</span> <span class="keyword">a</span>,<span class="keyword">b</span> in zip(<span class="keyword">x</span>,<span class="keyword">y</span>):</div><div class="line">    plt.text(<span class="keyword">a</span>, <span class="keyword">b</span>+<span class="number">0.8</span>, <span class="string">'%.0f元'</span> %<span class="keyword">b</span>, <span class="keyword">ha</span>=<span class="string">'center'</span>, va = <span class="string">'bottom'</span>, fontsize=<span class="number">10</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<blockquote>
+<h2 id="数据按月统计"><a href="#数据按月统计" class="headerlink" title="数据按月统计"></a>数据按月统计</h2></blockquote>
+<p>这只是显示了每一种类的统计，我还对每个月份的消费进行了统计。<br>先上效果图：</p>
+<p><img src="http://othwobwlu.bkt.clouddn.com/%E6%9C%88%E4%BB%BD%E7%BB%9F%E8%AE%A1%E5%9B%BE.png" alt="5"></p>
+<blockquote>
+<h3 id="完整代码-1"><a href="#完整代码-1" class="headerlink" title="完整代码"></a>完整代码</h3></blockquote>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"> </div><div class="line">import json</div><div class="line">import numpy <span class="keyword">as</span> np</div><div class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"> </div><div class="line">Aug_16 = Sup_16 = Oct_16 = Noc_16 = Dec_16 = Jan_17 = Feb_17 = Mar_17 = Apr_17 = May_17 = Jun_17 = <span class="number">0</span></div><div class="line">path = <span class="string">'/交流账单.txt'</span></div><div class="line">records = [json.loads(<span class="built_in">line</span>) <span class="keyword">for</span> <span class="built_in">line</span> <span class="keyword">in</span> <span class="built_in">open</span>(path)]</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">705</span>):</div><div class="line">    <span class="keyword">items</span> = records[i]</div><div class="line">    <span class="built_in">time</span> = <span class="keyword">items</span>[<span class="string">'时间'</span>]</div><div class="line">    <span class="keyword">if</span> <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2016'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'08'</span>:</div><div class="line">        Aug_16 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2016'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'09'</span>:</div><div class="line">        Sup_16 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2016'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'10'</span>:</div><div class="line">        Oct_16 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2016'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'11'</span>:</div><div class="line">        Noc_16 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2016'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'12'</span>:</div><div class="line">        Dec_16 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'01'</span>:</div><div class="line">        Jan_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'02'</span>:</div><div class="line">        Feb_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'03'</span>:</div><div class="line">        Mar_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'04'</span>:</div><div class="line">        Apr_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'05'</span>:</div><div class="line">        May_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line">    elif <span class="built_in">time</span>[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'2017'</span> <span class="keyword">and</span> <span class="built_in">time</span>[<span class="number">5</span>:<span class="number">7</span>] == <span class="string">'06'</span>:</div><div class="line">        Jun_17 += float(<span class="keyword">items</span>[<span class="string">'账目金额'</span>])</div><div class="line"> </div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>]</div><div class="line">size = <span class="number">11</span></div><div class="line">x = np.arange(size)</div><div class="line">plt.title(<span class="string">'2016至2017交流账单统计图'</span>)</div><div class="line">labels = [<span class="string">'八月'</span>,<span class="string">'九月'</span>,<span class="string">'十月'</span>,<span class="string">'十一月'</span>,<span class="string">'十二月'</span>,<span class="string">'一月'</span>,<span class="string">'二月'</span>,<span class="string">'三月'</span>,<span class="string">'四月'</span>,<span class="string">'五月'</span>,<span class="string">'六月'</span>]</div><div class="line">y = [<span class="built_in">abs</span>(int(Aug_16)),<span class="built_in">abs</span>(int(Sup_16)),<span class="built_in">abs</span>(int(Oct_16)),<span class="built_in">abs</span>(int(Noc_16)),<span class="built_in">abs</span>(int(Dec_16)),<span class="built_in">abs</span>(int(Jan_17)),<span class="built_in">abs</span>(int(Feb_17)),<span class="built_in">abs</span>(int(Mar_17)),<span class="built_in">abs</span>(int(Apr_17)),<span class="built_in">abs</span>(int(May_17)),<span class="built_in">abs</span>(int(Jun_17))]</div><div class="line">colors = [<span class="string">'blue'</span>,<span class="string">'green'</span>,<span class="string">'yellowgreen'</span>,<span class="string">'gold'</span>,<span class="string">'lightskyblue'</span>,<span class="string">'lightcoral'</span>,<span class="string">'lightgray'</span>,<span class="string">'lime'</span>,<span class="string">'skyblue'</span>,<span class="string">'red'</span>,<span class="string">'green'</span>]</div><div class="line">plt.bar(range(<span class="built_in">len</span>(y)),y,width=<span class="number">0.8</span>,tick_label=labels,color=colors)</div><div class="line"><span class="keyword">for</span> <span class="keyword">a</span>,b <span class="keyword">in</span> zip(x,y):</div><div class="line">    plt.<span class="keyword">text</span>(<span class="keyword">a</span>,b+<span class="number">0.8</span>,<span class="string">'%.0f元'</span> %b, ha = <span class="string">'center'</span>, va = <span class="string">'bottom'</span>,fontsize = <span class="number">10</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p>这里的思路以及代码和上面的大同小异，这里不再进行多余的分析。如果有不理解或不正确的地方，欢迎给博主留言，与博主进行交流。</p>
+<p>完整的项目我会提交到<a href="https://github.com/Tactful-biao/billing_analysis" target="_blank" rel="external">我的GitHub</a>上，感兴趣的朋友可以去看看。</p>
+<blockquote>
+<p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/07/24/使用Python对账单进行分析（续）/" title="使用Python对账单进行分析（续）">http://www.bbiao.me/2017/07/24/使用Python对账单进行分析（续）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Matplotlib/" rel="tag"># Matplotlib</a>
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/使用Python对账单进行分析/" rel="next" title="使用Python对账单进行分析">
+                <i class="fa fa-chevron-left"></i> 使用Python对账单进行分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/28/论备份的重要性！！！/" rel="prev" title="论备份的重要性！！！">
+                论备份的重要性！！！ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#要用到的库函数"><span class="nav-number">1.</span> <span class="nav-text">要用到的库函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析："><span class="nav-number">2.1.</span> <span class="nav-text">前两步跟上篇文章画饼图的操作一样，我们直接从第三步开始分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画柱状图需要的一些参数"><span class="nav-number">2.2.</span> <span class="nav-text">画柱状图需要的一些参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">2.3.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据按月统计"><span class="nav-number">3.</span> <span class="nav-text">数据按月统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码-1"><span class="nav-number">3.1.</span> <span class="nav-text">完整代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

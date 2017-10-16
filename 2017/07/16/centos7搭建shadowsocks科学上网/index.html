@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ss,梯子,科学上网,翻墙," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。 首先，我们登录我们的远程桌面： 下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，">
+<meta name="keywords" content="ss,梯子,科学上网,翻墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7-搭建shadowsocks科学上网">
+<meta property="og:url" content="http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。 首先，我们登录我们的远程桌面： 下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/1.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/2.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/3.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/4.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/5.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/7.png">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/8.PNG8">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/12.png">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/9.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/10.png">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/11.png">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/13.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/14.PNG">
+<meta property="og:image" content="http://ot4elod26.bkt.clouddn.com/15.PNG">
+<meta property="og:updated_time" content="2017-10-13T13:38:44.888Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7-搭建shadowsocks科学上网">
+<meta name="twitter:description" content="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。 首先，我们登录我们的远程桌面： 下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，">
+<meta name="twitter:image" content="http://ot4elod26.bkt.clouddn.com/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/"/>
+
+
+
+
+
+  <title>centos7-搭建shadowsocks科学上网 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">centos7-搭建shadowsocks科学上网</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T13:24:36+08:00">
+                2017-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/16/centos7搭建shadowsocks科学上网/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/16/centos7搭建shadowsocks科学上网/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h3 id="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"><a href="#在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。" class="headerlink" title="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"></a>在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的<a href="http://localhost:4000/2017/07/15/digital-ocean%E6%B3%A8%E5%86%8C%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_blank" rel="external">这篇文章</a>来查看。</h3></blockquote>
+<h3 id="首先，我们登录我们的远程桌面："><a href="#首先，我们登录我们的远程桌面：" class="headerlink" title="首先，我们登录我们的远程桌面："></a>首先，我们登录我们的远程桌面：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/1.PNG" alt="1"></p>
+<h3 id="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"><a href="#下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。" class="headerlink" title="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"></a>下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。</h3><blockquote>
+<p>yum install epel-release<br> yum update<br> yum install python-setuptools m2crypto supervisor<br> easy_install pip<br> pip install shadowsocks</p>
+</blockquote>
+<h3 id="输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json"><a href="#输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json" class="headerlink" title="输入完上面的命令之后，继续执行命令：vi /etc/shadowsocks.json"></a>输入完上面的命令之后，继续执行命令：<font color="Violet">vi /etc/shadowsocks.json</font></h3><h3 id="此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为复制内容——-</p>
+<p><font color="Lime">{<br>    “server”:”0.0.0.0”,<br>    “server_port”:8388,<br>    “local_port”:1080,<br>    “password”:”yourpassword”,<br>    “timeout”:600,<br>    “method”:”aes-256-cfb”<br>}</font><br>——以上为复制内容——–</p>
+<p><img src="http://ot4elod26.bkt.clouddn.com/2.PNG" alt="2"></p>
+<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）</h3><p>###继续执行命令：<font color="Violet">vi /etc/supervisord.conf</font></p>
+<h3 id="此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为粘贴内容—–</p>
+<p><font size="4" color="Lime">[program:shadowsocks]<br>command=ssserver -c /etc/shadowsocks.json<br>autostart=true<br>autorestart=true<br>user=root<br>log_stderr=true<br>logfile=/var/log/shadowsocks.log</font><br>—–以上为粘贴内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/3.PNG" alt="3"></p>
+<h3 id="复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="继续执行命令：-vi-etc-rc-local"><a href="#继续执行命令：-vi-etc-rc-local" class="headerlink" title="继续执行命令： vi /etc/rc.local"></a>继续执行命令： <font color="Lime">vi /etc/rc.local</font></h3><h3 id="此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>——以下为复制内容—–</p>
+<p><font size="4" color="Lime">service supervisord start</font><br>——以上为复制内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/4.PNG" alt="4"></p>
+<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="最后执行命令：reboot"><a href="#最后执行命令：reboot" class="headerlink" title="最后执行命令：reboot"></a>最后执行命令：<font color="Lime">reboot</font></h3><h3 id="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。"><a href="#此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。" class="headerlink" title="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。"></a>此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/5.PNG" alt="5"></p>
+<blockquote>
+<h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2></blockquote>
+<h3 id="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"><a href="#至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。" class="headerlink" title="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"></a>至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。</h3><h3 id="Android客户端下载链接"><a href="#Android客户端下载链接" class="headerlink" title="Android客户端下载链接"></a>Android客户端下载链接</h3><p><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank" rel="external">https://play.google.com/store/apps/details?id=com.github.shadowsocks</a></p>
+<h3 id="推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。"><a href="#推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。" class="headerlink" title="推荐在Google Play下载，自动适配你的系统版本，以免出现问题。"></a>推荐在Google Play下载，自动适配你的系统版本，以免出现问题。</h3><p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">https://github.com/shadowsocks/shadowsocks-android/releases</a></p>
+<h3 id="电脑客户端端下载链接（Windows、Mac-OS-X）"><a href="#电脑客户端端下载链接（Windows、Mac-OS-X）" class="headerlink" title="电脑客户端端下载链接（Windows、Mac OS X）"></a>电脑客户端端下载链接（Windows、Mac OS X）</h3><p><a href="http://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">http://sourceforge.net/projects/shadowsocksgui/files/dist/</a><br><strong>小提醒</strong>：Windows 7用户下载Shadowsocks-win-x.x.x.zip，Windows 8用户下载Shadowsocks-win-dotnet4.0-x.x.x.zip。</p>
+<h3 id="iOS客户端端下载链接"><a href="#iOS客户端端下载链接" class="headerlink" title="iOS客户端端下载链接"></a>iOS客户端端下载链接</h3><p><a href="https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8" target="_blank" rel="external">https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8</a></p>
+<h3 id="Android手机客户端配置示例（以上述服务端配置为例）："><a href="#Android手机客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="Android手机客户端配置示例（以上述服务端配置为例）："></a>Android手机客户端配置示例（以上述服务端配置为例）：</h3><blockquote>
+<p>注意：已经root手机的小伙伴请勿授予root权限，以免发生未知问题。<br>服务器：你的VPS IP地址（非0.0.0.0）<br>远程端口：8388<br>本地端口：1080<br>密码：yourpassword<br>加密方法：AES-256-CFB<br>路由：绕过局域网及中国大陆地址<br>全局代理：勾选<br>UDP转发：建议勾选，如有问题则取消勾选<br>自动连接：勾选</p>
+</blockquote>
+<h2 id="电脑客户端配置示例（以上述服务端配置为例）："><a href="#电脑客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="电脑客户端配置示例（以上述服务端配置为例）："></a>电脑客户端配置示例（以上述服务端配置为例）：</h2><h3 id="（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）"><a href="#（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）" class="headerlink" title="（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）"></a>（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）</h3><blockquote>
+<p>服务器 IP：你的VPS IP地址（非0.0.0.0）<br>服务器端口：8388<br>密码：yourpassword<br>加密：aes-256-cfb<br>代理端口：1080<br>备注：随便写</p>
+</blockquote>
+<h2 id="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"><a href="#这里是电脑版的shadowsocks软件，安装好刚打开的样子。" class="headerlink" title="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"></a>这里是电脑版的shadowsocks软件，安装好刚打开的样子。</h2><p>###填上你的vps的IP地址配置你的ss：<br><img src="http://ot4elod26.bkt.clouddn.com/7.png" alt="7"><br><img src="http://ot4elod26.bkt.clouddn.com/8.PNG8" alt="8"></p>
+<h3 id="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："><a href="#配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：" class="headerlink" title="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："></a>配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/12.png" alt="12"></p>
+<h3 id="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："><a href="#如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：" class="headerlink" title="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："></a>如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/9.PNG" alt="9"></p>
+<h3 id="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："><a href="#然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：" class="headerlink" title="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："></a>然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/10.png" alt="10"></p>
+<h3 id="进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。"><a href="#进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。" class="headerlink" title="进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。"></a>进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/11.png" alt="11"></p>
+<h3 id="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："><a href="#现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：" class="headerlink" title="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："></a>现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/13.PNG" alt="13"><br><img src="http://ot4elod26.bkt.clouddn.com/14.PNG" alt="14"><br><img src="http://ot4elod26.bkt.clouddn.com/15.PNG" alt="15"></p>
+<blockquote>
+<h2 id="答疑阶段"><a href="#答疑阶段" class="headerlink" title="答疑阶段"></a>答疑阶段</h2></blockquote>
+<h3 id="1-为什么选择CentOS？"><a href="#1-为什么选择CentOS？" class="headerlink" title="1. 为什么选择CentOS？"></a>1. <strong>为什么选择CentOS？</strong></h3><blockquote>
+<p><strong>作为服务器，永远都是稳定压倒一切。而CentOS简单易用，上手快速，业界公认的稳定，且易于维护，是服务器操作<br>系统首选。</strong></p>
+</blockquote>
+<h3 id="2-为什么是Python版本的Shadowsocks？"><a href="#2-为什么是Python版本的Shadowsocks？" class="headerlink" title="2. 为什么是Python版本的Shadowsocks？"></a>2. <strong>为什么是Python版本的Shadowsocks？</strong></h3><blockquote>
+<p><strong>Python版的Shadowsocks易部署，后期升级维护都非常方便，相当适合新手，支持的特性也最多，稳定性好，运行效率高。</strong></p>
+</blockquote>
+<h3 id="3-为什么使用supervisord"><a href="#3-为什么使用supervisord" class="headerlink" title="3.为什么使用supervisord?"></a>3.<strong>为什么使用supervisord?</strong></h3><blockquote>
+<p><strong>与繁琐的带参执行方式相比，service命令在CentOS系统里使用起来更加灵活方便，比如：<br>①启动Shadowsocks服务端：service supervisord start<br>②关闭Shadowsocks服务端：service supervisord stop<br>③重启shadowsocks服务端：service supervisord restart</strong></p>
+</blockquote>
+<h3 id="4-如何配置多账户？"><a href="#4-如何配置多账户？" class="headerlink" title="4. 如何配置多账户？"></a>4. <strong>如何配置多账户？</strong></h3><blockquote>
+<p><strong>小提示：Shadowsocks支持一个账户在多个终端同时使用，一般人没有配置多账户的必要。所以如果你看不懂，那你还是别折腾了。</strong><br>——分割线——-<br><strong>{<br>    “server”:”0.0.0.0”,<br>    “port_password”:{<br>        “8388”:”password1”,<br>        “8389”:”password2”,<br>        “8390”:”password3”,<br>        “8391”:”password4”<br>    },<br>    “timeout”:300,<br>    “method”:”aes-256-cfb”<br>} </strong><br>——-分割线———<br><strong>友情提醒：GFW目前是根据流量检测分析匹配统计学模型的方式来判断你是否在翻墙，换言之，你用什么方式翻墙并不重要，重要的是你和服务器之间的流量特征是否像是在翻墙。一旦匹配，既对你进行有罪推论，轻则限速，重则彻底封锁IP。在IPv4地址已经枯竭的今天，可用的美国IP地址会越来越少，所以不建议将自己的账号分享多人使用，以防被封</strong></p>
+</blockquote>
+<h3 id="5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"><a href="#5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？" class="headerlink" title="5.为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"></a>5.<strong>为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？</strong></h3><blockquote>
+<h3 id="出现这种情况有多种可能性："><a href="#出现这种情况有多种可能性：" class="headerlink" title="出现这种情况有多种可能性："></a>出现这种情况有多种可能性：</h3></blockquote>
+<p>①shadowsocks长时间保持不间断连接会被GFW根据流量模型分析判断出你可能在翻墙(原理见上面的友情提醒)，于是进行主动干扰，轻则限速，重则切断你和服务端的连接。解决方法：切换一下你的网络，比如从Wi-Fi切换到3G或者从3G切换到Wi-Fi或者直接断开网络连接，等待10分钟以后，一般即可恢复正常。PS：每天晚上睡觉前关闭手机的网络连接会大大减小此种情况发生的概率；而将自己的VPS分享给多人使用则可能大大增加此种情况发生的概率，请自行斟酌。值得说明的是，VPN最容易受到此类干扰，而shadowsocks作为可自定义端口的私有协议代理已经是最不容易被干扰的翻墙方式之一了。</p>
+<p>②机房的QoS策略。解决方法：将shadowsocks服务端的server_port改为常见端口。</p>
+<p>③本地线路抽风，你所使用宽带运营商的国际出口出现问题。比如最近南方电信部分地区国际出口严重不稳定(电信人为限制)。解决方法：<1>先尝试一下DigitalOcean的新加坡节点或者Linode的日本节点；<2>如果当地有“国际精品网”业务，开通后可立即完美解决这个问题；<3>如果不愿意给电信交保护费，那么就换家运营商吧，移动和联通都没问题。</3></2></1></p>
+<p>④VPS间歇性抽风。无论你选择哪家供应商的VPS，都可能遇到有时候线路抽风、VPS速度慢或者不正常。不同的是，越是价位高的VPS出现抽风情况的可能性越低，越是价位高的VPS出现抽风情况时能保证的最低连接速度越高。出现这种情况的可能性比较低，我手头的无论是搬瓦工还是DigitalOcean以及Linode暂时未遇到线路抽风情况。</p>
+<p>⑤搬瓦工的年付VPS为OpenVZ架构，同一母机下的VPS越多，同一时间段使用的人越多，速度就越慢。解决方法：一分价钱一分货，将VPS更换为DigitalOcean或者Linode。</p>
+<p>⑥中国的国际出口带宽有限，晚高峰时段可能出现网络拥堵，速度多少会受影响，但这种情况起码白天的速度应该是没问题的。</p>
+<p>⑦如果你在VPS上搭建了VPN并且经常使用，尤其是OpenVPN，请立即停止使用。VPN协议特征明显，GFW可以非常容易的检测到，从而盯上你的IP，轻则限速，重则彻底屏蔽。常见VPN协议根据易受干扰的程度从大到小依次为：OpenVPN &gt; PPTP &gt; L2TP &gt; IPSec，尤其是OpenVPN，GFW已经可以实现对其定点清除(同样遭此待遇的还有SSH翻墙)。如果你想让自己VPS的IP快速报废，那么就请尽情的使用搬瓦工的控制面板搭建OpenVPN吧。重要提醒：在不明所以的情况下尽量不要在自己的VPS上搭建其他杂七乱八的翻墙服务尤其是一些早已过时和落后的翻墙方式，翻墙手段宜新不宜旧，只搭一个Shadowsocks是最能保证你翻墙效果和服务器稳定的好策略。</p>
+<p>⑧其他：偶尔的速度慢或者连不上都是正常的，但如果经常性的速度奇慢或者连不上那就不正常了。</p>
+<blockquote>
+<h2 id="错误排查"><a href="#错误排查" class="headerlink" title="错误排查"></a>错误排查</h2></blockquote>
+<h3 id="已经成功的小伙伴可以直接略过这部分了。"><a href="#已经成功的小伙伴可以直接略过这部分了。" class="headerlink" title="已经成功的小伙伴可以直接略过这部分了。"></a>已经成功的小伙伴可以直接略过这部分了。</h3><blockquote>
+<h3 id="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"><a href="#温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。" class="headerlink" title="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"></a>温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。</h3></blockquote>
+<h3 id="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"><a href="#服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。" class="headerlink" title="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"></a>服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。</h3><h3 id="遇到问题的小伙伴请先认真仔细阅读这两篇文章"><a href="#遇到问题的小伙伴请先认真仔细阅读这两篇文章" class="headerlink" title="遇到问题的小伙伴请先认真仔细阅读这两篇文章"></a>遇到问题的小伙伴请先认真仔细阅读这两篇文章</h3><p><a href="http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml" target="_blank" rel="external">http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml</a><br><a href="http://linux.vbird.org/linux_basic/0310vi.php" target="_blank" rel="external">http://linux.vbird.org/linux_basic/0310vi.php</a><br>上面的链接为vi编辑器基本用法扫盲（新手必读）</p>
+<h3 id="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"><a href="#最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。" class="headerlink" title="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"></a>最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。</h3><h3 id="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查："><a href="#如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查：" class="headerlink" title="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查："></a>如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查：</h3><h3 id="1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="1. 执行命令service supervisord start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>1. 执行命令<font color="Lime">service supervisord start</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="2. 执行命令ssserver -c /etc/shadowsocks.json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>2. 执行命令<font color="Lime">ssserver -c /etc/shadowsocks.json</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。"><a href="#3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。" class="headerlink" title=" 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi /etc/shadowsocks.json环节，请重新检查该文件配置。"></a><strong> 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在<font color="Lime">vi /etc/shadowsocks.json</font>环节，请重新检查该文件配置。</strong></h3><h3 id="4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"><a href="#4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。" class="headerlink" title="4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"></a><strong>4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。</strong></h3><blockquote>
+<h3 id="有问题可以留言，大家一起研究。"><a href="#有问题可以留言，大家一起研究。" class="headerlink" title="有问题可以留言，大家一起研究。"></a>有问题可以留言，大家一起研究。</h3><h2 id="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"><a href="#如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。" class="headerlink" title="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"></a>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</h2></blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/" title="centos7-搭建shadowsocks科学上网">http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ss/" rel="tag"># ss</a>
+          
+            <a href="/tags/梯子/" rel="tag"># 梯子</a>
+          
+            <a href="/tags/科学上网/" rel="tag"># 科学上网</a>
+          
+            <a href="/tags/翻墙/" rel="tag"># 翻墙</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/digitalocean注册和虚拟主机的创建/" rel="next" title="digitalocean注册和虚拟主机的创建">
+                <i class="fa fa-chevron-left"></i> digitalocean注册和虚拟主机的创建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/16/使用linux-apache-mysql-php-lamp搭建wordpress/" rel="prev" title="使用linux-apache-mysql-php-lamp搭建wordpress">
+                使用linux-apache-mysql-php-lamp搭建wordpress <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"><span class="nav-number">1.</span> <span class="nav-text">在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首先，我们登录我们的远程桌面："><span class="nav-number">2.</span> <span class="nav-text">首先，我们登录我们的远程桌面：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"><span class="nav-number">3.</span> <span class="nav-text">下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json"><span class="nav-number">4.</span> <span class="nav-text">输入完上面的命令之后，继续执行命令：vi /etc/shadowsocks.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"><span class="nav-number">5.</span> <span class="nav-text">此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）"><span class="nav-number">6.</span> <span class="nav-text">复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><span class="nav-number">7.</span> <span class="nav-text">此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><span class="nav-number">8.</span> <span class="nav-text">复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继续执行命令：-vi-etc-rc-local"><span class="nav-number">9.</span> <span class="nav-text">继续执行命令： vi /etc/rc.local</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><span class="nav-number">10.</span> <span class="nav-text">此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><span class="nav-number">11.</span> <span class="nav-text">复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后执行命令：reboot"><span class="nav-number">12.</span> <span class="nav-text">最后执行命令：reboot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。"><span class="nav-number">13.</span> <span class="nav-text">此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadowsocks客户端配置"><span class="nav-number"></span> <span class="nav-text">Shadowsocks客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"><span class="nav-number">1.</span> <span class="nav-text">至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android客户端下载链接"><span class="nav-number">2.</span> <span class="nav-text">Android客户端下载链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。"><span class="nav-number">3.</span> <span class="nav-text">推荐在Google Play下载，自动适配你的系统版本，以免出现问题。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电脑客户端端下载链接（Windows、Mac-OS-X）"><span class="nav-number">4.</span> <span class="nav-text">电脑客户端端下载链接（Windows、Mac OS X）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS客户端端下载链接"><span class="nav-number">5.</span> <span class="nav-text">iOS客户端端下载链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android手机客户端配置示例（以上述服务端配置为例）："><span class="nav-number">6.</span> <span class="nav-text">Android手机客户端配置示例（以上述服务端配置为例）：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电脑客户端配置示例（以上述服务端配置为例）："><span class="nav-number"></span> <span class="nav-text">电脑客户端配置示例（以上述服务端配置为例）：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）"><span class="nav-number">1.</span> <span class="nav-text">（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这里是电脑版的shadowsocks软件，安装好刚打开的样子。"><span class="nav-number"></span> <span class="nav-text">这里是电脑版的shadowsocks软件，安装好刚打开的样子。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："><span class="nav-number">1.</span> <span class="nav-text">配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："><span class="nav-number">2.</span> <span class="nav-text">如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："><span class="nav-number">3.</span> <span class="nav-text">然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。"><span class="nav-number">4.</span> <span class="nav-text">进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："><span class="nav-number">5.</span> <span class="nav-text">现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答疑阶段"><span class="nav-number"></span> <span class="nav-text">答疑阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-为什么选择CentOS？"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么选择CentOS？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-为什么是Python版本的Shadowsocks？"><span class="nav-number">2.</span> <span class="nav-text">2. 为什么是Python版本的Shadowsocks？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-为什么使用supervisord"><span class="nav-number">3.</span> <span class="nav-text">3.为什么使用supervisord?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-如何配置多账户？"><span class="nav-number">4.</span> <span class="nav-text">4. 如何配置多账户？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"><span class="nav-number">5.</span> <span class="nav-text">5.为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出现这种情况有多种可能性："><span class="nav-number">6.</span> <span class="nav-text">出现这种情况有多种可能性：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误排查"><span class="nav-number"></span> <span class="nav-text">错误排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已经成功的小伙伴可以直接略过这部分了。"><span class="nav-number">1.</span> <span class="nav-text">已经成功的小伙伴可以直接略过这部分了。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"><span class="nav-number">2.</span> <span class="nav-text">温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"><span class="nav-number">3.</span> <span class="nav-text">服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到问题的小伙伴请先认真仔细阅读这两篇文章"><span class="nav-number">4.</span> <span class="nav-text">遇到问题的小伙伴请先认真仔细阅读这两篇文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"><span class="nav-number">5.</span> <span class="nav-text">最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查："><span class="nav-number">6.</span> <span class="nav-text">如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><span class="nav-number">7.</span> <span class="nav-text">1. 执行命令service supervisord start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><span class="nav-number">8.</span> <span class="nav-text">2. 执行命令ssserver -c /etc/shadowsocks.json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。"><span class="nav-number">9.</span> <span class="nav-text"> 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi /etc/shadowsocks.json环节，请重新检查该文件配置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"><span class="nav-number">10.</span> <span class="nav-text">4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有问题可以留言，大家一起研究。"><span class="nav-number">11.</span> <span class="nav-text">有问题可以留言，大家一起研究。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"><span class="nav-number"></span> <span class="nav-text">如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

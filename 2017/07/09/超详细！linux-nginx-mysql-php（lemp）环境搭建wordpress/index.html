@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="WordPress,LEMP,Nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="之前写过《如何在LAMP环境下搭建WordPress》，这里介绍一下用LEMP搭建，选择用什么环境搭建，请参考我的这篇文章《WordPress安装环境与配置的选择》。 废话不多说，我们开始进入正题。使用LEMP安装WordPress，首先需要搭建LEMP环境。需要安装Nginx和MySQL以及PHP。Linux环境我们选择的是使用Ubuntu 14.04作为我们的操作系统。  先登录上你的vps服">
+<meta name="keywords" content="WordPress,LEMP,Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress">
+<meta property="og:url" content="http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="之前写过《如何在LAMP环境下搭建WordPress》，这里介绍一下用LEMP搭建，选择用什么环境搭建，请参考我的这篇文章《WordPress安装环境与配置的选择》。 废话不多说，我们开始进入正题。使用LEMP安装WordPress，首先需要搭建LEMP环境。需要安装Nginx和MySQL以及PHP。Linux环境我们选择的是使用Ubuntu 14.04作为我们的操作系统。  先登录上你的vps服">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/1_1.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/2.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/3.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/4.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/5.png">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/6.png">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/8.png">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/9.png">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/10.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/11.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/12.png">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/13.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/14.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/15.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/16.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/17.PNG">
+<meta property="og:image" content="http://otc4m8ch2.bkt.clouddn.com/18.PNG">
+<meta property="og:updated_time" content="2017-10-14T15:00:26.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress">
+<meta name="twitter:description" content="之前写过《如何在LAMP环境下搭建WordPress》，这里介绍一下用LEMP搭建，选择用什么环境搭建，请参考我的这篇文章《WordPress安装环境与配置的选择》。 废话不多说，我们开始进入正题。使用LEMP安装WordPress，首先需要搭建LEMP环境。需要安装Nginx和MySQL以及PHP。Linux环境我们选择的是使用Ubuntu 14.04作为我们的操作系统。  先登录上你的vps服">
+<meta name="twitter:image" content="http://otc4m8ch2.bkt.clouddn.com/1_1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/"/>
+
+
+
+
+
+  <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T22:21:41+08:00">
+                2017-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前写过《<a href="http://bbiao.me/2017/07/16/%E4%BD%BF%E7%94%A8linux-apache-mysql-php-lamp%E6%90%AD%E5%BB%BAwordpress/" target="_blank" rel="external">如何在LAMP环境下搭建WordPress</a>》，这里介绍一下用LEMP搭建，选择用什么环境搭建，请参考我的这篇文章《<a href="http://bbiao.me/2017/07/18/WordPress%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E4%B8%8E%E9%85%8D%E7%BD%AE%E7%9A%84%E9%80%89%E6%8B%A9/" target="_blank" rel="external">WordPress安装环境与配置的选择</a>》。</p>
+<p>废话不多说，我们开始进入正题。<br>使用LEMP安装WordPress，首先需要搭建LEMP环境。需要安装Nginx和MySQL以及PHP。Linux环境我们选择的是使用Ubuntu 14.04作为我们的操作系统。</p>
+<blockquote>
+<p>先登录上你的vps服务器：</p>
+</blockquote>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/1_1.PNG" alt="3"></p>
+<blockquote>
+<h2 id="第一步：-安装Nginx"><a href="#第一步：-安装Nginx" class="headerlink" title="第一步： 安装Nginx"></a>第一步： 安装Nginx</h2></blockquote>
+<p>需要使用以下命令进行安装：</p>
+<font color="Lime">apt-get install nginx</font><br>重启nginx服务：<br><font color="Lime">service nginx start</font><br>然后你可以在浏览器中通过你vps的IP地址如果你有域名并且把域名解析到你的vps上了，你也可以在浏览器输入你的域名进行查看，如果出现以下画面，则安装成功：<br><font color="Lime"><a href="http://server_domain_name_or_IP/" target="_blank" rel="external">http://server_domain_name_or_IP/</a></font>
+
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/2.PNG" alt="4"></p>
+<blockquote>
+<h2 id="第二步：安装PHP"><a href="#第二步：安装PHP" class="headerlink" title="第二步：安装PHP"></a>第二步：安装PHP</h2></blockquote>
+<p>通过以下命令安装：</p>
+<font color="Lime">apt-get install php5-common php5-mysqlnd php5-xmlrpc php5-curl php5-gd php5-cli php5-fpm php-pear php5-dev php5-imap php5-mcrypt</font><br>你可以检查你的PHP版本：<br><font color="Lime">php -v</font><br>你可以看到以下内容：<br>&gt; PHP 5.5.9-1ubuntu4.21 (cli) (built: Feb 9 2017 20:54:58)<br>Copyright (c) 1997-2014 The PHP Group<br>Zend Engine v2.5.0, Copyright (c) 1998-2014 Zend Technologies<br>with Zend OPcache v7.0.3, Copyright (c) 1999-2014, by Zend Technologies<br><br>现在，我们将进行一些小小的改动，使我们的设置更加安全。<br><font color="Lime">nano /etc/php5/fpm/php.ini</font><br>按Ctrl + W并搜索cgi.fix_pathinfo=取消注释（delete;）并将1更改为0.更改后，该行应如下所示：<br><font color="Lime">cgi.fix_pathinfo=0</font><br>保存（Ctrl + O）并关闭文件（Ctrl + X）。<br>现在，我们只需要重新启动PHP处理器即可：<br><font color="Lime">service php5-fpm restart</font>
+
+<blockquote>
+<h2 id="第三步：-安装MySql"><a href="#第三步：-安装MySql" class="headerlink" title="第三步： 安装MySql"></a>第三步： 安装MySql</h2></blockquote>
+<p>要存储和管理数据库，我们需要安装MySQL。您可以通过在控制台中键入以下内容来轻松安装它：</p>
+<font color="Lime">apt-get install mysql-server</font><br>在安装过程中，将要求您为MySQL设置root密码。到目前为止，安装的MySQ还不完整，我们需要使用如下命令，进行完整安装：<br><font color="Lime">mysql_install_db</font><br>最后一步，通过运行一个安全脚本来修改一些默认的设置。<br><font color="Lime">mysql_secure_installation</font><br>首先会让你输入MySQL的密码，这个密码是刚刚你安装的时候设置的那个密码，然后会问你是否更改当前密码，如果你不打算更改现在的密码，就输入n，如果需要更改就输入y，然后输入新密码。这一步之后，后面的直接一路输入y就行了。<br>你还可以通过如下操作设置时区（可以不设置）：<br><font color="Lime">dpkg-reconfigure tzdata</font><br>点击OK，然后选择UTC-8就行了。<br><br><img src="http://otc4m8ch2.bkt.clouddn.com/3.PNG" alt="5"><br><br>到这里，LEMP环境就已经搭建完成了。<br><br>&gt; ## 第四步：配置Nginx服务<br><br>首先，开始安装WordPress，先给我们的网站建立一个Nginx服务块。<br><font color="Lime">nano /etc/nginx/sites-available/wordpress</font><br>粘贴一下代码：<br>———–以下为复制部分————–<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line"><span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line"><span class="attribute">root</span> /var/www/wordpress;</div><div class="line"><span class="attribute">index</span> index.php index.html index.htm;</div><div class="line"></div><div class="line"><span class="attribute">server_name</span> domain.com;</div><div class="line"></div><div class="line"><span class="attribute">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</div><div class="line"></div><div class="line"><span class="attribute">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</div><div class="line"><span class="attribute">location</span> = /50x.html &#123;</div><div class="line"><span class="attribute">root</span> /usr/share/nginx/html;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> / &#123;</div><div class="line"><span class="comment"># try_files $uri $uri/ =404;</span></div><div class="line"><span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.php?q=<span class="variable">$uri</span>&amp;<span class="variable">$args</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</div><div class="line"><span class="attribute">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</div><div class="line"><span class="attribute">fastcgi_split_path_info</span><span class="regexp"> ^(.+\.php)(/.+)$</span>;</div><div class="line"><span class="attribute">fastcgi_pass</span> unix:/var/run/php5-fpm.sock;</div><div class="line"><span class="attribute">fastcgi_index</span> index.php;</div><div class="line"><span class="attribute">fastcgi_param</span> SCRIPT_FILENAME <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</div><div class="line"><span class="attribute">include</span> fastcgi_params;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="attribute">location</span> = /favicon.ico &#123;</div><div class="line"><span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">log_not_found</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">expires</span> max;</div><div class="line">&#125;</div><div class="line"><span class="attribute">location</span> = /robots.txt &#123;</div><div class="line"><span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">log_not_found</span> <span class="literal">off</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># Cache Static Files For As Long As Possible</span></div><div class="line"><span class="attribute">location</span> ~*</div><div class="line">\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|css|rss|atom|js|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)$</div><div class="line">&#123;</div><div class="line"><span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">log_not_found</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">expires</span> max;</div><div class="line">&#125;</div><div class="line"><span class="comment"># Security Settings For Better Privacy Deny Hidden Files</span></div><div class="line"><span class="attribute">location</span> <span class="regexp">~ /\.</span> &#123;</div><div class="line"><span class="attribute">deny</span> all;</div><div class="line"><span class="attribute">access_log</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">log_not_found</span> <span class="literal">off</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment"># Return 403 Forbidden For readme.(txt|html) or license.(txt|html)</span></div><div class="line"><span class="attribute">if</span> (<span class="variable">$request_uri</span> <span class="regexp">~* “^.+(readme|license)\.(txt|html)$”)</span> &#123;</div><div class="line"><span class="attribute">return</span> <span class="number">403</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment"># Disallow PHP In Upload Folder</span></div><div class="line"><span class="attribute">location</span> /wp-content/uploads/ &#123;</div><div class="line"><span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</div><div class="line"><span class="attribute">deny</span> all;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>—————-以上为复制部分————————–<br>保存（Ctrl + O）并关闭文件（Ctrl + X）。让我们通过符号链接（相当于Windows的快捷方式）启用服务器块：<br><font color="Lime">ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/wordpress</font>
+
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/4.PNG" alt="6"></p>
+<p>然后，我们删除Nginx默认的服务块</p>
+<font color="Lime">rm /etc/nginx/sites-enabled/default</font><br>下面将对Nginx的配置文件进行设置：<br><font color="Lime">nano /etc/nginx/nginx.conf</font><br>修改以下内容：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user www-data<span class="comment">;</span></div><div class="line">worker_processes <span class="number">1</span><span class="comment">;</span></div><div class="line">pid /run/nginx.pid<span class="comment">;</span></div></pre></td></tr></table></figure><br><br>添加一个用户epoll到event中：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="section">events</span> &#123;</div><div class="line"><span class="attribute">worker_connections</span> <span class="number">4096</span>;</div><div class="line"><span class="attribute">multi_accept</span> <span class="literal">on</span>;</div><div class="line"><span class="attribute">use</span> <span class="literal">epoll</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>添加client_max_body_size（WordPress上传文件大小设置）和server_tokens off。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">server_tokens</span> <span class="literal">off</span>;</div><div class="line"><span class="attribute">client_max_body_size</span> <span class="number">100m</span>;</div></pre></td></tr></table></figure><br><br><img src="http://otc4m8ch2.bkt.clouddn.com/5.png" alt="7"><br><br>然后再把下面以下内容的注释（前面的#）去掉：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">##</span></div><div class="line"><span class="comment"># Gzip Settings</span></div><div class="line"><span class="comment">##</span></div><div class="line"></div><div class="line">gzip <span class="keyword">on</span>;</div><div class="line">gzip_disable “msie6”;</div><div class="line"></div><div class="line">gzip_vary <span class="keyword">on</span>;</div><div class="line">gzip_proxied any;</div><div class="line">gzip_comp_level <span class="number">6</span>;</div><div class="line">gzip_buffers <span class="number">16</span> <span class="number">8</span>k;</div><div class="line">gzip_http_version <span class="number">1.1</span>;</div><div class="line">gzip_types <span class="built_in">text</span>/plain <span class="built_in">text</span>/css <span class="built_in">application</span>/json <span class="built_in">application</span>/x-javascript <span class="built_in">text</span>/xml <span class="built_in">application</span>/xml <span class="built_in">application</span>/xml+rss <span class="built_in">text</span>/javascript;</div></pre></td></tr></table></figure><br><br><img src="http://otc4m8ch2.bkt.clouddn.com/6.png" alt="8"><br><br>保存（Ctrl + O）并关闭文件（Ctrl + X）。然后重新启动服务器：<br><font color="Lime">service nginx restart</font>
+
+<blockquote>
+<h2 id="第五步：配置PHP"><a href="#第五步：配置PHP" class="headerlink" title="第五步：配置PHP"></a>第五步：配置PHP</h2></blockquote>
+<p>如果你上传到WordPress网站的文件大于2MB，您必须增加php.ini中的 PHP上传大小变量：</p>
+<font color="Lime">nano /etc/php5/fpm/php.ini<br>按Ctrl + W并搜索“ upload_max_filesize ”并将其设置为100m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![9][9]</div><div class="line"></div><div class="line">对post_max_size执行相同操作。post_max_size需要与upload_max_filesize大小相同。</div><div class="line">```post_max_size=100M</div></pre></td></tr></table></figure><br><br><img src="http://otc4m8ch2.bkt.clouddn.com/8.png" alt="10"><br><br>重新启动PHP。<br><font color="Lime">service php5-fpm restart</font>
+
+<blockquote>
+<h2 id="第六步：设置MySql数据库"><a href="#第六步：设置MySql数据库" class="headerlink" title="第六步：设置MySql数据库"></a>第六步：设置MySql数据库</h2></blockquote>
+<p>在这一步中，我们将创建数据库用户和表，首先登陆MySQL（密码是之前安装的时候设置的那么密码）：</p>
+<font color="Lime">mysql -u root -p</font><br>我们创建一个名为wordpress的数据库（当然你也可以设置成你自己喜欢的名称，MySQL命令以分号结束，不要忘记分号）：<br><font color="Lime">CREATE DATABASE wordpress;</font><br>Query OK, 1 row affected (0.00 sec)<br>之后，我们需要创建一个新用户。用户和密码也可以根据自己的习惯进行设置：<br><font color="Lime">CREATE USER wordpressuser@localhost;</font><br>Query OK, 0 rows affected (0.00 sec)<br>为新用户设置密码：<br><font color="Lime">SET PASSWORD FOR wordpressuser@localhost= PASSWORD(“password”);</font><br>Query OK, 0 rows affected (0.00 sec<br>通过向新用户授予所有权限来完成。没有这个命令，WordPress安装程序将无法启动（重要）：<br><font color="Lime">GRANT ALL PRIVILEGES ON wordpress.* TO wordpressuser@localhost IDENTIFIED BY ‘password’;</font><br>Query OK, 0 rows affected (0.00 sec)<br>然后刷新MySQL：<br><font color="Lime">FLUSH PRIVILEGES;</font><br>Query OK, 0 rows affected (0.00 sec)<br>退出MySQL：<br><font color="Lime">exit</font>
+
+<blockquote>
+<h2 id="第七步：安装WordPress"><a href="#第七步：安装WordPress" class="headerlink" title="第七步：安装WordPress"></a>第七步：安装WordPress</h2></blockquote>
+<p>首先创建网站的根目录：</p>
+<p><font color="Lime">mkdir /var/www/</font></p>
+<p><font color="Lime">cd /var/www/</font><br>下载最新版的WordPress：</p>
+<p><font color="Lime">wget <a href="http://wordpress.org/latest.tar.gz" target="_blank" rel="external">http://wordpress.org/latest.tar.gz</a></font><br>对压缩包进行解压归档：</p>
+<p><font color="Lime">tar -xzvf latest.tar.gz</font><br>修改/var/www/wordpress文件的用户权限，修改为www-data，如果不设置安装完WordPress之后，你会发现自己没有操作的权限，就很烦：</p>
+<p><font color="Lime">chown -R www-data:www-data wordpress/</font></p>
+<p><font color="Lime">usermod -a -G www-data www-data</font><br>修改完即可看到wordpress目录的用户和所属组都变成www-data了：</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/9.png" alt="11"></p>
+<p>到下载，我们服务器端的命令行操作就结束了，剩下的只需要在浏览器输入你的IP地址或者域名进行浏览器端图形化界面安装就行了：</p>
+<p><strong><a href="http://server_domain_name_or_IP" target="_blank" rel="external">http://server_domain_name_or_IP</a></strong></p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/10.PNG" alt="12"></p>
+<p>下面会让你对数据库进行链接，首先我们刚刚已经创建了给wordpress的数据库，但是我们没有把数据库对wordpress进行链接，有两种方法进行链接，第一种是通过命令行，修改网站根目录下的wp-config.php文件进行链接。<br>第二种方法就是我们接下来要用的方法，如果你完成安装上面的方法进行安装的，当你上一步选择好语言点击下一步之后，会出现如下界面：</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/11.PNG" alt="13"></p>
+<p>只需要点击 现在就开始就可以进行图形化的设置，十分简单</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/12.png" alt="14"></p>
+<p>然后，选择进行安装就可以了：</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/13.PNG" alt="15"></p>
+<p>然后对wordpress进行简单的设置，比如站点标题，用户名密码之类的东西进行设置，设置好之后，点击安装WordPress就行了。</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/14.PNG" alt="16"></p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/15.PNG" alt="17"></p>
+<p>登录你之前设置的用户名或者邮箱，输入密码（即可进入WordPress后台管理界面）：</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/16.PNG" alt="18"></p>
+<p>进入后台之后，你就可以安装主题，发表文章等等一系列操作。</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/17.PNG" alt="19"></p>
+<p>这是刚搭建完成通过IP地址访问看到的界面：</p>
+<p><img src="http://otc4m8ch2.bkt.clouddn.com/18.PNG" alt="20"></p>
+<p>至此，我们使用LEMP搭建WordPress就全部完成了。码字不易，请多多支持。</p>
+<blockquote>
+<p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，请您随意打赏，以支持作者继续创作。</p>
+</blockquote>
+</font>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/" title="超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress">http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WordPress/" rel="tag"># WordPress</a>
+          
+            <a href="/tags/LEMP/" rel="tag"># LEMP</a>
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/14/开博总结/" rel="prev" title="开博总结">
+                开博总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步：-安装Nginx"><span class="nav-number">1.</span> <span class="nav-text">第一步： 安装Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步：安装PHP"><span class="nav-number">2.</span> <span class="nav-text">第二步：安装PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步：-安装MySql"><span class="nav-number">3.</span> <span class="nav-text">第三步： 安装MySql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五步：配置PHP"><span class="nav-number">4.</span> <span class="nav-text">第五步：配置PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六步：设置MySql数据库"><span class="nav-number">5.</span> <span class="nav-text">第六步：设置MySql数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七步：安装WordPress"><span class="nav-number">6.</span> <span class="nav-text">第七步：安装WordPress</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

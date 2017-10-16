@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,爬虫,种子," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="相信大家都有到处找资源找种子的经历(不管是什么种子)。为何不自己写一个爬虫把一个网站的所有的种子链接都爬取下来呢？所以接下来我们就通过一个简单的爬虫程序把电影天堂的所有的种子链接爬取下来。    思路永远是第一步  首先我们需要分析目标站点，然后依次找到我们需要的内容所在的位置。 然后我们再通过代码对目标内容进行提取 保存到本地   分析目标网站 打开目标网址：http://www.btbtdy">
+<meta name="keywords" content="Python,爬虫,种子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取《电影天堂》所有电影种子">
+<meta property="og:url" content="http://www.bbiao.me/2017/09/17/爬取《电影天堂》所有电影种子/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="相信大家都有到处找资源找种子的经历(不管是什么种子)。为何不自己写一个爬虫把一个网站的所有的种子链接都爬取下来呢？所以接下来我们就通过一个简单的爬虫程序把电影天堂的所有的种子链接爬取下来。    思路永远是第一步  首先我们需要分析目标站点，然后依次找到我们需要的内容所在的位置。 然后我们再通过代码对目标内容进行提取 保存到本地   分析目标网站 打开目标网址：http://www.btbtdy">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/14.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/15.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/16.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/17.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/18.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/19.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/20.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/21.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/22.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/23.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/24.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/25.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/26.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/29.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/30.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/31.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/32.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/33.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/34.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/27.png">
+<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/28.png">
+<meta property="og:updated_time" content="2017-10-14T06:49:40.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬取《电影天堂》所有电影种子">
+<meta name="twitter:description" content="相信大家都有到处找资源找种子的经历(不管是什么种子)。为何不自己写一个爬虫把一个网站的所有的种子链接都爬取下来呢？所以接下来我们就通过一个简单的爬虫程序把电影天堂的所有的种子链接爬取下来。    思路永远是第一步  首先我们需要分析目标站点，然后依次找到我们需要的内容所在的位置。 然后我们再通过代码对目标内容进行提取 保存到本地   分析目标网站 打开目标网址：http://www.btbtdy">
+<meta name="twitter:image" content="http://ovfqn6f2x.bkt.clouddn.com/14.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/09/17/爬取《电影天堂》所有电影种子/"/>
+
+
+
+
+
+  <title>爬取《电影天堂》所有电影种子 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/09/17/爬取《电影天堂》所有电影种子/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">爬取《电影天堂》所有电影种子</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T14:17:30+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">网络爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/09/17/爬取《电影天堂》所有电影种子/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/09/17/爬取《电影天堂》所有电影种子/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>相信大家都有到处找资源找种子的经历(不管是什么种子)。为何不自己写一个爬虫把一个网站的所有的种子链接都爬取下来呢？<br>所以接下来我们就通过一个简单的爬虫程序把电影天堂的所有的种子链接爬取下来。</p>
+</blockquote>
+<hr>
+<blockquote>
+<h2 id="思路永远是第一步"><a href="#思路永远是第一步" class="headerlink" title="思路永远是第一步"></a>思路永远是第一步</h2></blockquote>
+<ol>
+<li>首先我们需要分析目标站点，然后依次找到我们需要的内容所在的位置。</li>
+<li>然后我们再通过代码对目标内容进行提取</li>
+<li>保存到本地</li>
+</ol>
+<blockquote>
+<h3 id="分析目标网站"><a href="#分析目标网站" class="headerlink" title="分析目标网站"></a>分析目标网站</h3></blockquote>
+<p>打开目标网址：<a href="http://www.btbtdy.com/screen/0%E2%80%94%E2%80%93time-1.html" target="_blank" rel="external">http://www.btbtdy.com/screen/0—–time-1.html</a>可以看到如下界面：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/14.png" alt="2"></p>
+<p>我们的目标是所有的电影，所以我们选择电影栏。电视剧什么的我个人不需要，所以我也就不打算爬取它。以下内容根据自己的情况进行选择：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/15.png" alt="3"></p>
+<p>我们查看网站的源代码可以看到，所有的电影详情页的链接都在div下的class为lsit_su下的ul里面的li标签下，但是链接是隐藏了域名的，所以我们在构造链接的时候需要加上前面的部分：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/16.png" alt="4"></p>
+<blockquote>
+<p>我们打开一个详情页可以看到下载地址，点开下载地址又是另外一个链接：</p>
+</blockquote>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/17.png" alt="5"></p>
+<p>鼠标放在下载地址上面，点击鼠标右键–&gt;检查，直接定位目标所在的源代码，我们可以看到下载页的所在的链接位置。</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/18.png" alt="6"></p>
+<p>我们接着点击下载页的链接：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/19.png" alt="7"></p>
+<blockquote>
+<p>通过上面的三步操作我们找到了我们想要的东西：</p>
+<ul>
+<li>打开主页 </li>
+<li>打开详情页</li>
+<li>打开下载链接</li>
+</ul>
+</blockquote>
+<p>我们先按照常规的方法进行爬取，文章最后我们会将一种简单的方法，一步到位的方法。</p>
+<blockquote>
+<h3 id="构造所有详情页的地址"><a href="#构造所有详情页的地址" class="headerlink" title="构造所有详情页的地址"></a>构造所有详情页的地址</h3></blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python3</div><div class="line"><span class="meta"># encoding=utf-8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> requests</div><div class="line">from bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"> </div><div class="line">url = <span class="string">'http://www.btbtdy.com/screen/1-----time-1.html'</span></div><div class="line">html = requests.<span class="built_in">get</span>(url).content</div><div class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">content = soup.<span class="built_in">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'list_su'</span>&#125;)</div><div class="line">pic_link = content.<span class="built_in">find</span>(<span class="string">'ul'</span>).find_all(<span class="string">'li'</span>)</div><div class="line"><span class="built_in">for</span> link in pic_link:</div><div class="line">    a = link.<span class="built_in">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'liimg'</span>&#125;).<span class="built_in">find</span>(<span class="string">'a'</span>)[<span class="string">'href'</span>]</div><div class="line">    <span class="built_in">print</span>(<span class="string">'http://www.btbtdy.com'</span> + a)</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/20.png" alt="8"></p>
+<p>上面的结果是爬取了当前页面的所有的电影的详情页的链接，我们需要爬取的是整个网站所有页的链接，所有我们需要分析它的翻页规则：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>www.btbtdy.com<span class="regexp">/screen/</span><span class="number">1</span>—–time-<span class="number">1</span>.html</div><div class="line">http:<span class="regexp">//</span>www.btbtdy.com<span class="regexp">/screen/</span><span class="number">1</span>—–time-<span class="number">2</span>.html</div><div class="line">…….</div><div class="line">http:<span class="regexp">//</span>www.btbtdy.com<span class="regexp">/screen/</span><span class="number">1</span>—–time-<span class="number">265</span>.html</div></pre></td></tr></table></figure>
+<p>总共有265页，每一页唯一的区别就是一个数字的不同，所有我们可以使用一种偷懒的方式，既然我们已经知道它总共有265页，那么我们就可以通过range来手动指定循环的范围。</p>
+<p>代码更改如下：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python3</div><div class="line"><span class="meta"># encoding=utf-8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> requests</div><div class="line">from bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"> </div><div class="line"><span class="built_in">for</span> i in range(<span class="number">1</span>, <span class="number">266</span>):</div><div class="line">    url = <span class="string">'http://www.btbtdy.com/screen/1-----time-'</span> + str(i) + <span class="string">'.html'</span></div><div class="line">    html = requests.<span class="built_in">get</span>(url).content</div><div class="line">    soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">    content = soup.<span class="built_in">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'list_su'</span>&#125;)</div><div class="line">    pic_link = content.<span class="built_in">find</span>(<span class="string">'ul'</span>).find_all(<span class="string">'li'</span>)</div><div class="line">    <span class="built_in">for</span> link in pic_link:</div><div class="line">        a = link.<span class="built_in">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'liimg'</span>&#125;).<span class="built_in">find</span>(<span class="string">'a'</span>)[<span class="string">'href'</span>]</div><div class="line">        <span class="built_in">print</span>(<span class="string">'http://www.btbtdy.com'</span> + a)</div></pre></td></tr></table></figure>
+<p>运行之后就可以看到所有的详情页都已经被我们构造出来了(由于内容太多，我就截取了一部分)：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/21.png" alt="9"></p>
+<blockquote>
+<h3 id="解析详情页"><a href="#解析详情页" class="headerlink" title="解析详情页"></a>解析详情页</h3></blockquote>
+<p>下面是对详情页进行解析，然后从详情页中提取下载页的链接，可以看到下载链接大致有三种情况(720P，1080P，网盘下载)，我们要做相应的处理，我们分析一下下面这两种情况的源代码：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/22.png" alt="10"></p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/23.png" alt="11"></p>
+<p>先来看这个下载地址只有1080P的源代码：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/24.png" alt="12"></p>
+<p>再看看下载地址既有720P又有1080P的：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/25.png" alt="13"></p>
+<blockquote>
+<p><strong>可以看到下载链接所在的位置是相同的，都是class为p_list_02下的ul下的li标签下的a标签内。在最前面的下载地址的链接格式是‘/down/11471-0-0.html’，第二种下载格式为‘/down/11471-1-0.html’，仔细观察这两中下载格式，在/down/后面使用-把数字分成了三部分，每一部分都是有意义的，第一部分是电影的编号，第二部分是用来区分下载方式/down/11471-(0,1,2)-0.html，0表示第一种下载方式，1表示第二种下载方式，2表示第三种下载方式(其中720P，1080P，4K各是一种下载方式)，另外网盘下载是另外的一种方式，网盘下载给出的是网盘的地址，我们不考虑这种情况。第三部分是区分同一种下载方式有几个，比如720P的下载链接给了3个，那么就分别对应/down/11471-0-(0,1,2).html。以上就是下载链接的规则，我们只爬取第一种下载方式，因为每一部电影都会至少给出一种下载的链接，如果是720P的我们就保存720P，是1080P就保存1080P的种子下载页面。</strong></p>
+</blockquote>
+<hr>
+<blockquote>
+<h3 id="获取下载链接"><a href="#获取下载链接" class="headerlink" title="获取下载链接"></a>获取下载链接</h3></blockquote>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> <span class="keyword">j</span> in link<span class="variable">s:</span></div><div class="line">    htmls = requests.<span class="built_in">get</span>(<span class="keyword">j</span>).content</div><div class="line">    soups = BeautifulSoup(htmls, <span class="string">'lxml'</span>)</div><div class="line">    <span class="keyword">con</span> = soups.<span class="keyword">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'id'</span>: <span class="string">'nucms_downlist'</span>&#125;).<span class="keyword">find</span>(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'p_list'</span>&#125;).<span class="keyword">find</span>(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'p_list_02'</span>&#125;).<span class="keyword">find</span>(<span class="string">'li'</span>).<span class="keyword">find</span>(<span class="string">'a'</span>)[<span class="string">'href'</span>]</div><div class="line">    <span class="keyword">print</span>(<span class="keyword">con</span>)</div></pre></td></tr></table></figure>
+<p>我们在对页面进行爬取的时候，爬取的内容被重定向了，显示的内容不是我们想要的：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/26.png" alt="14"></p>
+<p>那么我们该怎样解决这种情况呢？出现这种情况是因为网站加入了反爬虫策略。首先，它的下载链接是异步请求的，主要通过Ajax实现异步请求，大家可以自行去了解ajax是什么，异步请求又是什么。<br>我们可以使用chrome浏览器查看网页源代码，查看Network下的XHR，ajax请求都在这里：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/29.png" alt="15"></p>
+<p>点击这个11504.html?timestamp=150606149934的请求可以看到我们需要的链接就在这个请求的Preview里面：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/30.png" alt="16"></p>
+<p>再看一下Response的内容，响应的内容就是我们想要的东西，是以HTML格式返回的：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/31.png" alt="17"></p>
+<p>我们只需要对这个链接进行请求，然后直接就可以提取我们想要的种子链接。<br>我们可以看到链接是由域名加上电影编号以及一个timestamp参数构成，电影编号是有规律的，电影编号是从1开始的，依次加一。而这个timestamp是一个时刻在变化的参数，它是一个时间戳。关于时间戳的概念大家可以自己去了解。它的这个链接是电影编号加上请求时刻的时间戳。知道规则之后，我们就可以通过相同的方法去构造这种链接。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">time</span></div><div class="line"><span class="keyword">from</span> urllib.parse import urlencode</div><div class="line"> </div><div class="line"><span class="keyword">for</span> i <span class="built_in">in</span> range(<span class="number">1</span>, <span class="number">100</span>):</div><div class="line">    ticks = <span class="built_in">time</span>.<span class="built_in">time</span>()</div><div class="line">    timestamp = int(ticks * <span class="number">1000</span>)</div><div class="line">    <span class="built_in">params</span> = &#123;</div><div class="line">        <span class="string">'timestamp'</span>: timestamp</div><div class="line">    &#125;</div><div class="line">    url = <span class="string">'http://www.btbtdy.com/vidlist/'</span> + <span class="built_in">str</span>(i) + <span class="string">'.html?'</span> + urlencode(<span class="built_in">params</span>)</div><div class="line">    print(url)</div></pre></td></tr></table></figure>
+<p>这里我们导入了time模块，用来构造时间戳，另外从urllib.parse中导入urlencode对链接进行编码。ticks 会得到时间戳，但是返回的是浮点数（1506064260.6314487），根据链接的格式我们需要构造十三位的时间戳，我们通过对我们构造的时间戳乘以1000再取整得到十三位的时间戳，最后把我们这些东西构造成一个完整的url，打印出来可以看到：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/32.png" alt="18"></p>
+<p>从上面运行的结果可以看到，时间戳没有改变，但是我们构造的链接还是可以打开的，通过实际操作我发现它这个timestamp参数并不是严格按照时间戳来的，你只要随便写一个十三位的数字就可以请求成功。<br>这里我们随便点开一个链接可以看到：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/33.png" alt="19"></p>
+<p>这里就得到我们想要的东西，我们再从这里提取我们需要的东西就可以了。</p>
+<blockquote>
+<h3 id="完整代码如下："><a href="#完整代码如下：" class="headerlink" title="完整代码如下："></a>完整代码如下：</h3></blockquote>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python3</div><div class="line"># encoding=utf-<span class="number">8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> <span class="built_in">time</span></div><div class="line"><span class="keyword">import</span> requests</div><div class="line">from bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line">from urllib.parse <span class="keyword">import</span> urlencode</div><div class="line"> </div><div class="line"><span class="keyword">with</span> open(<span class="string">'种子.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> fp:</div><div class="line">    <span class="keyword">for</span> i <span class="built_in">in</span> range(<span class="number">1</span>, <span class="number">11505</span>):</div><div class="line">        headers = &#123;</div><div class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'</span></div><div class="line">        &#125;</div><div class="line">        ticks = <span class="built_in">time</span>.<span class="built_in">time</span>()</div><div class="line">        timestamp = int(ticks * <span class="number">1000</span>)</div><div class="line">        params = &#123;</div><div class="line">            <span class="string">'timestamp'</span>: timestamp</div><div class="line">        &#125;</div><div class="line">        url = <span class="string">'http://www.btbtdy.com/vidlist/'</span> + str(i) + <span class="string">'.html?'</span> + urlencode(params)</div><div class="line">        html = requests.get(url, headers=headers).content</div><div class="line">        soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">        try:</div><div class="line">            <span class="built_in">title</span> = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'p_list_02'</span>&#125;).find(<span class="string">'li'</span>).find(<span class="string">'a'</span>)[<span class="string">'title'</span>]</div><div class="line">            seed = soup.find(<span class="string">'ul'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'p_list_02'</span>&#125;).find(<span class="string">'a'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'d1'</span>&#125;)[<span class="string">'href'</span>]</div><div class="line">            <span class="keyword">data</span> = &#123;</div><div class="line">                <span class="string">'电影名称:'</span>: <span class="built_in">title</span>,</div><div class="line">                <span class="string">'种子链接:'</span>: seed</div><div class="line">            &#125;</div><div class="line">            fp.write(str(<span class="keyword">data</span>)+<span class="string">'\n'</span>)</div><div class="line">            print(<span class="string">'正在下载第%s个种子！'</span> % i)</div><div class="line">        except:</div><div class="line">            pass</div></pre></td></tr></table></figure>
+<p>代码运行效果如下：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/34.png" alt="20"></p>
+<blockquote>
+<h2 id="另辟蹊径"><a href="#另辟蹊径" class="headerlink" title="另辟蹊径"></a>另辟蹊径</h2></blockquote>
+<h3 id="继续分析"><a href="#继续分析" class="headerlink" title="继续分析"></a>继续分析</h3><blockquote>
+<p>这是详情页：<a href="http://www.btbtdy.com/btdy/dy11460.html" target="_blank" rel="external">http://www.btbtdy.com/btdy/dy11460.html</a><br>这是下载页：<a href="http://www.btbtdy.com/down/11460-0-0.html" target="_blank" rel="external">http://www.btbtdy.com/down/11460-0-0.html</a></p>
+</blockquote>
+<p>可以看出来，下载页的链接后面的电影编号跟详情页里面的数字编号是一样的，这样我们就可以通过从详情页中提取电影编号，然后再自己构造下载页，在构造的过程中我发现这个编号是按顺序来的，从1开始，到最新的电影的编号为止，这样我们连主页都不用解析，直接构造下载页面：<br>通过分析下载页面的源代码可以看到，下载页面包括电影名称已经种子链接，我们可以通过下载页面可以直接爬取电影名称以及种子链接：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/27.png" alt="21"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment"># encoding=utf-8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"> </div><div class="line">links = []</div><div class="line"><span class="keyword">for</span> link <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10000</span>):</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        rel_url = <span class="string">'http://www.btbtdy.com/down/'</span> + str(link) + <span class="string">'-0-0.html'</span></div><div class="line">        html = requests.get(rel_url).content</div><div class="line">        soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">        title = soup.find(<span class="string">'h1'</span>).getText()</div><div class="line">        downlist = soup.find(<span class="string">'form'</span>, attrs=&#123;<span class="string">'name'</span>: <span class="string">'form2'</span>, <span class="string">'id'</span>: <span class="string">'form2'</span>&#125;).find(<span class="string">'input'</span>)[<span class="string">'value'</span>]</div><div class="line">        data = &#123;</div><div class="line">            <span class="string">'电影名称:'</span>: title,</div><div class="line">            <span class="string">'种子链接:'</span>: downlist</div><div class="line">        &#125;</div><div class="line">        print(data)</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>上面的代码进行了异常处理，处理的方式就是对异常不处理。运行结果如下：</p>
+<p><img src="http://ovfqn6f2x.bkt.clouddn.com/28.png" alt="22"></p>
+<p>可以看到我们使用上面的21行代码就可以把所有的电影及其种子链接爬取下来。</p>
+<blockquote>
+<h2 id="保存到本地"><a href="#保存到本地" class="headerlink" title="保存到本地"></a>保存到本地</h2></blockquote>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python3</span></div><div class="line"><span class="comment"># encoding=utf-8</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"> </div><div class="line">links = []</div><div class="line"><span class="keyword">with</span> open(<span class="string">'电影种子.txt'</span>, <span class="string">'w+'</span>) <span class="keyword">as</span> fp:</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11471</span>):</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            rel_url = <span class="string">'http://www.btbtdy.com/down/'</span> + str(link) + <span class="string">'-0-0.html'</span></div><div class="line">            html = requests.get(rel_url).content</div><div class="line">            soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</div><div class="line">            title = soup.find(<span class="string">'h1'</span>).getText()</div><div class="line">            downlist = soup.find(<span class="string">'form'</span>, attrs=&#123;<span class="string">'name'</span>: <span class="string">'form2'</span>, <span class="string">'id'</span>: <span class="string">'form2'</span>&#125;).find(<span class="string">'input'</span>)[<span class="string">'value'</span>]</div><div class="line">            data = &#123;</div><div class="line">                <span class="string">'电影名称:'</span>: title,</div><div class="line">                <span class="string">'种子链接:'</span>: downlist</div><div class="line">            &#125;</div><div class="line">            fp.write(str(data)+<span class="string">'\n'</span>)</div><div class="line">            print(data)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><pre><code>这次的爬虫很简单，代码没怎么进行解释，相信大家如果学习过基础知识还是能够看懂的，实在看不懂的可以给我留言，我会解释的。这次的爬虫思路很新奇，思路是十分重要的，特别是在编程上，不同的思路可能给你带来的工作量的差别很大，本次爬虫我采用了两种思路，第一种是普通的思路：从原网页进行解析，一步一步的对目标(下载页面)进行靠拢。这种思路是最简单的思路，当然随着网页的复杂，可能工作量会特别大。第二种思路就是上面用到的思路，因为网页规律性很强，很少会有人给每一个页面进行命名，特别是页面非常多的网站，仔细观察，他们可能区别很小，我们可以直接跳过前面的解析，直接观察目标的特点。
+当然这个思路肯定不适合所有的站点，所以大家的思路还是要活一点，同一个问题多思考一下，在思路上多花点时间完全是值得的，不要看到问题就想都不想的去解决，不要把思维固定了。在思路上花时间完全是值得的，另外无论是怎样的思路，一定要清晰，不然只会把自己搞迷。
+另外，这里涉及到了一些异步请求，ajax，时间戳的知识，我没有进行介绍，大家可以自己去查询一下。这些东西随着你写的爬虫一步步的强大起来，肯定都会遇到的。
+</code></pre></blockquote>
+<hr>
+<h3 id="项目在我的GitHub上，欢迎查看，记得点star哦！"><a href="#项目在我的GitHub上，欢迎查看，记得点star哦！" class="headerlink" title="项目在我的GitHub上，欢迎查看，记得点star哦！"></a><strong>项目在<a href="https://github.com/Tactful-biao/scrapy" target="_blank" rel="external">我的GitHub</a>上，欢迎查看，记得点star哦！</strong></h3><hr>
+<blockquote>
+<p>文章如有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/09/17/爬取《电影天堂》所有电影种子/" title="爬取《电影天堂》所有电影种子">http://www.bbiao.me/2017/09/17/爬取《电影天堂》所有电影种子/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/种子/" rel="tag"># 种子</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/01/爬取糗事百科/" rel="next" title="爬取糗事百科">
+                <i class="fa fa-chevron-left"></i> 爬取糗事百科
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/15/博客迁移/" rel="prev" title="博客迁移">
+                博客迁移 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路永远是第一步"><span class="nav-number">1.</span> <span class="nav-text">思路永远是第一步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析目标网站"><span class="nav-number">1.1.</span> <span class="nav-text">分析目标网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造所有详情页的地址"><span class="nav-number">1.2.</span> <span class="nav-text">构造所有详情页的地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析详情页"><span class="nav-number">1.3.</span> <span class="nav-text">解析详情页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取下载链接"><span class="nav-number">1.4.</span> <span class="nav-text">获取下载链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码如下："><span class="nav-number">1.5.</span> <span class="nav-text">完整代码如下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#另辟蹊径"><span class="nav-number">2.</span> <span class="nav-text">另辟蹊径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#继续分析"><span class="nav-number">2.1.</span> <span class="nav-text">继续分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存到本地"><span class="nav-number">3.</span> <span class="nav-text">保存到本地</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">3.1.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目在我的GitHub上，欢迎查看，记得点star哦！"><span class="nav-number">4.1.</span> <span class="nav-text">项目在我的GitHub上，欢迎查看，记得点star哦！</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

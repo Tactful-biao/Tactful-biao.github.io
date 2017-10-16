@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="WordPress,FireWall,XML-RPC,攻击," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="发现问题 最近两天发现我的博客经常出现404 Not Found的错误，我仔细想了一下不应该啊。因为我刚更换的服务器，1G的内存，对于我这种刚搭建的博客来说，访问量不大，足够用了。可是为什么会出现这种问题呢，遇到问题当然是找解决方法了，在digitalocean的服务器后台发现我的服务器的CPU一直处于高负载的状态：  可是我又没进行什么高消耗的操作，还出现这种情况，我就意识到事情没那么简单，于">
+<meta name="keywords" content="WordPress,FireWall,XML-RPC,攻击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xml-rpc攻击">
+<meta property="og:url" content="http://www.bbiao.me/2017/07/22/xml-rpc攻击/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="发现问题 最近两天发现我的博客经常出现404 Not Found的错误，我仔细想了一下不应该啊。因为我刚更换的服务器，1G的内存，对于我这种刚搭建的博客来说，访问量不大，足够用了。可是为什么会出现这种问题呢，遇到问题当然是找解决方法了，在digitalocean的服务器后台发现我的服务器的CPU一直处于高负载的状态：  可是我又没进行什么高消耗的操作，还出现这种情况，我就意识到事情没那么简单，于">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otgyv5nhv.bkt.clouddn.com/cpu.PNG">
+<meta property="og:image" content="http://otgyv5nhv.bkt.clouddn.com/%E6%94%BB%E5%87%BB.PNG">
+<meta property="og:image" content="http://otgyv5nhv.bkt.clouddn.com/ip.PNG">
+<meta property="og:image" content="http://otgyv5nhv.bkt.clouddn.com/define.PNG">
+<meta property="og:image" content="http://otgyv5nhv.bkt.clouddn.com/cpud.PNG">
+<meta property="og:updated_time" content="2017-10-14T14:20:04.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xml-rpc攻击">
+<meta name="twitter:description" content="发现问题 最近两天发现我的博客经常出现404 Not Found的错误，我仔细想了一下不应该啊。因为我刚更换的服务器，1G的内存，对于我这种刚搭建的博客来说，访问量不大，足够用了。可是为什么会出现这种问题呢，遇到问题当然是找解决方法了，在digitalocean的服务器后台发现我的服务器的CPU一直处于高负载的状态：  可是我又没进行什么高消耗的操作，还出现这种情况，我就意识到事情没那么简单，于">
+<meta name="twitter:image" content="http://otgyv5nhv.bkt.clouddn.com/cpu.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/07/22/xml-rpc攻击/"/>
+
+
+
+
+
+  <title>xml-rpc攻击 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/07/22/xml-rpc攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">xml-rpc攻击</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-22T22:09:02+08:00">
+                2017-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/博客/" itemprop="url" rel="index">
+                    <span itemprop="name">博客</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/07/22/xml-rpc攻击/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/07/22/xml-rpc攻击/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2></blockquote>
+<p>最近两天发现我的博客经常出现404 Not Found的错误，我仔细想了一下不应该啊。因为我刚更换的服务器，1G的内存，对于我这种刚搭建的博客来说，访问量不大，足够用了。可是为什么会出现这种问题呢，遇到问题当然是找解决方法了，在digitalocean的服务器后台发现我的服务器的CPU一直处于高负载的状态：</p>
+<p><img src="http://otgyv5nhv.bkt.clouddn.com/cpu.PNG" alt="1"></p>
+<p>可是我又没进行什么高消耗的操作，还出现这种情况，我就意识到事情没那么简单，于是去查看系统日志，发现果然不是那么简单（日志文件内都是如下内容）：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">2017/07/22 09:20:39 [<span class="builtin-name">error</span>] 1302#0: <span class="number">*22381</span> connect() <span class="keyword">to</span> unix:/var/run/php5-fpm.sock failed (11:<span class="built_in"> Resource </span>temporarily unavailable) <span class="keyword">while</span>      connecting <span class="keyword">to</span> upstream, client: 185.188.204.14, server: bbiao.me, request: <span class="string">"POST /xmlrpc.php HTTP/1.0"</span>, upstream: <span class="string">"fastcgi://unix:/var/r     un/php5-fpm.sock:"</span>, host: <span class="string">"128.199.131.59"</span></div><div class="line">2017/07/22 09:20:39 [<span class="builtin-name">error</span>] 1302#0: <span class="number">*22383</span> connect() <span class="keyword">to</span> unix:/var/run/php5-fpm.sock failed (11:<span class="built_in"> Resource </span>temporarily unavailable) <span class="keyword">while</span>      connecting <span class="keyword">to</span> upstream, client: 185.188.204.9, server: bbiao.me, request: <span class="string">"POST /xmlrpc.php HTTP/1.0"</span>, upstream: <span class="string">"fastcgi://unix:/var/ru     n/php5-fpm.sock:"</span>, host: <span class="string">"128.199.131.59"</span></div><div class="line">2017/07/22 09:20:39 [<span class="builtin-name">error</span>] 1302#0: <span class="number">*22385</span> connect() <span class="keyword">to</span> unix:/var/run/php5-fpm.sock failed (11:<span class="built_in"> Resource </span>temporarily unavailable) <span class="keyword">while</span>      connecting <span class="keyword">to</span> upstream, client: 185.188.204.15, server: bbiao.me, request: <span class="string">"POST /xmlrpc.php HTTP/1.0"</span>, upstream: <span class="string">"fastcgi://unix:/var/r     un/php5-fpm.sock:"</span>, host: <span class="string">"128.199.131.59"</span></div><div class="line">2017/07/22 09:20:39 [<span class="builtin-name">error</span>] 1302#0: <span class="number">*22387</span> connect() <span class="keyword">to</span> unix:/var/run/php5-fpm.sock failed (11:<span class="built_in"> Resource </span>temporarily unavailable) <span class="keyword">while</span>      connecting <span class="keyword">to</span> upstream, client: 185.188.204.20, server: bbiao.me, request: <span class="string">"POST /xmlrpc.php HTTP/1.0"</span>, upstream: <span class="string">"fastcgi://unix:/var/r     un/php5-fpm.sock:"</span>, host: <span class="string">"128.199.131.59"</span></div><div class="line">2017/07/22 09:20:39 [<span class="builtin-name">error</span>] 1302#0: <span class="number">*22389</span> connect() <span class="keyword">to</span> unix:/var/run/php5-fpm.sock failed (11:<span class="built_in"> Resource </span>temporarily unavailable) <span class="keyword">while</span>      connecting <span class="keyword">to</span> upstream, client: 185.188.204.8, server: bbiao.me, request: <span class="string">"POST /xmlrpc.php HTTP/1.0"</span>, upstream: <span class="string">"fastcgi://unix:/var/ru     n/php5-fpm.sock:"</span>, host: <span class="string">"128.199.131.59"</span></div></pre></td></tr></table></figure></p>
+<p><img src="http://otgyv5nhv.bkt.clouddn.com/%E6%94%BB%E5%87%BB.PNG" alt="2"></p>
+<p>查询了一下，发现自己的服务器正在被攻击，可能不是专门的指定的攻击，更像是一种批量的攻击，毕竟我和别人无缘无仇的，之所以攻击我，可能是想拿下我的服务器，然后把我的服务器当做肉鸡再对其他的地方进行攻击。既然知道别人在攻击咱们，咱们当然要做点什么了，至少要阻止它对我们的进一步攻击吧。</p>
+<blockquote>
+<h2 id="XML-RPC攻击"><a href="#XML-RPC攻击" class="headerlink" title="XML-RPC攻击"></a>XML-RPC攻击</h2></blockquote>
+<p>首先，先简单介绍一下XML-RPC拒绝服务攻击是什么吧<br>xmlrpc 是 WordPress 中进行远程调用的接口，而使用 xmlrpc 调用接口进行账号爆破在很早之前就被提出并加以利用。近日 SUCURI 发布文章介绍了如何利用 xmlrpc 调用接口中的 system.multicall 来提高爆破效率，使得成千上万次的帐号密码组合尝试能在一次请求完成，极大的压缩请求次数，在一定程度上能够躲避日志的检测。<br>早在2012 年 12 月 17 日一些采用 PHP 的知名博客程序 WordPress被曝光存在严重的漏洞，该漏洞覆盖WordPress 全部已发布的版本（包括WordPress 3.8.1）。该漏洞的 WordPress 扫描工具也在很多论坛和网站发布出来。工具可以利用 WordPress 漏洞来进行扫描，也可以发起DDoS 攻击。经过测试，漏洞影响存在 xmlrpc.php 文件的全部版本。</p>
+<blockquote>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3></blockquote>
+<p>WordPress 中关于 xmlrpc 服务的定义代码主要位于 wp-includes/class-IXR.php 和 wp-includes/class-wp-xmlrpc-server.php 中。基类 IXR_Server 中定义了三个内置的调用方法，分别为 system.getCapabilities，system.listMethods 和 system.multicall，其调用映射位于 IXR_Server 基类定义中：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCallbacks</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">$this</span>-&gt;callbacks[<span class="string">'system.getCapabilities'</span>] = <span class="string">'this:getCapabilities'</span>;</div><div class="line">    <span class="keyword">$this</span>-&gt;callbacks[<span class="string">'system.listMethods'</span>] = <span class="string">'this:listMethods'</span>;</div><div class="line">    <span class="keyword">$this</span>-&gt;callbacks[<span class="string">'system.multicall'</span>] = <span class="string">'this:multiCall'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而基类在初始化时，调用 setCallbacks() 绑定了调用映射关系：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">( $callbacks = false, $data = false, $wait = false )</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">$this</span>-&gt;setCapabilities();</div><div class="line">    <span class="keyword">if</span> ($callbacks) &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;callbacks = $callbacks;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">$this</span>-&gt;setCallbacks();  <span class="comment">// 绑定默认的三个基本调用映射</span></div><div class="line">    <span class="keyword">if</span> (!$wait) &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;serve($data);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再来看看 system.multicall 对应的处理函数：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">multiCall</span><span class="params">($methodcalls)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">// See http://www.xmlrpc.com/discuss/msgReader$1208</span></div><div class="line">    $return = <span class="keyword">array</span>();</div><div class="line">    <span class="keyword">foreach</span> ($methodcalls <span class="keyword">as</span> $call) &#123;</div><div class="line">        $method = $call[<span class="string">'methodName'</span>];</div><div class="line">        $params = $call[<span class="string">'params'</span>];</div><div class="line">        <span class="keyword">if</span> ($method == <span class="string">'system.multicall'</span>) &#123;</div><div class="line">            $result = <span class="keyword">new</span> IXR_Error(<span class="number">-32600</span>, <span class="string">'Recursive calls to system.multicall are forbidden'</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $result = <span class="keyword">$this</span>-&gt;call($method, $params);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (is_a($result, <span class="string">'IXR_Error'</span>)) &#123;</div><div class="line">            $return[] = <span class="keyword">array</span>(</div><div class="line">                <span class="string">'faultCode'</span> =&gt; $result-&gt;code,</div><div class="line">                <span class="string">'faultString'</span> =&gt; $result-&gt;message</div><div class="line">            );</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            $return[] = <span class="keyword">array</span>($result);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $return;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以从代码中看出，程序会解析请求传递的 XML，遍历多重调用中的每一个接口调用请求，并会将最终有调用的结果合在一起返回给请求端。<br>通过阅读 WordPress 中 xmlrpc 相关处理的代码，能大量的 xmlrpc 调用都验证了用户名和密码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ( !$user = <span class="keyword">$this</span>-&gt;login($username, $password) )</div><div class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;error;</div></pre></td></tr></table></figure></p>
+<p>这里是用参数传递最少获取信息最直接的 wp.getUsersBlogs 进行测试，将两次帐号密码尝试包含在同一次请求里，构造 XML 请求内容为：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">methodCall</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">methodName</span>&gt;</span>system.multicall<span class="tag">&lt;/<span class="name">methodName</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">params</span>&gt;</span><span class="tag">&lt;<span class="name">param</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">struct</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>methodName<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>wp.getUsersBlogs<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>params<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>admin<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>admin888<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">struct</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">      </div><div class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">struct</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>methodName<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>wp.getUsersBlogs<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>params<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>guest<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>test<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">struct</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">param</span>&gt;</span><span class="tag">&lt;/<span class="name">params</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">methodCall</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>将上面包含两个子调用的 XML 请求发送至 xmlrpc 服务端入口，若目标开启了 xmlrpc 服务会返回类似如下的信息：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">methodResponse</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">params</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">param</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">array</span>&gt;</span><span class="tag">&lt;<span class="name">data</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">struct</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>isAdmin<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">boolean</span>&gt;</span>1<span class="tag">&lt;/<span class="name">boolean</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>url<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>http://172.16.96.130/xampp/wordpress-4.3.1/<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>blogid<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>1<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>blogName<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>WordPress 4.3.1<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>xmlrpc<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>http://172.16.96.130/xampp/wordpress-4.3.1/xmlrpc.php<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struct</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">struct</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>faultCode<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">int</span>&gt;</span>403<span class="tag">&lt;/<span class="name">int</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">member</span>&gt;</span><span class="tag">&lt;<span class="name">name</span>&gt;</span>faultString<span class="tag">&lt;/<span class="name">name</span>&gt;</span><span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>用户名或密码不正确。<span class="tag">&lt;/<span class="name">string</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span><span class="tag">&lt;/<span class="name">member</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">struct</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">data</span>&gt;</span><span class="tag">&lt;/<span class="name">array</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">param</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">params</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">methodResponse</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>从结果中可以看到在同一次请求里面处理了两种帐号密码组合，并以集中形式将结果返回，通过该种方式可以极大地提高帐号爆破效率。</p>
+<blockquote>
+<h3 id="简而言之"><a href="#简而言之" class="headerlink" title="简而言之"></a>简而言之</h3></blockquote>
+<p>简单点说，就是有人通过xml-rpc漏洞再对我的WordPress管理员密码进行爆破，爆破成功的话，我的WordPress就会沦为僵尸机，这对我来说，是很糟糕的事情。查询了一些解决办法。<br>网上给出的办法主要有以下三种：</p>
+<ol>
+<li>通过配置 Apache、Nginx 等 Web 服务器来限制 xmlrpc.php 文件的访问;</li>
+<li>在不影响站点运行的情况下可以直接删除 xmlrpc.php 文件;</li>
+<li>从官方插件库中安装JetPack 并启用;</li>
+<li>添加代码 add_filter(‘xmlrpc_enabled’, ‘__return_false’); 至 WordPress 配置文件 wp-config.php;<br>上面的方法，前三种我都试了，发现对我目前的情况来看，并不起作用，可能是我的打开方式不对。我观察了一下攻击者的IP地址，主要是这一个范围（185.188.204.7/12）的IP地址在频繁的对我的服务器通过XML-RPC进行POST请求（1秒钟4~5次），难怪我的服务器受不了，我就1G的内存，怎么能够承受得了这么频繁请求 :mad: 。查了一下，发现这一个网段的IP地址都是属于俄罗斯的：</li>
+</ol>
+<p><img src="http://otgyv5nhv.bkt.clouddn.com/ip.PNG" alt="3"></p>
+<p>一想到俄罗斯的黑客这么厉害，我就有点紧张。但是也没有办法啊，别人在攻击自己，不想被攻陷，只能找解决办法呀。<br>网上提供的办法，都没有解决我的问题，后来我发现这些进攻的IP都是一个网段的，我能不能把这一个网段的IP都封掉，禁止它对我们的服务器进行访问，然后我就想到了防火墙。通过防火墙，把这一个网段的IP都封掉，拒绝给这个网段的IP提供服务。于是就开始配置防火墙。</p>
+<blockquote>
+<p>启动防火墙<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service iptables <span class="literal">start</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>提示iptables：unrecognized service的错误。</p>
+<blockquote>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3></blockquote>
+<p>解决思路很明了，就是首先确定linux是否安装了 iptables 。<br><figure class="highlight plain"><figcaption><span>iptables status```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">如果已经安装的话，会显示安装路径，一般都会默认安装的吧。</div><div class="line">如果没有安装的话，通过如下命令进行安装：</div></pre></td></tr></table></figure></p>
+<p>yum install iptables #CentOS系统<br>apt-get install iptables #Debian系统<br><figure class="highlight tp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">在ubuntu中由于不存在 /etc/init.d/iptales文件，所以无法使用service等命令来启动iptables，需要用modprobe命令。</div><div class="line"></div><div class="line">&gt;启动iptables：</div><div class="line">modprobe ip_tables</div><div class="line">关闭iptables（关闭命令要比启动复杂）</div><div class="line">iptables -F</div><div class="line">iptables -<span class="keyword">X</span></div><div class="line">iptables -<span class="keyword">Z</span></div><div class="line">iptables -<span class="keyword">P</span> INPUT <span class="keyword">ACC</span>EPT</div><div class="line">iptables -<span class="keyword">P</span> OUTPUT <span class="keyword">ACC</span>EPT</div><div class="line">iptables -<span class="keyword">P</span> FORWARD <span class="keyword">ACC</span>EPT</div><div class="line">modprobe -r ip_tables</div><div class="line"></div><div class="line">依次执行以上命令即可关闭iptables，否则在执行modproble -r ip_tables时将会提示</div><div class="line">FATAL: Module ip_tables is in use.</div><div class="line">开启之后就可以通过防火墙对IP进行封杀了。</div><div class="line">封杀单个IP：</div><div class="line">```iptables -I INPUT -s ***.***.***.*** -j DROP</div></pre></td></tr></table></figure></p>
+<p>解封这个IP：<br><figure class="highlight plain"><figcaption><span>-D INPUT -s ***.***.***.*** -j DROP```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">封杀一个网段的IP：</div><div class="line">```iptables -I INPUT -s 121.0.0.0/8 -j DROP</div></pre></td></tr></table></figure></p>
+<p><code>iptables -F   全部解封</code><br>通过命令封杀掉这一个网段的IP地址，通过iptables -L 可以查看你封掉的IP都有哪些：</p>
+<p><img src="http://otgyv5nhv.bkt.clouddn.com/define.PNG" alt="4"></p>
+<p>再去查看CPU发现，CPU已经开始恢复正常了,日志文件也没有出现新的攻击动态了。：</p>
+<p><img src="http://otgyv5nhv.bkt.clouddn.com/cpud.PNG" alt="5"></p>
+<blockquote>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3></blockquote>
+<ul>
+<li>：<a href="https://www.digitalocean.com/community/tutorials/how-to-protect-wordpress-from-xml-rpc-attacks-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-protect-wordpress-from-xml-rpc-attacks-on-ubuntu-14-04</a></li>
+<li>：<a href="http://rickgray.me/2015/10/09/wordpress-xmlrpc-brute-force-in-one-request.html" target="_blank" rel="external">http://rickgray.me/2015/10/09/wordpress-xmlrpc-brute-force-in-one-request.html</a></li>
+<li>：<a href="http://www.freebuf.com/vuls/81331.html" target="_blank" rel="external">http://www.freebuf.com/vuls/81331.html</a></li>
+<li>：<a href="http://blog.csdn.net/feeltouch/article/details/21830541" target="_blank" rel="external">http://blog.csdn.net/feeltouch/article/details/21830541</a></li>
+</ul>
+<blockquote>
+<p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/07/22/xml-rpc攻击/" title="xml-rpc攻击">http://www.bbiao.me/2017/07/22/xml-rpc攻击/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WordPress/" rel="tag"># WordPress</a>
+          
+            <a href="/tags/FireWall/" rel="tag"># FireWall</a>
+          
+            <a href="/tags/XML-RPC/" rel="tag"># XML-RPC</a>
+          
+            <a href="/tags/攻击/" rel="tag"># 攻击</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/21/使用python编写天气查询小程序/" rel="next" title="使用python编写天气查询小程序">
+                <i class="fa fa-chevron-left"></i> 使用python编写天气查询小程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/23/使用Python对账单进行分析/" rel="prev" title="使用Python对账单进行分析">
+                使用Python对账单进行分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#发现问题"><span class="nav-number">1.</span> <span class="nav-text">发现问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML-RPC攻击"><span class="nav-number">2.</span> <span class="nav-text">XML-RPC攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理分析"><span class="nav-number">2.1.</span> <span class="nav-text">原理分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简而言之"><span class="nav-number">2.2.</span> <span class="nav-text">简而言之</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决思路"><span class="nav-number">2.3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">2.4.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
