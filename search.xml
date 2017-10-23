@@ -27,6 +27,7 @@
 <li>docopt 模块: 命令行参数解释器</li>
 <li>prettytable 模块: 将输出内容如表格方式整齐输出</li>
 <li>colorama 模块: 命令行上色函数</li>
+<li>setup 模块: python的构建工具</li>
 <li>系统环境: Ubuntu 16.04</li>
 <li>python 环境: python 3.5</li>
 </ul>
@@ -1316,9 +1317,9 @@
             
             <tag> Python </tag>
             
-            <tag> 数据分析 </tag>
-            
             <tag> Matplotlib </tag>
+            
+            <tag> 数据分析 </tag>
             
         </tags>
         
@@ -1418,11 +1419,11 @@
         
         <tags>
             
-            <tag> Mateplotlib </tag>
-            
             <tag> Python </tag>
             
             <tag> 数据分析 </tag>
+            
+            <tag> Mateplotlib </tag>
             
         </tags>
         
@@ -2020,11 +2021,11 @@
         
         <tags>
             
+            <tag> 博客 </tag>
+            
             <tag> 总结 </tag>
             
             <tag> 感悟 </tag>
-            
-            <tag> 博客 </tag>
             
         </tags>
         
