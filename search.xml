@@ -117,6 +117,10 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2></blockquote>
 <p>这个程序不是很难，通过这个程序使我掌握了docopt、prettytable、colorama、setup的使用，感觉收获还是很大的。<br>希望通过这个程序对你也有所提升。</p>
 <blockquote>
+<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3></blockquote>
+<p>完整代码我放在我的GitHub上了，感兴趣的朋友可以参考一下,记得点star哦！</p>
+<p><a href="https://github.com/Tactful-biao/scrapy/tree/master/12306" target="_blank" rel="external">项目地址</a></p>
+<blockquote>
 <p>文章如有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
 </blockquote>
 ]]></content>
@@ -1414,9 +1418,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Mateplotlib </tag>
+            
+            <tag> Python </tag>
             
             <tag> 数据分析 </tag>
             
@@ -1759,11 +1763,11 @@
             
             <tag> vps </tag>
             
+            <tag> WordPress </tag>
+            
             <tag> Lamp </tag>
             
             <tag> Lemp </tag>
-            
-            <tag> WordPress </tag>
             
             <tag> 经验 </tag>
             
@@ -1851,11 +1855,11 @@
         
         <tags>
             
-            <tag> WordPress </tag>
-            
             <tag> Apache </tag>
             
             <tag> LEMP </tag>
+            
+            <tag> WordPress </tag>
             
             <tag> 博客搭建 </tag>
             
@@ -2108,9 +2112,9 @@
         
         <tags>
             
-            <tag> WordPress </tag>
-            
             <tag> LEMP </tag>
+            
+            <tag> WordPress </tag>
             
             <tag> Nginx </tag>
             

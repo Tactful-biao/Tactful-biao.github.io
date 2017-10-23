@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://www.bbiao.me/2017/10/23/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E8%AF%A2%E7%81%AB%E8%BD%A6%E7%A5%A8/</loc>
-    <lastmod>2017-10-23T13:31:20.421Z</lastmod>
+    <lastmod>2017-10-23T13:39:15.639Z</lastmod>
     <data>
         <display>
         <title>命令行查询火车票</title>
@@ -170,9 +170,9 @@
         <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</title>
         <pubTime>2017-07-09T14:21:41.000Z</pubTime>
         
-        <tag>WordPress</tag>
-         
         <tag>LEMP</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>Nginx</tag>
          
@@ -244,11 +244,11 @@
         
         <tag>vps</tag>
          
+        <tag>WordPress</tag>
+         
         <tag>Lamp</tag>
          
         <tag>Lemp</tag>
-         
-        <tag>WordPress</tag>
          
         <tag>经验</tag>
          
@@ -404,9 +404,9 @@
         <title>使用Python对账单进行分析</title>
         <pubTime>2017-07-23T06:54:42.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>Mateplotlib</tag>
+         
+        <tag>Python</tag>
          
         <tag>数据分析</tag>
          
@@ -539,11 +539,11 @@
         <title>使用linux-apache-mysql-php-lamp搭建wordpress</title>
         <pubTime>2017-07-16T05:24:36.000Z</pubTime>
         
-        <tag>WordPress</tag>
-         
         <tag>Apache</tag>
          
         <tag>LEMP</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>博客搭建</tag>
          
