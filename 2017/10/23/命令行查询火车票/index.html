@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,12306," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="简介 最近一直在找一些Python相关的练手项目，只有不断的做项目才能够对知识有更加牢固的掌握。找到了一个关于查询火车票余票的小项目，就拿来练练手，由于项目比较小，所以作为一个练手项目还是十分不错的。  思路 编程最重要的就是思路，思路一定要清晰，在思路上花时间是值得的。  从12306网站上获取它的API接口 对它的接口进行请求，对获得的数据进行处理 提取我们想要的内容  上面就是我们的总的一">
+<meta name="keywords" content="Python,12306">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行查询火车票">
+<meta property="og:url" content="http://www.bbiao.me/2017/10/23/命令行查询火车票/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="简介 最近一直在找一些Python相关的练手项目，只有不断的做项目才能够对知识有更加牢固的掌握。找到了一个关于查询火车票余票的小项目，就拿来练练手，由于项目比较小，所以作为一个练手项目还是十分不错的。  思路 编程最重要的就是思路，思路一定要清晰，在思路上花时间是值得的。  从12306网站上获取它的API接口 对它的接口进行请求，对获得的数据进行处理 提取我们想要的内容  上面就是我们的总的一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/11.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/12.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/13.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/18.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/19.png">
+<meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/20.png">
+<meta property="og:updated_time" content="2017-10-23T13:31:20.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行查询火车票">
+<meta name="twitter:description" content="简介 最近一直在找一些Python相关的练手项目，只有不断的做项目才能够对知识有更加牢固的掌握。找到了一个关于查询火车票余票的小项目，就拿来练练手，由于项目比较小，所以作为一个练手项目还是十分不错的。  思路 编程最重要的就是思路，思路一定要清晰，在思路上花时间是值得的。  从12306网站上获取它的API接口 对它的接口进行请求，对获得的数据进行处理 提取我们想要的内容  上面就是我们的总的一">
+<meta name="twitter:image" content="http://oxwgzg29g.bkt.clouddn.com/11.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.bbiao.me/2017/10/23/命令行查询火车票/"/>
+
+
+
+
+
+  <title>命令行查询火车票 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7d52b51614c44e9f6b49bfa3c263ed8a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.bbiao.me/2017/10/23/命令行查询火车票/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="孙士标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">命令行查询火车票</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T21:29:03+08:00">
+                2017-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/10/23/命令行查询火车票/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/10/23/命令行查询火车票/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,136
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2></blockquote>
+<p>最近一直在找一些Python相关的练手项目，只有不断的做项目才能够对知识有更加牢固的掌握。找到了一个关于查询火车票余票的小项目，就拿来练练手，由于项目比较小，所以作为一个练手项目还是十分不错的。</p>
+<blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2></blockquote>
+<p>编程最重要的就是思路，思路一定要清晰，在思路上花时间是值得的。</p>
+<ul>
+<li>从12306网站上获取它的API接口</li>
+<li>对它的接口进行请求，对获得的数据进行处理</li>
+<li>提取我们想要的内容</li>
+</ul>
+<p>上面就是我们的总的一个思路。下面就是把大的思想划分成小的功能，逐步进行实现。</p>
+<blockquote>
+<h2 id="逐步实现"><a href="#逐步实现" class="headerlink" title="逐步实现"></a>逐步实现</h2></blockquote>
+<p>下面我们就一步步的来实现我们的程序。</p>
+<blockquote>
+<h3 id="用到的模块"><a href="#用到的模块" class="headerlink" title="用到的模块"></a>用到的模块</h3></blockquote>
+<ul>
+<li>requests 模块: 网络请求的库</li>
+<li>docopt 模块: 命令行参数解释器</li>
+<li>prettytable 模块: 将输出内容如表格方式整齐输出</li>
+<li>colorama 模块: 命令行上色函数</li>
+<li>系统环境: Ubuntu 16.04</li>
+<li>python 环境: python 3.5</li>
+</ul>
+<p>系统环境可以根据自己的实际来选择不同的操作系统应该都可以正确执行，上面这些模块就是我们接下来主要用到的模块，在下面的文章中，我们不仔细介绍具体模块的使用方法，不理解的可以留言或者自己百度也可以，我相信这样你能记得更牢固。</p>
+<blockquote>
+<h3 id="获得接口并且请求接口"><a href="#获得接口并且请求接口" class="headerlink" title="获得接口并且请求接口"></a>获得接口并且请求接口</h3></blockquote>
+<p>12306 官网:<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="external">https://kyfw.12306.cn/otn/leftTicket/init</a></p>
+<p>使用Chrome浏览器，打开12306官网，F12，选择出发地、目的地以及日期，点击查询，从下面的NetWork栏，可以看到它的数据接口是：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="regexp">//</span>kyfw.<span class="number">12306</span>.cn<span class="regexp">/otn/</span>leftTicket<span class="regexp">/query?leftTicketDTO.train_date=2017-11-10&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT</span></div></pre></td></tr></table></figure>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/11.png" alt="1"></p>
+<p>数据返回的是json格式的，每列火车对应一条json数据。只不过返回的内容十分的嘈杂，我们需要从返回的数据中提取出我们需要的内容。<br>这里我们就得到了我们需要的API。</p>
+<p>我们暂时先不分析这个API，我们先对这个API进行请求看看返回的内容是什么。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from requests<span class="selector-class">.packages</span><span class="selector-class">.urllib3</span><span class="selector-class">.exceptions</span> import InsecureRequestWarning</div><div class="line"></div><div class="line">requests<span class="selector-class">.packages</span><span class="selector-class">.urllib3</span><span class="selector-class">.disable_warnings</span>(InsecureRequestWarning)</div><div class="line"></div><div class="line">url = <span class="string">'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date=2017-11-10&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT'</span></div><div class="line">s = requests.get(url, verify=False)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(s.json()</span></span>)</div></pre></td></tr></table></figure>
+<p>上面的代码就是对12306的这个余票的API进行了请求，大家知道12306的证书是自己颁发的，浏览器不认。要想对它进行requests请求，必须在请求的时候加上verify=False,默认为True，这样就会忽略证书。另外我们导入的exceptions模块是处理异常信息的，如果不加上的话。会显示如下错误：/usr/local/lib/python3.5/dist-packages/urllib3/connectionpool.py:852: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: <a href="https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings" target="_blank" rel="external">https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings</a><br>  InsecureRequestWarning)，加上之后就不会显示这个错误了。如果导入这个模块出现问题的话，建议把requests换成版本2.17.3</p>
+<p>我们来看一下我们获得的数据：</p>
+<blockquote>
+<p>{<br>  “validateMessagesShowId”: “_validatorMessage”,<br>  “status”: true,<br>  “httpstatus”: 200,<br>  “data”: {<br>    “result”: [<br>      “aSRB3lfB6Mz%2FLafQ6X4JF1mIzb%2F5U%2F%2BDiKDDDrF4D%2F0umLHjuqsgduKSCdskDh2dI60zPanx2XWl%0AFMYzqHdjYZn3lp44kgCYPJrkVpruig2zfcLU6p6N%2BoKEE8XXNiFo5VLBNvX4oQ3SYHK6KALA4Z0C%0AyBJmqV8gyK8kZBhsAebwDpYHo0qGPEP6i6MX9oLwXFsOGtjhpZyedQ4Fk6UKqoBvjOHiu84B3GtN%0AbvLUhdL%2F%2Fi6%2F|预订|240000G1010D|G101|VNP|AOH|VNP|AOH|06:43|12:39|05:56|Y|2K4q7e00dHCBKBkBXUoLkJvNCxC5z%2Fx3dqGAR%2BKRNj6oJADq|20171110|3|P2|01|11|0|0|||||||||||有|有|20||O0M090|OM9”,  “flag”: “1”,<br>    “map”: {<br>      “AOH”: “上海虹桥”,<br>      “BJP”: “北京”,<br>      “VNP”: “北京南”,<br>      “SHH”: “上海”<br>    }<br>  },<br>  “messages”: [],<br>  “validateMessages”: {}<br>} </p>
+</blockquote>
+<p>考虑到篇幅的问题，这里我只选取了一小部分数据，可以看到每一列火车余票的信息都在这样的一条数据里面，扎一看乱七八糟的一片，感觉无从下手。这时候一定要有耐心，要仔细。</p>
+<blockquote>
+<h3 id="分析数据，提取内容"><a href="#分析数据，提取内容" class="headerlink" title="分析数据，提取内容"></a>分析数据，提取内容</h3></blockquote>
+<p>从上面杂乱无章的数据中提取我们想要的内容是一个体力活，需要仔细观察，认真思考。可以看到相邻的段都有一个”|”,这就是一个突破点，Python有一个split方法，可以把数据按指定条件进行分割，我们就用这个方法，把杂乱无章的数据分割成有规律的数据块。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from requests<span class="selector-class">.packages</span><span class="selector-class">.urllib3</span><span class="selector-class">.exceptions</span> import InsecureRequestWarning</div><div class="line"></div><div class="line">requests<span class="selector-class">.packages</span><span class="selector-class">.urllib3</span><span class="selector-class">.disable_warnings</span>(InsecureRequestWarning)</div><div class="line"></div><div class="line">url = <span class="string">'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date=2017-11-10&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT'</span></div><div class="line">s = requests.get(url, verify=False).json()</div><div class="line">data = s[<span class="string">'data'</span>][<span class="string">'result'</span>]</div><div class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> data:</div><div class="line">    print(<span class="selector-tag">i</span>.split(<span class="string">'|'</span>))</div></pre></td></tr></table></figure>
+<p>我们需要的数据在json格式下，在’data’的’result’里面，因为data包含许多条数据，所以需要使用for循环进行逐条访问，通过上面的代码，就可以把杂乱无章的数据分割成小的数据块，结果如下：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="symbol">'aSRB3l6i6MvLUhdL%2F%2Fi6%2F</span>', <span class="symbol">'预订</span>', <span class="symbol">'240000G1010D</span>', <span class="symbol">'G101</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'06:43</span>', <span class="symbol">'12:39</span>', <span class="symbol">'05:56</span>', <span class="symbol">'Y</span>', <span class="symbol">'2K4q7e00dHCBKBkBXUoLkJvNCxC5z%2Fx3dqGAR%2BKRNj6oJADq</span>', <span class="symbol">'20171110</span>', <span class="symbol">'3</span>', <span class="symbol">'P2</span>', <span class="symbol">'01</span>', <span class="symbol">'11</span>', <span class="symbol">'0</span>', <span class="symbol">'0</span>', '', '', '', '', '', '', '', '', '', '', <span class="symbol">'有</span>', <span class="symbol">'有</span>', <span class="symbol">'20</span>', '', <span class="symbol">'O0M090</span>', <span class="symbol">'OM9</span>']</div><div class="line">[<span class="symbol">'vP6ccFiPo7CIHX9rsUDgg3y60dq5</span>', <span class="symbol">'预订</span>', <span class="symbol">'24000000G503</span>', <span class="symbol">'G5</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'07:00</span>', <span class="symbol">'11:34</span>', <span class="symbol">'04:34</span>', <span class="symbol">'Y</span>', <span class="symbol">'E%2BKOgellBQOuoFy3ooqgD1IiyztPgk2GP%2BrKNB8zgp8NLzS9</span>', <span class="symbol">'20171110</span>', <span class="symbol">'3</span>', <span class="symbol">'P2</span>', <span class="symbol">'01</span>', <span class="symbol">'05</span>', <span class="symbol">'0</span>', <span class="symbol">'0</span>', '', '', '', '', '', '', '', '', '', '', <span class="symbol">'有</span>', <span class="symbol">'9</span>', <span class="symbol">'9</span>', '', <span class="symbol">'O0M090</span>', <span class="symbol">'OM9</span>']</div><div class="line">[<span class="symbol">'ykb6BDSb5WqzjAheDW8FxhnuUkqLO</span>', <span class="symbol">'预订</span>', <span class="symbol">'240000G1050K</span>', <span class="symbol">'G105</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'VNP</span>', <span class="symbol">'AOH</span>', <span class="symbol">'07:35</span>', <span class="symbol">'13:11</span>', <span class="symbol">'05:36</span>', <span class="symbol">'Y</span>', <span class="symbol">'zZHDvkuUo0QIfwYrdqP%2FndR3PG%2FVmePNTN8vgl85mkQkHs8f</span>', <span class="symbol">'20171110</span>', <span class="symbol">'3</span>', <span class="symbol">'P4</span>', <span class="symbol">'01</span>', <span class="symbol">'09</span>', <span class="symbol">'0</span>', <span class="symbol">'0</span>', '', '', '', '', '', '', '', '', '', '', <span class="symbol">'有</span>', <span class="symbol">'19</span>', <span class="symbol">'5</span>', '', <span class="symbol">'O0M090</span>', <span class="symbol">'OM9</span>']</div></pre></td></tr></table></figure>
+<p>考虑到篇幅我把部分数据截短了，现在再来看我们的数据是不是清晰了许多，我们需要的数据在哪里都可以清楚的看到。</p>
+<blockquote>
+<h3 id="分析与构造网址"><a href="#分析与构造网址" class="headerlink" title="分析与构造网址"></a>分析与构造网址</h3></blockquote>
+<p>上面我们请求的网址是固定的，在实际应用中这样肯定是不行的，如果程序只能查询固定地方的余票信息，那么这个程序就是一个“死”的，下面我们就构造动态请求，可以根据你的需要进行请求。</p>
+<p>首先我们来分析一下这个网址：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="regexp">//</span>kyfw.<span class="number">12306</span>.cn<span class="regexp">/otn/</span>leftTicket<span class="regexp">/query?leftTicketDTO.train_date=2017-11-10&amp;leftTicketDTO.from_station=BJP&amp;leftTicketDTO.to_station=SHH&amp;purpose_codes=ADULT</span></div></pre></td></tr></table></figure>
+<p>这个网址分四部分：</p>
+<ol>
+<li>固定的部分:<code>https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.</code></li>
+<li>出行日期部分: train_date=2017-11-10&amp;leftTicketDTO.</li>
+<li>始发站部分: from_station=BJP&amp;leftTicketDTO.</li>
+<li>终点站部分: to_station=SHH&amp;purpose_codes=ADULT</li>
+</ol>
+<p>可以把url分这四部分，我们需要动态构造的是2,3,4部分。出发日期格式很简单，主要是始发站和终点站部分，它把城市名称转化成了相应的code，我们需要知道它的转换规则，它的转换规则在它的网站上肯定是有的。我们去找一下。</p>
+<p>果然在请求的js里面有一个stations_name 的js，打开它就是所有城市对应的code：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/12.png" alt="3"></p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/13.png" alt="4"></p>
+<p>我们写一个简单的脚本，把这些内容提取出来并保存到列表里面：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.9018'</span></div><div class="line">    r = requests.get(url, verify=<span class="keyword">False</span>)</div><div class="line">    pattern = <span class="string">u'([\u4e00-\u9fa5]+)\|([A-Z]+)'</span></div><div class="line">    stations = dict(re.findall(pattern, r.text))</div><div class="line">    print(stations.keys())</div><div class="line">    print(stations.values())</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>运行之后会显示两个字典，每个字典内包含一个列表一个是城市名称，另外一个是城市代码，是一一对应关系。这样我们就把城市和对应的代码提取出来了。</p>
+<p>我们可以通过传入参数(日期，出发站，终点站)就可以实现动态查找。</p>
+<blockquote>
+<h3 id="docopt的使用"><a href="#docopt的使用" class="headerlink" title="docopt的使用"></a>docopt的使用</h3></blockquote>
+<p>docopt 是Python的命令行参数解释器，具体使用方法可以参考<a href="https://www.tuicool.com/articles/36zyQnu" target="_blank" rel="external">这篇教程</a>，这里不做过多介绍。<br>可以使用该命令进行安装:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip3 <span class="keyword">install</span> docopt</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""Train tickets query from CLI.</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Usage:</span></div><div class="line"><span class="string">  test.py [-dgktz] &lt;from&gt; &lt;to&gt; &lt;date&gt;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Options:</span></div><div class="line"><span class="string">  -h --help    Show this screen.</span></div><div class="line"><span class="string">  -d            动车</span></div><div class="line"><span class="string">  -g            高铁</span></div><div class="line"><span class="string">  -k            快速</span></div><div class="line"><span class="string">  -t            特快</span></div><div class="line"><span class="string">  -z            直达</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">Example:</span></div><div class="line"><span class="string">  test.py -gd 北京 上海 2017-11-01</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="keyword">from</span> docopt <span class="keyword">import</span> docopt</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> stations</div><div class="line"><span class="keyword">from</span> requests.packages.urllib3.exceptions <span class="keyword">import</span> InsecureRequestWarning</div><div class="line"></div><div class="line">requests.packages.urllib3.disable_warnings(InsecureRequestWarning)</div><div class="line"></div><div class="line">canshu = docopt(__doc__)</div><div class="line">start = stations.get_telecode(canshu[<span class="string">'&lt;from&gt;'</span>])</div><div class="line">stop = stations.get_telecode(canshu[<span class="string">'&lt;to&gt;'</span>])</div><div class="line">url = (</div><div class="line">        <span class="string">'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.'</span></div><div class="line">        <span class="string">'train_date=&#123;&#125;&amp;'</span></div><div class="line">        <span class="string">'leftTicketDTO.from_station=&#123;&#125;&amp;'</span></div><div class="line">        <span class="string">'leftTicketDTO.to_station=&#123;&#125;&amp;'</span></div><div class="line">        <span class="string">'purpose_codes=ADULT'</span></div><div class="line">    ).format(canshu[<span class="string">'&lt;date&gt;'</span>], start, stop)</div><div class="line">s = requests.get(url, verify=<span class="keyword">False</span>).json()</div><div class="line">data = s[<span class="string">'data'</span>][<span class="string">'result'</span>]</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</div><div class="line">    print(i.split(<span class="string">'|'</span>))</div></pre></td></tr></table></figure>
+<p>stations模块是我们自己定义的一个python模块，内容就是我们之前获得的城市名称以及它所对应的城市代码。</p>
+<p>通过这种方法就可以实现动态的获取数据，上面的程序传入参数之后运行后的结果如下：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/18.png" alt="6"></p>
+<p>上面获得的数据虽然通过我们的分割但是还是处于待处理阶段，不过处理就十分简单了，通过Python的切片操作，直接把需要的数据通过切片的方式获取就可以了。</p>
+<p>我们需要获取的数据有“车次 车站 时间 历时 特等座 一等座 二等座 软卧 硬卧 软座 硬座 无座”，这些内容的票数信息在上面的数据中都有，我们主需要把对应的内容提取出来就可以了。</p>
+<blockquote>
+<h3 id="prettytable-的使用"><a href="#prettytable-的使用" class="headerlink" title="prettytable 的使用"></a>prettytable 的使用</h3></blockquote>
+<p>Python通过PrettyTable模块可以将输出内容如表格方式整齐地输出。</p>
+<p>安装：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip3 <span class="keyword">install</span> prettytable</div></pre></td></tr></table></figure></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">from prettytable import PrettyTable</div><div class="line"><span class="selector-tag">table</span> = PrettyTable([<span class="string">"animal"</span>, <span class="string">"ferocity"</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"wolverine"</span>, <span class="number">100</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"grizzly"</span>, <span class="number">87</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"Rabbit of Caerbannog"</span>, <span class="number">110</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"cat"</span>, -<span class="number">1</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"platypus"</span>, <span class="number">23</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"dolphin"</span>, <span class="number">63</span>])</div><div class="line"><span class="selector-tag">table</span>.add_row([<span class="string">"albatross"</span>, <span class="number">44</span>])</div><div class="line"><span class="selector-tag">table</span>.sort_key(<span class="string">"ferocity"</span>)</div><div class="line"><span class="selector-tag">table</span><span class="selector-class">.reversesort</span> = True</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(table)</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">''<span class="emphasis">'效果图</span></div><div class="line"><span class="emphasis">+----------------------+----------+</span></div><div class="line"><span class="emphasis">|        animal        | ferocity |</span></div><div class="line"><span class="emphasis">+----------------------+----------+</span></div><div class="line"><span class="emphasis">| Rabbit of Caerbannog |   110    |</span></div><div class="line"><span class="emphasis">|      wolverine       |   100    |</span></div><div class="line"><span class="emphasis">|       grizzly        |    87    |</span></div><div class="line"><span class="emphasis">|       dolphin        |    63    |</span></div><div class="line"><span class="emphasis">|      albatross       |    44    |</span></div><div class="line"><span class="emphasis">|       platypus       |    23    |</span></div><div class="line"><span class="emphasis">|         cat          |    -1    |</span></div><div class="line"><span class="emphasis">+----------------------+----------+</span></div></pre></td></tr></table></figure>
+<p>具体用法可以自己去了解一下，自己动手丰衣足食。</p>
+<blockquote>
+<h3 id="colorama-的使用"><a href="#colorama-的使用" class="headerlink" title="colorama 的使用"></a>colorama 的使用</h3></blockquote>
+<p>colorama是一个python专门用来在控制台、命令行输出彩色文字的模块，可以跨平台使用。</p>
+<p>安装:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip3 <span class="keyword">install</span> colorama</div></pre></td></tr></table></figure></p>
+<p>可用格式常数:<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">Fore:</span> <span class="keyword">BLACK, </span>RED, GREEN, YELLOW, <span class="keyword">BLUE, </span>MAGENTA, CYAN, WHITE, RESET.</div><div class="line"><span class="keyword">Back: </span><span class="keyword">BLACK, </span>RED, GREEN, YELLOW, <span class="keyword">BLUE, </span>MAGENTA, CYAN, WHITE, RESET.</div><div class="line"><span class="symbol">Style:</span> <span class="keyword">DIM, </span><span class="keyword">NORMAL, </span><span class="keyword">BRIGHT, </span>RESET_ALL</div></pre></td></tr></table></figure></p>
+<p>跨平台印刷彩色文本可以使用彩色光的常数简称ANSI转义序列:<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> colorama import Fore,Back,Style</div><div class="line"><span class="builtin-name">print</span> (Fore.RED + <span class="string">"some red text"</span>)</div><div class="line"><span class="builtin-name">print</span> (Back.GREEN + <span class="string">"and with a green background"</span>)</div><div class="line"><span class="builtin-name">print</span> (Style.DIM + <span class="string">"and in dim text"</span>)</div><div class="line"><span class="builtin-name">print</span> (Style.RESET_ALL)</div><div class="line"><span class="builtin-name">print</span> (<span class="string">"back to normal now!!"</span>)</div></pre></td></tr></table></figure></p>
+<p>同样具体用法自行了解。</p>
+<blockquote>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2></blockquote>
+<p>在命令行下运行结果如下：<br><img src="http://oxwgzg29g.bkt.clouddn.com/19.png" alt="7"></p>
+<p>每次都要输入python3 而且还都要在tickets.py所在目录才能执行这个程序十分的不方便，有没有简便的方法呢？答案是肯定的。</p>
+<p>先来看下效果图:</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/20.png" alt="8"></p>
+<blockquote>
+<h3 id="setup的使用"><a href="#setup的使用" class="headerlink" title="setup的使用"></a>setup的使用</h3></blockquote>
+<p>setup依赖于setuptools包，通过<strong>pip3 install setuptools</strong>进行安装。<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">from setuptools <span class="built_in">import</span> setup, find_packages </div><div class="line"> </div><div class="line">setup( </div><div class="line"> <span class="attr">name</span> = <span class="string">"test"</span>, </div><div class="line"> <span class="attr">version</span> = <span class="string">"1.0"</span>, </div><div class="line"> <span class="attr">keywords</span> = (<span class="string">"test"</span>, <span class="string">"xxx"</span>), </div><div class="line"> <span class="attr">description</span> = <span class="string">"eds sdk"</span>, </div><div class="line"> <span class="attr">long_description</span> = <span class="string">"eds sdk for python"</span>, </div><div class="line"> <span class="attr">license</span> = <span class="string">"MIT Licence"</span>, </div><div class="line"> </div><div class="line"> <span class="attr">url</span> = <span class="string">"http://test.com"</span>, </div><div class="line"> <span class="attr">author</span> = <span class="string">"test"</span>, </div><div class="line"> <span class="attr">author_email</span> = <span class="string">"test@gmail.com"</span>, </div><div class="line"> </div><div class="line"> <span class="attr">packages</span> = find_packages(), </div><div class="line"> <span class="attr">include_package_data</span> = True, </div><div class="line"> <span class="attr">platforms</span> = <span class="string">"any"</span>, </div><div class="line"> <span class="attr">install_requires</span> = [], </div><div class="line"> </div><div class="line"> <span class="attr">scripts</span> = [], </div><div class="line"> <span class="attr">entry_points</span> = &#123; </div><div class="line">  'console_scripts': [ </div><div class="line">   '<span class="attr">test</span> = test.help:main' </div><div class="line">  ] </div><div class="line"> &#125; </div><div class="line">)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p> setup.py各参数介绍：<br>–name 包名称<br>–version (-V) 包版本<br>–author 程序的作者<br>–author_email 程序的作者的邮箱地址<br>–maintainer 维护者<br>–maintainer_email 维护者的邮箱地址<br>–url 程序的官网地址<br>–license 程序的授权信息<br>–description 程序的简单描述<br>–long_description 程序的详细描述<br>–platforms 程序适用的软件平台列表<br>–classifiers 程序的所属分类列表<br>–keywords 程序的关键字列表<br>–packages 需要处理的包目录（包含<strong>init</strong>.py的文件夹）<br>–py_modules 需要打包的python文件列表<br>–download_url 程序的下载地址<br>–cmdclass<br>–data_files 打包时需要打包的数据文件，如图片，配置文件等<br>–scripts 安装时需要执行的脚步列表<br>–package_dir 告诉setuptools哪些目录下的文件被映射到哪个源码包。一个例子：package_dir = {‘’: ‘lib’}，表示“root package”中的模块都在lib 目录中。<br>–requires 定义依赖哪些模块<br>–provides定义可以为哪些模块提供依赖<br>–find_packages() 对于简单工程来说，手动增加packages参数很容易，刚刚我们用到了这个函数，它默认在和setup.py同一目录下搜索各个含有 <strong>init</strong>.py的包。</p>
+</blockquote>
+<p>–install_requires = [“requests”] 需要安装的依赖包<br>–entry_points 动态发现服务和插件</p>
+<p>entry_points 中console_scripts 指明了命令行工具的名称；在“redis_run = RedisRun.redis_run:main”中，等号前面指明了工具包的名称，等号后面的内容指明了程序的入口地址。</p>
+<p>当然具体用法还需要自己去理解去实际，这里给出setup的官网，可以参考一下：<br><a href="https://docs.python.org/3/distutils/setupscript.html" target="_blank" rel="external">官方网站</a></p>
+<p>我们需要用到的实例<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from setuptools <span class="keyword">import</span> <span class="built_in">setup</span></div><div class="line"></div><div class="line"><span class="built_in">setup</span>(</div><div class="line">    name=<span class="string">'tickets'</span>,</div><div class="line">    py_modules=[<span class="string">'tickets'</span>, <span class="string">'stations'</span>],</div><div class="line">    install_requires=[<span class="string">'requests'</span>, <span class="string">'docopt'</span>, <span class="string">'prettytable'</span>, <span class="string">'colorama'</span>],</div><div class="line">    entry_points=&#123;</div><div class="line">        <span class="string">'console_scripts'</span>: [<span class="string">'tickets=tickets:main'</span>]</div><div class="line">    &#125;</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>运行python3 setup.py install 即可。</p>
+<p>然后就可以在任何位置使用tickets [-dgktz] <from> <to> <date>进行命令行查票了。</date></to></from></p>
+<blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2></blockquote>
+<p>这个程序不是很难，通过这个程序使我掌握了docopt、prettytable、colorama、setup的使用，感觉收获还是很大的。<br>希望通过这个程序对你也有所提升。</p>
+<blockquote>
+<p>文章如有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="http://ot2lns8xg.bkt.clouddn.com/BAFC168A07011B2AE219C4D6201DA9E5.png" alt="孙士标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="http://ot2lns8xg.bkt.clouddn.com/21626B4C2050CA824E8A62975F8B46A7.png" alt="孙士标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    孙士标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.bbiao.me/2017/10/23/命令行查询火车票/" title="命令行查询火车票">http://www.bbiao.me/2017/10/23/命令行查询火车票/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/12306/" rel="tag"><i class="fa fa-tag"></i> 12306</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/23/抵御sshd暴力破解/" rel="next" title="抵御sshd暴力破解">
+                <i class="fa fa-chevron-left"></i> 抵御sshd暴力破解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ot6pss72x.bkt.clouddn.com/%E5%A4%B4%E5%83%8F.png"
+                alt="孙士标" />
+            
+              <p class="site-author-name" itemprop="name">孙士标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="shibiaosun@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逐步实现"><span class="nav-number">3.</span> <span class="nav-text">逐步实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用到的模块"><span class="nav-number">3.1.</span> <span class="nav-text">用到的模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获得接口并且请求接口"><span class="nav-number">3.2.</span> <span class="nav-text">获得接口并且请求接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析数据，提取内容"><span class="nav-number">3.3.</span> <span class="nav-text">分析数据，提取内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析与构造网址"><span class="nav-number">3.4.</span> <span class="nav-text">分析与构造网址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docopt的使用"><span class="nav-number">3.5.</span> <span class="nav-text">docopt的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prettytable-的使用"><span class="nav-number">3.6.</span> <span class="nav-text">prettytable 的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colorama-的使用"><span class="nav-number">3.7.</span> <span class="nav-text">colorama 的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setup的使用"><span class="nav-number">4.1.</span> <span class="nav-text">setup的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孙士标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">56.3k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+-->
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共56.3k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: '7U13QSwAEd3bAMJ7A8vD3umk-gzGzoHsz# your leancloud application appid',
+        app_key: '0mzkiyudq6RV9ufX92nesMYh# your leancloud application appkey',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
