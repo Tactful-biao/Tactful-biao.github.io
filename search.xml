@@ -3,6 +3,57 @@
   
     
     <entry>
+      <title><![CDATA[抵御sshd暴力破解]]></title>
+      <url>/2017/10/23/%E6%8A%B5%E5%BE%A1sshd%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2></blockquote>
+<p>最近发现服务器总是连接不上，打开控制台发现CPU一直处于很高的负载状态，导致我正常的连接都连接不上，这时候就该思考一下原因了，我打开系统下/var/log/secure(CentOS7)之后看到了如下画面：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/14.png" alt="1"></p>
+<p>大家都知道当你的服务器开启了远程连接服务之后，你的连接就相当于公开了，如果你不添加任何过滤的话，任何人都可以对你的服务器进行连接，当然想要连接成功的话肯定是要秘钥或者密码的。但是如果是密码的话就可以进行暴力枚举，虽然效率很低，但是总会有一些弱密码存在。群众里面有坏人，总有刁民想害朕。<br>我大致浏览了一下服务器日志，发现每天都有大量的连接，有的能够持续好几个小时的尝试登录，这样就导致我的正常登录存在问题。</p>
+<p>我是设置了秘钥的，并且禁止了密码登录，但是还是有很多的ip尝试进行密码登录，虽然登录不上，但是一直建立连接也会影响服务器性能，主要是我打算在手机上远程控制服务器，这样的话我是打算把密码验证打开的，所以我要杜绝这种暴力登录的尝试，虽然我对我的密码有信心，但是一想到自己的服务器在一直被别人破解着密码，心里就不是很爽。</p>
+<blockquote>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2></blockquote>
+<p><a href="https://baike.baidu.com/item/DenyHosts/7529952?fr=aladdin" target="_blank" rel="external">DenyHosts</a> :DenyHosts是Python语言写的一个程序，它会分析sshd的日志文件（/var/log/secure），当发现重 复的攻击时就会记录IP到/etc/hosts.deny文件，从而达到自动屏IP的功能。<br>我们通过给服务器配置和安装DenyHosts把那些尝试破解我们的服务器的ip都添加到hosts.deny中，这样这些ip就不能再对我们进行尝试连接了。</p>
+<blockquote>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3></blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget http:<span class="comment">//ncu.dl.sourceforge.net/sourceforge/denyhosts/DenyHosts-2.6.tar.gz</span></div><div class="line">tar -xzvf DenyHosts-<span class="number">2.6</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line">cd DenyHosts-<span class="number">2.6</span></div><div class="line">python setup<span class="selector-class">.py</span> install　　  <span class="comment">//安装Denyhost</span></div><div class="line">cd /usr/share/denyhosts/    <span class="comment">//切换目录进入/usr/share/denyhosts目录</span></div><div class="line">cp denyhosts<span class="selector-class">.cfg-dist</span> denyhosts<span class="selector-class">.cfg</span>   <span class="comment">//备份配置文件</span></div></pre></td></tr></table></figure>
+<blockquote>
+<h3 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h3></blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">vi</span> <span class="selector-tag">denyhosts</span><span class="selector-class">.cfg</span></div></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"> ############ THESE SETTINGS ARE REQUIRED ############</div><div class="line"></div><div class="line">SECURE_LOG = /var/log/secure</div><div class="line"></div><div class="line">HOSTS_DENY = /etc/hosts.deny</div><div class="line"></div><div class="line">PURGE_DENY = <span class="number">1</span>w #过多久后清除已经禁止的，其中w代表周，d代表天，h代表小时，s代表秒，m代表分钟</div><div class="line"></div><div class="line">BLOCK_SERVICE  = sshd</div><div class="line"></div><div class="line">DENY_THRESHOLD_INVALID = <span class="number">3</span> #允许无效用户失败的次数</div><div class="line"></div><div class="line">DENY_THRESHOLD_VALID = <span class="number">5</span> #允许普通用户登陆失败的次数</div><div class="line"></div><div class="line">DENY_THRESHOLD_ROOT = <span class="number">5</span> #允许root登陆失败的次数</div><div class="line"></div><div class="line">DENY_THRESHOLD_RESTRICTED = <span class="number">1</span></div><div class="line"></div><div class="line">WORK_DIR = /usr/share/denyhosts/data</div><div class="line"></div><div class="line">SUSPICIOUS_LOGIN_REPORT_ALLOWED_HOSTS=YES</div><div class="line"></div><div class="line">HOSTNAME_LOOKUP=YES</div><div class="line"></div><div class="line">LOCK_FILE = /var/lock/subsys/denyhosts</div><div class="line"></div><div class="line"> ############ THESE SETTINGS ARE OPTIONAL ############</div><div class="line"></div><div class="line">ADMIN_EMAIL = denyhosts@<span class="number">163.</span>com #若有ip被禁用发邮件通知</div><div class="line"></div><div class="line">SMTP_HOST = localhost</div><div class="line"></div><div class="line">SMTP_PORT = <span class="number">25</span></div><div class="line"></div><div class="line">SMTP_FROM = DenyHosts &lt;<span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span>@localhost&gt;</div><div class="line"></div><div class="line">SMTP_SUBJECT = DenyHosts Report</div><div class="line"></div><div class="line">AGE_RESET_VALID=<span class="number">1</span>d #有效用户登录失败计数归零的时间</div><div class="line"></div><div class="line">AGE_RESET_ROOT=<span class="number">1</span>d #root用户登录失败计数归零的时间</div><div class="line"></div><div class="line">AGE_RESET_RESTRICTED=<span class="number">1</span>d</div><div class="line"></div><div class="line">AGE_RESET_INVALID=<span class="number">10</span>d #无效用户登录失败计数归零的时间</div><div class="line"></div><div class="line">######### THESE SETTINGS ARE SPECIFIC TO DAEMON MODE  ##########</div><div class="line"></div><div class="line">DAEMON_LOG = /var/log/denyhosts</div><div class="line"></div><div class="line">DAEMON_SLEEP = <span class="number">30</span>s</div><div class="line"></div><div class="line">DAEMON_PURGE = <span class="number">1</span>h</div></pre></td></tr></table></figure>
+<blockquote>
+<h3 id="启动文件配置"><a href="#启动文件配置" class="headerlink" title="启动文件配置"></a>启动文件配置</h3></blockquote>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cp daemon-<span class="section">control</span>-dist daemon-<span class="section">control</span></div><div class="line">chown root daemon-<span class="section">control</span></div><div class="line">chmod <span class="number">700</span> daemon-<span class="section">control</span></div><div class="line">./daemon-<span class="section">control</span> start         <span class="comment">//启动DenyHosts</span></div><div class="line"> </div><div class="line">ln -s /usr/share/denyhosts/daemon-<span class="section">control</span> /etc/init.d/denyhosts    <span class="comment">//建立符号链接</span></div><div class="line">chkconfig --add denyhosts　　　　　　　　　　　　　　　　　　　　  <span class="comment">//增加denyhosts服务进程</span></div><div class="line">chkconfig  denyhosts on　　　　　　　　　　　　　　　　　　　　　　<span class="comment">//设置开机启动denyhosts</span></div><div class="line">chkconfig --<span class="type">list</span> denyhosts      <span class="comment">// 查看是否生效</span></div></pre></td></tr></table></figure>
+<p>如果显示如下则表示生效：<br><img src="http://oxwgzg29g.bkt.clouddn.com/15.png" alt="3"></p>
+<p>到目前为止我们的所有配置都已经配置完成了，我们来看一下日志：<br><img src="http://oxwgzg29g.bkt.clouddn.com/16.png" alt="4"></p>
+<p>可以看到这个59.63.188.3的ip尝试暴力登录我们的服务器，在尝试登录5次之后，就被拒绝连接了。<br>我们再来看一下我们的hosts.deny文件：</p>
+<p><img src="http://oxwgzg29g.bkt.clouddn.com/17.png" alt="5"></p>
+<p>可以在最后看到该IP已经在我们的屏蔽列表里面了。</p>
+<blockquote>
+<p>文章若有出错的地方，请多多指正！如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 解决问题 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ssh </tag>
+            
+            <tag> 暴力破解 </tag>
+            
+            <tag> denyhosts </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[搭建自己的网盘 owncloud]]></title>
       <url>/2017/10/16/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BD%91%E7%9B%98-owncloud/</url>
       <content type="html"><![CDATA[<blockquote>
@@ -423,9 +474,9 @@
         
         <tags>
             
-            <tag> 爬虫 </tag>
-            
             <tag> requests </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
         
@@ -676,9 +727,9 @@
         
         <tags>
             
-            <tag> 爬虫 </tag>
-            
             <tag> requests </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
         
@@ -1119,9 +1170,9 @@
             
             <tag> Python </tag>
             
-            <tag> Matplotlib </tag>
-            
             <tag> 数据分析 </tag>
+            
+            <tag> Matplotlib </tag>
             
         </tags>
         
@@ -1221,11 +1272,11 @@
         
         <tags>
             
+            <tag> Mateplotlib </tag>
+            
             <tag> Python </tag>
             
             <tag> 数据分析 </tag>
-            
-            <tag> Mateplotlib </tag>
             
         </tags>
         
