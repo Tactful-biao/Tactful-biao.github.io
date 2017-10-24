@@ -19,8 +19,8 @@ http://www.bbiao.me/2017/07/20/人生苦短，我用Python/
 http://www.bbiao.me/2017/07/18/提供下载！！分享一个实用的小工具/
 http://www.bbiao.me/2017/07/18/WordPress安装环境与配置的选择/
 http://www.bbiao.me/2017/07/16/大学感悟/
-http://www.bbiao.me/2017/07/16/使用linux-apache-mysql-php-lamp搭建wordpress/
 http://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/
+http://www.bbiao.me/2017/07/16/使用linux-apache-mysql-php-lamp搭建wordpress/
 http://www.bbiao.me/2017/07/15/digitalocean注册和虚拟主机的创建/
 http://www.bbiao.me/2017/07/14/开博总结/
 http://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/
