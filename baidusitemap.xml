@@ -3,6 +3,7 @@
 
 
     
+    
   <url>
     <loc>http://www.bbiao.me/2017/10/29/%E7%9B%91%E7%A5%A8%E5%B0%8F%E8%84%9A%E6%9C%AC/</loc>
     <lastmod>2017-10-31T14:08:29.264Z</lastmod>
@@ -96,7 +97,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://www.bbiao.me/2017/08/31/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
@@ -378,9 +378,9 @@
         
         <tag>Python</tag>
          
-        <tag>数据分析</tag>
-         
         <tag>Matplotlib</tag>
+         
+        <tag>数据分析</tag>
          
          
            
@@ -426,11 +426,11 @@
         <title>使用Python对账单进行分析</title>
         <pubTime>2017-07-23T06:54:42.000Z</pubTime>
         
-        <tag>Mateplotlib</tag>
-         
         <tag>Python</tag>
          
         <tag>数据分析</tag>
+         
+        <tag>Mateplotlib</tag>
          
          
            
@@ -585,11 +585,11 @@
         <title>开博总结</title>
         <pubTime>2017-07-14T09:14:06.000Z</pubTime>
         
+        <tag>博客</tag>
+         
         <tag>总结</tag>
          
         <tag>感悟</tag>
-         
-        <tag>博客</tag>
          
          
            
