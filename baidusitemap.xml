@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://www.bbiao.me/2017/10/13/%E6%B4%BB%E5%8A%A8%E5%9B%A2%E6%94%AF%E9%83%A8/</loc>
-    <lastmod>2017-11-13T13:23:59.961Z</lastmod>
+    <lastmod>2017-11-13T13:34:09.410Z</lastmod>
     <data>
         <display>
         <title>活动团支部</title>
@@ -209,9 +209,9 @@
         <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</title>
         <pubTime>2017-07-09T14:21:41.000Z</pubTime>
         
-        <tag>LEMP</tag>
-         
         <tag>WordPress</tag>
+         
+        <tag>LEMP</tag>
          
         <tag>Nginx</tag>
          
@@ -281,13 +281,13 @@
         <title>WordPress安装环境与配置的选择</title>
         <pubTime>2017-07-18T13:41:51.000Z</pubTime>
         
-        <tag>WordPress</tag>
-         
         <tag>vps</tag>
          
         <tag>Lamp</tag>
          
         <tag>Lemp</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>经验</tag>
          
@@ -395,9 +395,9 @@
         
         <tag>Python</tag>
          
-        <tag>Matplotlib</tag>
-         
         <tag>数据分析</tag>
+         
+        <tag>Matplotlib</tag>
          
          
            
@@ -443,11 +443,11 @@
         <title>使用Python对账单进行分析</title>
         <pubTime>2017-07-23T06:54:42.000Z</pubTime>
         
+        <tag>Mateplotlib</tag>
+         
         <tag>Python</tag>
          
         <tag>数据分析</tag>
-         
-        <tag>Mateplotlib</tag>
          
          
            
@@ -578,11 +578,11 @@
         <title>使用linux-apache-mysql-php-lamp搭建wordpress</title>
         <pubTime>2017-07-16T05:24:36.000Z</pubTime>
         
+        <tag>WordPress</tag>
+         
         <tag>Apache</tag>
          
         <tag>LEMP</tag>
-         
-        <tag>WordPress</tag>
          
         <tag>博客搭建</tag>
          
@@ -602,11 +602,11 @@
         <title>开博总结</title>
         <pubTime>2017-07-14T09:14:06.000Z</pubTime>
         
-        <tag>博客</tag>
-         
         <tag>总结</tag>
          
         <tag>感悟</tag>
+         
+        <tag>博客</tag>
          
          
            
