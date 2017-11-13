@@ -3,6 +3,23 @@
 
 
     
+  <url>
+    <loc>http://www.bbiao.me/2017/10/13/%E6%B4%BB%E5%8A%A8%E5%9B%A2%E6%94%AF%E9%83%A8/</loc>
+    <lastmod>2017-11-13T13:18:31.914Z</lastmod>
+    <data>
+        <display>
+        <title>活动团支部</title>
+        <pubTime>2017-10-13T12:46:38.000Z</pubTime>
+        
+        <tag>test</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.bbiao.me/2017/10/29/%E7%9B%91%E7%A5%A8%E5%B0%8F%E8%84%9A%E6%9C%AC/</loc>
@@ -192,9 +209,9 @@
         <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</title>
         <pubTime>2017-07-09T14:21:41.000Z</pubTime>
         
-        <tag>WordPress</tag>
-         
         <tag>LEMP</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>Nginx</tag>
          
@@ -266,11 +283,11 @@
         
         <tag>vps</tag>
          
+        <tag>WordPress</tag>
+         
         <tag>Lamp</tag>
          
         <tag>Lemp</tag>
-         
-        <tag>WordPress</tag>
          
         <tag>经验</tag>
          
@@ -561,11 +578,11 @@
         <title>使用linux-apache-mysql-php-lamp搭建wordpress</title>
         <pubTime>2017-07-16T05:24:36.000Z</pubTime>
         
-        <tag>WordPress</tag>
-         
         <tag>Apache</tag>
          
         <tag>LEMP</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>博客搭建</tag>
          
@@ -585,11 +602,11 @@
         <title>开博总结</title>
         <pubTime>2017-07-14T09:14:06.000Z</pubTime>
         
-        <tag>博客</tag>
-         
         <tag>总结</tag>
          
         <tag>感悟</tag>
+         
+        <tag>博客</tag>
          
          
            
