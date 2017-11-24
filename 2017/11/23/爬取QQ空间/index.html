@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/32.png">
 <meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/34.png">
 <meta property="og:image" content="http://oxwgzg29g.bkt.clouddn.com/30.png">
-<meta property="og:updated_time" content="2017-11-24T08:45:28.715Z">
+<meta property="og:updated_time" content="2017-11-24T08:57:22.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取QQ空间">
 <meta name="twitter:description" content="简介 垂涎QQ空间已经很久了，空间里有大量的数据。如果能把它爬取下来肯定是十分有趣的。网上各大网站的爬虫都有，但是关于QQ空间的爬虫却十分的少，只要是腾讯的请求都是加了密的，腾讯光加密算法的js就写了6000行，想要构造它的请求链接比较困难。不过只要功夫深 铁杵磨成针。  思路 博主每次写和程序相关的文章都会把思路写出来，因为这一步是关键部分，只有思路清晰才能够把程序写好。  构造请求链接 先获">
@@ -572,7 +572,7 @@
 <blockquote>
 <p>留言的爬取</p>
 </blockquote>
-<p>先来到留言板的页面，链接格式是<a href="https://user.qzone.qq.com/好友的qq/334，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：" target="_blank" rel="external">https://user.qzone.qq.com/好友的qq/334，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：</a></p>
+<p>先来到留言板的页面，链接格式是<code>https://user.qzone.qq.com/好友的qq/334</code>，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：</p>
 <p><img src="http://oxwgzg29g.bkt.clouddn.com/31.png" alt="11"></p>
 <p>通过链接构造，start控制翻页，每次增加10，对数据进行处理等过程和爬取说说的过程十分的相似。</p>
 <blockquote>

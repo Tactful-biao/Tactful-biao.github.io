@@ -78,7 +78,7 @@
 <blockquote>
 <p>留言的爬取</p>
 </blockquote>
-<p>先来到留言板的页面，链接格式是<a href="https://user.qzone.qq.com/好友的qq/334，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：" target="_blank" rel="external">https://user.qzone.qq.com/好友的qq/334，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：</a></p>
+<p>先来到留言板的页面，链接格式是<code>https://user.qzone.qq.com/好友的qq/334</code>，打开之后，找到get_msgb?开头的js，然后可以看到它里面包含的就是当前页面所有的留言信息，当然，我们只需要对它进行请求即可。如下图：</p>
 <p><img src="http://oxwgzg29g.bkt.clouddn.com/31.png" alt="11"></p>
 <p>通过链接构造，start控制翻页，每次增加10，对数据进行处理等过程和爬取说说的过程十分的相似。</p>
 <blockquote>
@@ -811,9 +811,9 @@
         
         <tags>
             
-            <tag> 爬虫 </tag>
-            
             <tag> requests </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
         
@@ -1064,9 +1064,9 @@
         
         <tags>
             
-            <tag> 爬虫 </tag>
-            
             <tag> requests </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
         
@@ -1505,9 +1505,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Matplotlib </tag>
+            
+            <tag> Python </tag>
             
             <tag> 数据分析 </tag>
             
@@ -1952,9 +1952,9 @@
         
         <tags>
             
-            <tag> WordPress </tag>
-            
             <tag> vps </tag>
+            
+            <tag> WordPress </tag>
             
             <tag> Lamp </tag>
             
@@ -2211,11 +2211,11 @@
         
         <tags>
             
+            <tag> 博客 </tag>
+            
             <tag> 总结 </tag>
             
             <tag> 感悟 </tag>
-            
-            <tag> 博客 </tag>
             
         </tags>
         
