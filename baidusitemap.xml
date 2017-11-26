@@ -3,6 +3,7 @@
 
 
     
+    
   <url>
     <loc>http://www.bbiao.me/2017/11/23/%E7%88%AC%E5%8F%96QQ%E7%A9%BA%E9%97%B4/</loc>
     <lastmod>2017-11-25T13:55:32.910Z</lastmod>
@@ -26,7 +27,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://www.bbiao.me/2017/10/29/%E7%9B%91%E7%A5%A8%E5%B0%8F%E8%84%9A%E6%9C%AC/</loc>
@@ -216,9 +216,9 @@
         <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</title>
         <pubTime>2017-07-09T14:21:41.000Z</pubTime>
         
-        <tag>LEMP</tag>
-         
         <tag>WordPress</tag>
+         
+        <tag>LEMP</tag>
          
         <tag>Nginx</tag>
          
@@ -290,11 +290,11 @@
         
         <tag>vps</tag>
          
-        <tag>WordPress</tag>
-         
         <tag>Lamp</tag>
          
         <tag>Lemp</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>经验</tag>
          
@@ -400,9 +400,9 @@
         <title>使用Python对账单进行分析（续）</title>
         <pubTime>2017-07-24T11:20:30.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>Matplotlib</tag>
+         
+        <tag>Python</tag>
          
         <tag>数据分析</tag>
          
@@ -585,11 +585,11 @@
         <title>使用linux-apache-mysql-php-lamp搭建wordpress</title>
         <pubTime>2017-07-16T05:24:36.000Z</pubTime>
         
+        <tag>WordPress</tag>
+         
         <tag>Apache</tag>
          
         <tag>LEMP</tag>
-         
-        <tag>WordPress</tag>
          
         <tag>博客搭建</tag>
          
@@ -609,11 +609,11 @@
         <title>开博总结</title>
         <pubTime>2017-07-14T09:14:06.000Z</pubTime>
         
-        <tag>博客</tag>
-         
         <tag>总结</tag>
          
         <tag>感悟</tag>
+         
+        <tag>博客</tag>
          
          
            
