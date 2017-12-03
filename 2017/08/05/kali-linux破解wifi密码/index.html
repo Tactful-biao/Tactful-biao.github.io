@@ -96,19 +96,19 @@
 <meta property="og:site_name" content="BiaoBiao&#39;s Blog">
 <meta property="og:description" content="现在的人都离不开网络，感觉离开网络整个人就被这个世界隔离了。而流量又那么的昂贵，所有WI-FI的作用变的举足轻重，几乎绝大多数的WI-FI都是要密码的，这就让我们很头疼，市面上也有很多破解WI-FI的软件，最知名的就数某万能钥匙，手机电脑版的都有，操作方便，但是电脑版的在使用的过程中需要先连接上网络，然后从云端获取指定WI-FI的密码，如果数据库中没有该密码，就不能进行破解。今天，我们来简单介绍">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/8.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/1.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/2.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/3.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/4.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/5.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/6.png">
-<meta property="og:image" content="http://ou7oiqoj6.bkt.clouddn.com/7.png">
-<meta property="og:updated_time" content="2017-10-14T13:35:43.158Z">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c7c9d074b.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c886e8220.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c888182a4.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c8885d7de.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c888c435b.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c8895a2db.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c88992f82.png">
+<meta property="og:image" content="https://i.loli.net/2017/12/03/5a23c889a000e.png">
+<meta property="og:updated_time" content="2017-12-03T09:51:23.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kali-linux破解wifi密码">
 <meta name="twitter:description" content="现在的人都离不开网络，感觉离开网络整个人就被这个世界隔离了。而流量又那么的昂贵，所有WI-FI的作用变的举足轻重，几乎绝大多数的WI-FI都是要密码的，这就让我们很头疼，市面上也有很多破解WI-FI的软件，最知名的就数某万能钥匙，手机电脑版的都有，操作方便，但是电脑版的在使用的过程中需要先连接上网络，然后从云端获取指定WI-FI的密码，如果数据库中没有该密码，就不能进行破解。今天，我们来简单介绍">
-<meta name="twitter:image" content="http://ou7oiqoj6.bkt.clouddn.com/8.png">
+<meta name="twitter:image" content="https://i.loli.net/2017/12/03/5a23c7c9d074b.png">
 
 
 
@@ -511,35 +511,35 @@
 <blockquote>
 <h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2></blockquote>
 <p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上并嗅探802.11a，802.11b，802.11g的数据。该程序可运行在Linux和Windows上。Linux版本已经被移植到了Zaurus和Maemo系统平台, 并概念验证可移植到iPhone。<br>总之Aircrack-ng是一个用来测试WIFI安全性的强大工具。<br>Aircrack-ng包包含有如下模块：</p>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/8.png" alt="1"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c7c9d074b.png" alt="1"></p>
 <p><a href="https://www.aircrack-ng.org/" target="_blank" rel="external">Aircrack-NG官方网站</a><br>在kali linux里给我们默认了一份字典，在/usr/share/wordlists/rockyou.txt.gz<br>下面的操作都是在没有网络环境的情况下进行的，如果你连着WI-FI就先把ＷI-FI断掉。</p>
 <blockquote>
 <h3 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h3></blockquote>
 <p>我使用自家的WIFI进行演示。<br>首先需要把破解密码的字典给解压出来，使用如下命令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gzip -d /usr/share/wordlists/rockyou<span class="selector-class">.txt</span><span class="selector-class">.gz</span></div></pre></td></tr></table></figure></p>
 <p>紧接着在终端中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">airmon-ng</span></div></pre></td></tr></table></figure></p>
 <p>如果出现如下画面，则表示你的网卡是支持监控模式的，如果输入命令之后，没有反应，则表示你的网卡是不支持监控模式的：</p>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/1.png" alt="3"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c886e8220.png" alt="3"></p>
 <p>下一步当然是开启无线网卡的监控模式啦(这里根据你自己的情况来，我的网卡显示的是wlan0，你的显示的是什么就写什么)：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng <span class="literal">start</span> wlan0</div></pre></td></tr></table></figure></p>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/2.png" alt="4"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c888182a4.png" alt="4"></p>
 <p>可以看到（mac80211 monitor mode vif enabled …）就表示开启成功，并且网卡信息也变成可wlan0mon，可以使用ifconfig进行查看。<br>下面查看wifi网络，就是扫描你周边的wifi：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng wlan0mon</div></pre></td></tr></table></figure></p>
 <p>可以看到你周边的wifi的详细信息，包括信号强度、加密类型、频道等，，你需要记住要破解的wifi的频道号和BSSID，然后就可以按Ctrl-C结束了，第一个FAST_E984就是我家的WIFI：</p>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/3.png" alt="5"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c8885d7de.png" alt="5"></p>
 <p>下一步是抓取握手包，使用网卡的监听模式抓取周围的无线网络数据包。其中，对我们最重要的数据包是：包含密码的包（也叫握手包），当有新用户断开或者自动连接wifi时，会发生握手包。<br>使用如下命令进行抓包：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">airodump-ng</span> <span class="selector-tag">-c</span> <span class="selector-tag">1</span> <span class="selector-tag">--bssid</span> <span class="selector-tag">D4</span><span class="selector-pseudo">:83</span><span class="selector-pseudo">:04</span><span class="selector-pseudo">:5E</span><span class="selector-pseudo">:E9</span><span class="selector-pseudo">:84</span> <span class="selector-tag">-w</span> ~/ <span class="selector-tag">wlan0mon</span></div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>-c 是指频道号，在上面的图中的CH的值<br>-bssid 指定路由器的bssid<br>-w 把数据包写入到指定位置</p>
 </blockquote>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/4.png" alt="6"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c888c435b.png" alt="6"></p>
 <p>紧接着，我们就等着用户连接/重新连接wifi了，运气好的话可能很快就可以。运气不好的话可能要等很长时间。这不是我们想要的结果，当然还有其他的方法可以做，aircrack-ng下有一个aireplay-ng模块，它可以强制用户断开wifi连接，原理是:给连接到的wifi的一个设备发送一个deauth（反认证）包，让那个设备断开wifi，随后它自己就会再次连接wifi。<br>但是这种方法生效的前提是：wifi网络中至少要有一个连接的设备。从上图中可以看到有哪些网络设备连接到该路由上了，SIATTON就是连接设备的MAC地址，记住一个。<br>另外再打开一个新的终端，并执行如下命令：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">aireplay-ng</span> <span class="selector-tag">-0</span> 2 <span class="selector-tag">-a</span> <span class="selector-tag">D4</span><span class="selector-pseudo">:83</span><span class="selector-pseudo">:04</span><span class="selector-pseudo">:5E</span><span class="selector-pseudo">:E9</span><span class="selector-pseudo">:84</span> <span class="selector-tag">-c</span> <span class="selector-tag">A0</span><span class="selector-pseudo">:18</span><span class="selector-pseudo">:28</span><span class="selector-pseudo">:A2</span><span class="selector-pseudo">:0E</span><span class="selector-pseudo">:E9</span> <span class="selector-tag">wlan0mon</span></div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>-0 表示发起deauthentication攻击<br>-a 表示指定无线路由器bssid<br>-c 指定强制断开的设备<br>如何成功的话可以看到在第一行后面会多出来 [WPA handshake:D4:83:04:5E:E9:84]</p>
 </blockquote>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/5.png" alt="7"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c8895a2db.png" alt="7"></p>
 <p>我们前面的所做都是为了得到这个握手包，得到之后就可以把无线网卡的监控模式关闭了，否则没法正常连接网络：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng <span class="built_in">stop</span> wlan0mon</div></pre></td></tr></table></figure></p>
 <p>可以看到（mac80211 station mode vif enabled on [py0]wlan0）,这样则表示切换成wlan0模式了。</p>
-<p><img src="http://ou7oiqoj6.bkt.clouddn.com/6.png" alt="8"></p>
+<p><img src="https://i.loli.net/2017/12/03/5a23c88992f82.png" alt="8"></p>
 <p>下一步就是对密码进行破解了：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng -a2 -b <span class="string">D4:</span><span class="number">83</span>:<span class="number">04</span>:<span class="number">5</span><span class="string">E:</span><span class="string">E9:</span><span class="number">84</span> -w <span class="regexp">/usr/</span>share<span class="regexp">/wordlists/</span>rockyou.txt ~<span class="comment">/*.cap</span></div></pre></td></tr></table></figure></p>
 <blockquote>
-<p>-a2 代表WPA握手包<br>-b 表示要破解的wifi 的BSSID<br>-w 指定字典文件<br>最后的是你抓取到的握手包的所在位置，在上面我们抓包的时候把它放在了根目录下.<br>可以看到我们已经破解得到了密码，KEY FOUND中显示的内容就是我们破解得到的密码(如果密码很简单，可以在很短的时间内破解掉)：<br><img src="http://ou7oiqoj6.bkt.clouddn.com/7.png" alt="9"></p>
+<p>-a2 代表WPA握手包<br>-b 表示要破解的wifi 的BSSID<br>-w 指定字典文件<br>最后的是你抓取到的握手包的所在位置，在上面我们抓包的时候把它放在了根目录下.<br>可以看到我们已经破解得到了密码，KEY FOUND中显示的内容就是我们破解得到的密码(如果密码很简单，可以在很短的时间内破解掉)：<br><img src="https://i.loli.net/2017/12/03/5a23c889a000e.png" alt="9"></p>
 </blockquote>
 <p>测试成功的关键是有一个靠谱的字典文件，字典越全面，破解成功的可能性越大，电脑性能越好，破解速度越快。<br>关于如何防范最简单的方法就是把密码设置的足够复杂，足够长。<br>还有就是不要使用WEP加密方式，这种方式最容易被破解。</p>
 <p>参考：<a href="http://topspeedsnail.com/kali-linux-crack-wifi-wpa/" target="_blank" rel="external">http://topspeedsnail.com/kali-linux-crack-wifi-wpa/</a></p>
@@ -920,7 +920,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">62.2k</span>
+    <span title="Site words total count">62.1k</span>
   
 </div>
 
@@ -942,7 +942,7 @@ var jiathis_config={
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共62.2k字</span>
+  <span class="post-count">博客全站共62.1k字</span>
 </div>
 
         
