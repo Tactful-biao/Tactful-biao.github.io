@@ -113,11 +113,11 @@
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/30.png">
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/31.png">
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/32.png">
-<meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/33.png">
+<meta property="og:image" content="https://moetu.fastmirror.org/images/2017/12/26/33128ec1741cd74234.png">
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/34.png">
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/27.png">
 <meta property="og:image" content="http://ovfqn6f2x.bkt.clouddn.com/28.png">
-<meta property="og:updated_time" content="2017-10-14T06:49:40.425Z">
+<meta property="og:updated_time" content="2017-12-26T13:48:16.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取《电影天堂》所有电影种子">
 <meta name="twitter:description" content="相信大家都有到处找资源找种子的经历(不管是什么种子)。为何不自己写一个爬虫把一个网站的所有的种子链接都爬取下来呢？所以接下来我们就通过一个简单的爬虫程序把电影天堂的所有的种子链接爬取下来。    思路永远是第一步  首先我们需要分析目标站点，然后依次找到我们需要的内容所在的位置。 然后我们再通过代码对目标内容进行提取 保存到本地   分析目标网站 打开目标网址：http://www.btbtdy">
@@ -580,7 +580,7 @@
 <p>我们只需要对这个链接进行请求，然后直接就可以提取我们想要的种子链接。<br>我们可以看到链接是由域名加上电影编号以及一个timestamp参数构成，电影编号是有规律的，电影编号是从1开始的，依次加一。而这个timestamp是一个时刻在变化的参数，它是一个时间戳。关于时间戳的概念大家可以自己去了解。它的这个链接是电影编号加上请求时刻的时间戳。知道规则之后，我们就可以通过相同的方法去构造这种链接。</p>
 <figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import <span class="built_in">time</span></div><div class="line"><span class="keyword">from</span> urllib.parse import urlencode</div><div class="line"> </div><div class="line"><span class="keyword">for</span> i <span class="built_in">in</span> range(<span class="number">1</span>, <span class="number">100</span>):</div><div class="line">    ticks = <span class="built_in">time</span>.<span class="built_in">time</span>()</div><div class="line">    timestamp = int(ticks * <span class="number">1000</span>)</div><div class="line">    <span class="built_in">params</span> = &#123;</div><div class="line">        <span class="string">'timestamp'</span>: timestamp</div><div class="line">    &#125;</div><div class="line">    url = <span class="string">'http://www.btbtdy.com/vidlist/'</span> + <span class="built_in">str</span>(i) + <span class="string">'.html?'</span> + urlencode(<span class="built_in">params</span>)</div><div class="line">    print(url)</div></pre></td></tr></table></figure>
 <p>这里我们导入了time模块，用来构造时间戳，另外从urllib.parse中导入urlencode对链接进行编码。ticks 会得到时间戳，但是返回的是浮点数（1506064260.6314487），根据链接的格式我们需要构造十三位的时间戳，我们通过对我们构造的时间戳乘以1000再取整得到十三位的时间戳，最后把我们这些东西构造成一个完整的url，打印出来可以看到：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/32.png" alt="18"></p>
-<p>从上面运行的结果可以看到，时间戳没有改变，但是我们构造的链接还是可以打开的，通过实际操作我发现它这个timestamp参数并不是严格按照时间戳来的，你只要随便写一个十三位的数字就可以请求成功。<br>这里我们随便点开一个链接可以看到：<br><img src="http://ovfqn6f2x.bkt.clouddn.com/33.png" alt="19"></p>
+<p>从上面运行的结果可以看到，时间戳没有改变，但是我们构造的链接还是可以打开的，通过实际操作我发现它这个timestamp参数并不是严格按照时间戳来的，你只要随便写一个十三位的数字就可以请求成功。<br>这里我们随便点开一个链接可以看到：<br><img src="https://moetu.fastmirror.org/images/2017/12/26/33128ec1741cd74234.png" alt="19"></p>
 <p>这里就得到我们想要的东西，我们再从这里提取我们需要的东西就可以了。</p>
 <blockquote>
 <h3 id="完整代码如下："><a href="#完整代码如下：" class="headerlink" title="完整代码如下："></a>完整代码如下：</h3></blockquote>
