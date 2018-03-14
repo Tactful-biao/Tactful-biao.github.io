@@ -1,3 +1,4 @@
+https://www.bbiao.me/2018/03/13/毛概模拟练习脚本/
 https://www.bbiao.me/2018/03/09/查询脚本/
 https://www.bbiao.me/2017/12/06/对QQ空间数据进行分析/
 https://www.bbiao.me/2017/11/23/爬取QQ空间/
@@ -23,8 +24,8 @@ https://www.bbiao.me/2017/07/20/人生苦短，我用Python/
 https://www.bbiao.me/2017/07/18/提供下载！！分享一个实用的小工具/
 https://www.bbiao.me/2017/07/18/WordPress安装环境与配置的选择/
 https://www.bbiao.me/2017/07/16/大学感悟/
-https://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/
 https://www.bbiao.me/2017/07/16/使用linux-apache-mysql-php-lamp搭建wordpress/
+https://www.bbiao.me/2017/07/16/centos7搭建shadowsocks科学上网/
 https://www.bbiao.me/2017/07/15/digitalocean注册和虚拟主机的创建/
 https://www.bbiao.me/2017/07/14/开博总结/
 https://www.bbiao.me/2017/07/09/超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress/
