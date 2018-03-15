@@ -96,16 +96,16 @@
 <meta property="og:site_name" content="BiaoBiao&#39;s Blog">
 <meta property="og:description" content="背景前段时间和同学一块接了一个简单的小项目，是做查询。要求是通过网页的方式进行查询。项目不是很难，于是我们就接下了，他负责前端和后端，我负责获取数据，于是就有了这些脚本。用python写脚本真的不能再方便了。 两种形式主要是做查询，其实数据还是从别人那里去拿，那客户为什么不直接去别人那里去拿呢？是这样的，比如说，你想查英语四六级成绩，你就需要到四六级查询的网站去查，你想要查询计算机等级成绩，就需要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://moetu.fastmirror.org/images/2018/03/09/1e38b388eefd2236d.png">
-<meta property="og:image" content="https://moetu.fastmirror.org/images/2018/03/09/24ec2c766ef42dc68.png">
-<meta property="og:image" content="https://moetu.fastmirror.org/images/2018/03/09/344c6ff62327e06a4.png">
-<meta property="og:image" content="https://moetu.fastmirror.org/images/2018/03/09/545fac1ddc57d19d6.png">
-<meta property="og:image" content="https://moetu.fastmirror.org/images/2018/03/09/68fb699352af0353f.png">
-<meta property="og:updated_time" content="2018-03-09T14:09:47.205Z">
+<meta property="og:image" content="https://i.loli.net/2018/03/15/5aaa814abb66b.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/15/5aaa81c36b7be.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/15/5aaa8206bc777.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/15/5aaa82960ffc5.png">
+<meta property="og:image" content="https://i.loli.net/2018/03/15/5aaa830dc05a7.png">
+<meta property="og:updated_time" content="2018-03-15T14:30:23.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="查询脚本">
 <meta name="twitter:description" content="背景前段时间和同学一块接了一个简单的小项目，是做查询。要求是通过网页的方式进行查询。项目不是很难，于是我们就接下了，他负责前端和后端，我负责获取数据，于是就有了这些脚本。用python写脚本真的不能再方便了。 两种形式主要是做查询，其实数据还是从别人那里去拿，那客户为什么不直接去别人那里去拿呢？是这样的，比如说，你想查英语四六级成绩，你就需要到四六级查询的网站去查，你想要查询计算机等级成绩，就需要">
-<meta name="twitter:image" content="https://moetu.fastmirror.org/images/2018/03/09/1e38b388eefd2236d.png">
+<meta name="twitter:image" content="https://i.loli.net/2018/03/15/5aaa814abb66b.png">
 
 
 
@@ -395,6 +395,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -432,7 +454,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,714
+                  2,717
                 </span>
               
 
@@ -472,13 +494,13 @@
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>前段时间和同学一块接了一个简单的小项目，是做查询。要求是通过网页的方式进行查询。项目不是很难，于是我们就接下了，他负责前端和后端，我负责获取数据，于是就有了这些脚本。用python写脚本真的不能再方便了。</p>
 <h2 id="两种形式"><a href="#两种形式" class="headerlink" title="两种形式"></a>两种形式</h2><p>主要是做查询，其实数据还是从别人那里去拿，那客户为什么不直接去别人那里去拿呢？是这样的，比如说，你想查英语四六级成绩，你就需要到四六级查询的网站去查，你想要查询计算机等级成绩，就需要到计算机等级网站去查询，客户要做的就是把各种查询都集中到他的网站上去，这样无论你是查询英语四六级还是查询计算机等级，都可以到他那里查询就可以了。而且他还可以把用户的成绩保存到本地，进行分析。 我们这里只记录技术。既然做查询，就会遇到两种情况，一种是带验证码的查询，一种是不带验证码的，不带验证码的很简单，只需要找到查询成绩的源链接，然后把用户名之类的数据发送个它就可以拿到数据了，带验证码的就比较复杂了，验证码也分为两种，一种是验证码比较简单的，可以通过python的图片识图库，或者使用百度识图的api进行识别，如果验证码比较复杂，那就只能把验证码爬取下来，然后人工识别，然后把验证码输入，再把验证码和用户名之类的账号发送过去就可以拿到数据了。</p>
 <h3 id="不带验证码"><a href="#不带验证码" class="headerlink" title="不带验证码"></a>不带验证码</h3><p>之前<a href="http://www.chsi.com.cn/cet/" target="_blank" rel="external">英语四六级查询的网址</a> 是不需要验证码的，但是这一次刚出的四六级成绩就需要验证码了。。。，这里不需要验证码的就不在介绍了，这种情况十分简单，只需要找到获取数据的链接，然后构造请求就可以了。而且现在绝大多数的查询网站都加入了验证码，目的就是防止爬虫的爬取。</p>
-<h3 id="带验证码"><a href="#带验证码" class="headerlink" title="带验证码"></a>带验证码</h3><p>这里，我们着重介绍一下，带验证码的情况，这里我们以大学英语四六级的查询网站为例子进行介绍：<br>网站查询页面如图:<br><img src="https://moetu.fastmirror.org/images/2018/03/09/1e38b388eefd2236d.png" alt="2"></p>
+<h3 id="带验证码"><a href="#带验证码" class="headerlink" title="带验证码"></a>带验证码</h3><p>这里，我们着重介绍一下，带验证码的情况，这里我们以大学英语四六级的查询网站为例子进行介绍：<br>网站查询页面如图:<br><img src="https://i.loli.net/2018/03/15/5aaa814abb66b.png" alt="2"></p>
 <p>这里我们使用测试<font color="blue">账号 440550172213914 姓名: 叶晖</font></p>
 <p>  <font color="red">注：账号来自网络，如有侵权，请联系博主邮箱(biao@bbiao.me)</font></p>
 <p>可以通过Chrome浏览器F12–&gt;Network 查看到含有成绩数据的链接，如下：</p>
-<p><img src="https://moetu.fastmirror.org/images/2018/03/09/24ec2c766ef42dc68.png" alt="3"></p>
+<p><img src="https://i.loli.net/2018/03/15/5aaa81c36b7be.png" alt="3"></p>
 <p>我们来分析一下这个链接的请求头部，浏览器的请求也是通过请求头部，我们只需要把头部模拟出来，我们也可以拿到数据。<br>我们可以看到请求的头部信息如下：</p>
-<p><img src="https://moetu.fastmirror.org/images/2018/03/09/344c6ff62327e06a4.png" alt="4"></p>
+<p><img src="https://i.loli.net/2018/03/15/5aaa8206bc777.png" alt="4"></p>
 <p>可以看到请求参数有三个，分别是：</p>
 <ul>
 <li>zkzh     准考证号</li>
@@ -487,9 +509,9 @@
 </ul>
 <p>在请求的时候我们只需要带上这三个参数即可。准考证号和姓名我们要查询成绩的话肯定知道，但是验证码每次都不一样，该怎么处理呢？</p>
 <p>我们先来观察一下验证码的信息，再看一下得到成绩的链接的信息，我们对比一下：</p>
-<p><img src="https://moetu.fastmirror.org/images/2018/03/09/545fac1ddc57d19d6.png" alt="5"></p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cookie:<span class="attribute">JSESSIONID</span>=23E5521A52C11D78EED651E737FB9470; <span class="attribute">JSESSIONID</span>=42C04019A0FE6E3FA0F8B412FD5EC7F6; <span class="attribute">acw_tc</span>=AQAAAIfwSFom6w4A15YccFVF1Cu3ZBX5; <span class="attribute">aliyungf_tc</span>=AQAAAOJW3hFvAQwAGfuKPbMBKKVJhaor; <span class="attribute">__utmt</span>=1; <span class="attribute">__utma</span>=65168252.783548276.1517454574.1520241698.1520600353.15; <span class="attribute">__utmb</span>=65168252.12.10.1520600353; <span class="attribute">__utmc</span>=65168252; <span class="attribute">__utmz</span>=65168252.1520600353.15.5.utmcsr=baidu|utmccn=(organic)|utmcmd=organic</div></pre></td></tr></table></figure>
-<p><img src="https://moetu.fastmirror.org/images/2018/03/09/68fb699352af0353f.png" alt="6"></p>
+<p><img src="https://i.loli.net/2018/03/15/5aaa82960ffc5.png" alt="5"></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">JSESSIONID</span>=23E5521A52C11D78EED651E737FB9470; <span class="attribute">JSESSIONID</span>=C251FAB3C55A4C79EE66E879761D9664; <span class="attribute">acw_tc</span>=AQAAAIfwSFom6w4A15YccFVF1Cu3ZBX5; <span class="attribute">aliyungf_tc</span>=AQAAAOJW3hFvAQwAGfuKPbMBKKVJhaor; <span class="attribute">__utmt</span>=1; <span class="attribute">__utma</span>=65168252.783548276.1517454574.1520600353.1521123535.16; <span class="attribute">__utmb</span>=65168252.6.10.1521123535; <span class="attribute">__utmc</span>=65168252; <span class="attribute">__utmz</span>=65168252.1520600353.15.5.utmcsr=baidu|utmccn=(organic)|utmcmd=organic</div><div class="line">Host:www.chsi.com.cn</div></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2018/03/15/5aaa830dc05a7.png" alt="6"></p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cookie:<span class="attribute">JSESSIONID</span>=23E5521A52C11D78EED651E737FB9470; <span class="attribute">JSESSIONID</span>=42C04019A0FE6E3FA0F8B412FD5EC7F6; <span class="attribute">acw_tc</span>=AQAAAIfwSFom6w4A15YccFVF1Cu3ZBX5; <span class="attribute">aliyungf_tc</span>=AQAAAOJW3hFvAQwAGfuKPbMBKKVJhaor; <span class="attribute">__utmt</span>=1; <span class="attribute">__utma</span>=65168252.783548276.1517454574.1520241698.1520600353.15; <span class="attribute">__utmb</span>=65168252.12.10.1520600353; <span class="attribute">__utmc</span>=65168252; <span class="attribute">__utmz</span>=65168252.1520600353.15.5.utmcsr=baidu|utmccn=(organic)|utmcmd=organic</div></pre></td></tr></table></figure>
 <p>上面分别是验证码的请求头部信息以及其cookies，和请求成绩的请求头部信息和cookies，可以看到他们之间的cookies是一样的，验证码和准考证号以及姓名是通过cookies连接起来的，这样每次都随机生成一张验证码，然后生成cookies，当请求成绩的时候也使用相同的cookies，这样就相当于把cookies和准考证号以及验证码等信息绑定在一起了。不明白什么是cookies的朋友可以自己去百度一下。</p>
 <p>这样我们的解决思路就是：</p>
@@ -846,7 +868,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">68.9k</span>
+    <span title="Site words total count">69.0k</span>
   
 </div>
 
@@ -868,7 +890,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共68.9k字</span>
+  <span class="post-count">博客全站共69.0k字</span>
 </div>
 
         
@@ -935,6 +957,9 @@
 
 
 
+  
+  
+
 
 
   
@@ -943,8 +968,6 @@
 
 
 
-
-  
 
 
 
@@ -970,10 +993,10 @@
   <script type="text/javascript" src="/lib/three/three.min.js"></script>
 
   
-  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
 
   
-  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
 
 
   
