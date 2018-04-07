@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.bbiao.me/about/index.html</loc>
+    
+    <lastmod>2018-04-07T09:45:01.736Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.bbiao.me/say/index.html</loc>
+    
+    <lastmod>2018-04-07T09:44:20.749Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.bbiao.me/2018/03/22/Scrapy%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2018-03-22T14:06:19.715Z</lastmod>
@@ -40,20 +54,6 @@
     <loc>https://www.bbiao.me/2018/03/13/%E6%AF%9B%E6%A6%82%E6%A8%A1%E6%8B%9F%E7%BB%83%E4%B9%A0%E8%84%9A%E6%9C%AC/</loc>
     
     <lastmod>2018-03-14T04:42:54.390Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.bbiao.me/about/index.html</loc>
-    
-    <lastmod>2018-03-11T11:17:54.034Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.bbiao.me/say/index.html</loc>
-    
-    <lastmod>2018-03-11T11:04:58.672Z</lastmod>
     
   </url>
   
