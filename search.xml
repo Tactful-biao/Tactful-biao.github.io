@@ -3,6 +3,51 @@
   
     
     <entry>
+      <title><![CDATA[校园内网实现穿梭]]></title>
+      <url>/2018/05/04/%E6%A0%A1%E5%9B%AD%E5%86%85%E7%BD%91%E5%AE%9E%E7%8E%B0%E7%A9%BF%E6%A2%AD/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>好的学校都是相同的，垃圾的学校垃圾到方方面面。</p>
+</blockquote>
+<p>学校的校园网分宿舍区和办公区，办公区是老师待的地方(免费, 不限速),同学上课的时候会在，宿舍区是收费的(30-49元一个月，4M网络，不能开共享)。</p>
+<p>贫穷丰富了我的想象力，无论是宿舍区还是办公区它都是统统在校园网络下面，这样的话可不可以从宿舍区跳到办公区呢？答案是肯定的。</p>
+<h2 id="shadowsocks-的使用"><a href="#shadowsocks-的使用" class="headerlink" title="shadowsocks 的使用"></a>shadowsocks 的使用</h2><p>Shadowsocks: 一种基于Socks5代理方式的加密传输协定，也可以指实作这个协定的各种传输套件。目前套件使用Python、C、C++、C#、Go语言等程式语言开发，大部分主要实作（iOS平台的除外）采用Apache许可证、GPL、MIT许可证等多种自由软体许可协定开放原始码。shadowsocks分为服务器端和客户端，在使用之前，需要先将服务器端部署到服务器上面，然后通过客户端连接并建立本地代理。(维基百科解释)</p>
+<h3 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h3><p>本机环境： Ubuntu 16.04 （其他发行版也同样）<br>安装shadowsocks： pip install shadowsocks<br>创建一个配置文件 vi /etc/shadowsocks.json<br>{<br>    “server”:”0.0.0.0”,<br>    “server_port”:指定端口,<br>    “local_port”:1080,<br>    “password”: 密码,<br>    “timeout”:600,<br>    “method”:”aes-256-cfb”<br>}<br>这一部分具体可以参考我的这篇文章<a href="https://bbiao.me/2017/07/16/centos7%E6%90%AD%E5%BB%BAshadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" target="_blank" rel="external">centos7-搭建shadowsocks科学上网</a></p>
+<p>使用： ssserver -c /etc/shadowsocks.json<br>使用客户端就可以进行连接了。<br><a href="http://oxwgzg29g.bkt.clouddn.com/shadowsocks--universal-4.5.7.apk" target="_blank" rel="external">安卓手机apk下载地址</a></p>
+<p>为了不每次开机都手动启动，可以把它加入到开机自启里面：vi /etc/rc.local</p>
+<p>在 exit 0前面加入：ssserver -c /etc/shadowsocks.json -d start<br>更改rc.local的权限：sudo chmod +x /etc/rc.local<br>重启就可以自动启动了。</p>
+<h2 id="实现穿越"><a href="#实现穿越" class="headerlink" title="实现穿越"></a>实现穿越</h2><p>学校是给每个学院划分了ip的，这个ip在整个校园内是唯一的，在校园内任何一台机器上都可以访问到该ip，这简称为内网。实现穿越的前提是你要在办公区有一台持续在线的机器。因为我在实验室(实验室在办公区)，所以我就用我自己的电脑作为跳转。</p>
+<p>校园网是有认证机制的(宿舍区和办公区都是一样的)，为了节省资源，默认3-5分钟不用网络，网络就自动断开了，所以我们要写一个简单的脚本，使网络不断开.<br>两种思路：</p>
+<ul>
+<li>每三分钟判断一下是否还有网络，若没网则脚本登录</li>
+<li>每时每刻都使用网络，使其不断网</li>
+</ul>
+<p>###第一种思路<br>尝试了一下不太好实现，它的密码是经过特殊处理的，不过我们使用其他的方法进行了实现：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">from</span> selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS()</div><div class="line">driver.<span class="built_in">get</span>(<span class="string">'http://192.168.118.51/srun_portal_pc?ac_id=4'</span>)</div><div class="line">driver.find_element_by_name(<span class="string">'username'</span>).send_keys(<span class="string">''</span>)  <span class="comment"># 账号</span></div><div class="line">driver.find_element_by_name(<span class="string">'password'</span>).send_keys(<span class="string">''</span>)  <span class="comment"># 密码</span></div><div class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="login-form"]/div[3]/div[1]/button'</span>).click()</div><div class="line">driver.<span class="built_in">close</span>()</div></pre></td></tr></table></figure></p>
+<p>主要使用了python的selenium模块，代码很简单。</p>
+<h3 id="第二种思路"><a href="#第二种思路" class="headerlink" title="第二种思路"></a>第二种思路</h3><p>这种思路也很简单，就是没隔3分钟请求一下网络(百度的状态码)，这样就不会断网，为了节省电脑资源，每到凌晨3点，就停止运行，或者执行关机命令也行：</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> <span class="built_in">time</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">url = <span class="string">'http://www.baidu.com'</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> True:</div><div class="line">    status = requests.get(url).status_code</div><div class="line">    <span class="keyword">if</span> status <span class="keyword">is</span> <span class="number">200</span>:</div><div class="line">        <span class="built_in">time</span>.sleep(<span class="number">180</span>)</div><div class="line">        <span class="keyword">if</span> <span class="built_in">time</span>.strftime(<span class="string">'%H'</span>) == <span class="string">'03'</span>:</div><div class="line">            <span class="built_in">time</span>.sleep(<span class="number">6</span> * <span class="number">60</span> * <span class="number">60</span>)</div><div class="line">            #os.popen(<span class="string">'shutdown -h now'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        break</div></pre></td></tr></table></figure>
+<h3 id="最后一步"><a href="#最后一步" class="headerlink" title="最后一步"></a>最后一步</h3><p>最后下载上面的安卓客户端，配置IP地址，端口，密码。再连上宿舍区的网络，打开代理，就可以实现在宿舍区跳到办公区进行上网了。用到了一点点简单的计算机网络的知识，整体思路也不难。欢迎留言与我交流。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 校园网 </tag>
+            
+            <tag> shadowsocks </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Scrapy的学习]]></title>
       <url>/2018/03/22/Scrapy%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
       <content type="html"><![CDATA[<p>Scrapy 是一个爬虫的框架，十分的强大，前前后后也写了很多的爬虫了，这里打算学习一下这个框架，刚开始学，感觉还是有点难度的，这里简单记录一下，以后慢慢补充。</p>
@@ -1800,9 +1845,9 @@
             
             <tag> Python </tag>
             
-            <tag> Matplotlib </tag>
-            
             <tag> 数据分析 </tag>
+            
+            <tag> Matplotlib </tag>
             
         </tags>
         
@@ -1902,11 +1947,11 @@
         
         <tags>
             
+            <tag> Mateplotlib </tag>
+            
             <tag> Python </tag>
             
             <tag> 数据分析 </tag>
-            
-            <tag> Mateplotlib </tag>
             
         </tags>
         
