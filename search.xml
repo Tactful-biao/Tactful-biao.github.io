@@ -1657,7 +1657,7 @@
 <p>U盘的设置就全部完成了，下面就开始安装系统了。</p>
 <blockquote>
 <h3 id="使用VM创建系统"><a href="#使用VM创建系统" class="headerlink" title="使用VM创建系统"></a>使用VM创建系统</h3></blockquote>
-<p>打开我们的VMware，选择新建虚拟机，典型安装即可：<br><img src="http://ou22pglma.bkt.clouddn.com/13.PNGhttp://ou22pglma.bkt.clouddn.com/12.png" alt="13"></p>
+<p>打开我们的VMware，选择新建虚拟机，典型安装即可：<br><img src="http://ou22pglma.bkt.clouddn.com/13.PNG" alt="13"></p>
 <p>然后选择你的kali系统。</p>
 <p><img src="http://ou22pglma.bkt.clouddn.com/14.PNG" alt="14"></p>
 <p>下面的安装图上的进行操作就行了：</p>
@@ -1845,9 +1845,9 @@
             
             <tag> Python </tag>
             
-            <tag> Matplotlib </tag>
-            
             <tag> 数据分析 </tag>
+            
+            <tag> Matplotlib </tag>
             
         </tags>
         
@@ -1947,11 +1947,11 @@
         
         <tags>
             
+            <tag> Mateplotlib </tag>
+            
             <tag> Python </tag>
             
             <tag> 数据分析 </tag>
-            
-            <tag> Mateplotlib </tag>
             
         </tags>
         
