@@ -8,7 +8,14 @@
     
     <url>
         <loc>https://www.bbiao.me/about/</loc>
-        <lastmod>2018-04-15T08:59:41.478Z</lastmod>
+        <lastmod>2018-05-23T06:48:33.820Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://www.bbiao.me/maomi/</loc>
+        <lastmod>2018-04-19T06:38:39.850Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -21,15 +28,8 @@
     </url>
     
     <url>
-        <loc>https://www.bbiao.me/maomi/</loc>
-        <lastmod>2018-03-14T06:56:46.534Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
         <loc>https://www.bbiao.me/board/</loc>
-        <lastmod>2017-10-14T05:48:27.159Z</lastmod>
+        <lastmod>2017-10-14T05:48:27.160Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

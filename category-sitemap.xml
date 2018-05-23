@@ -8,21 +8,21 @@
 
     <url>
         <loc>https://www.bbiao.me/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
-        <lastmod>2017-10-14T14:06:07.787Z</lastmod>
+        <lastmod>2017-10-14T14:06:07.788Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://www.bbiao.me/categories/%E5%B9%B2%E8%B4%A7/</loc>
-        <lastmod>2017-10-14T15:28:42.200Z</lastmod>
+        <lastmod>2017-10-14T15:28:42.201Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://www.bbiao.me/categories/%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98/</loc>
-        <lastmod>2017-10-23T10:38:50.091Z</lastmod>
+        <lastmod>2017-10-23T10:38:50.092Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -30,13 +30,6 @@
     <url>
         <loc>https://www.bbiao.me/categories/%E6%84%9F%E6%82%9F/</loc>
         <lastmod>2017-12-03T09:43:01.112Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://www.bbiao.me/categories/Kali-Linux/</loc>
-        <lastmod>2017-12-03T09:51:23.401Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -50,7 +43,7 @@
 
     <url>
         <loc>https://www.bbiao.me/categories/%E5%8D%9A%E5%AE%A2/</loc>
-        <lastmod>2017-12-03T09:57:19.250Z</lastmod>
+        <lastmod>2017-12-03T09:57:19.251Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -58,13 +51,6 @@
     <url>
         <loc>https://www.bbiao.me/categories/%E8%84%9A%E6%9C%AC/</loc>
         <lastmod>2018-03-14T04:42:54.390Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://www.bbiao.me/categories/Python/</loc>
-        <lastmod>2018-03-15T14:30:23.619Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -79,6 +65,27 @@
     <url>
         <loc>https://www.bbiao.me/categories/python3/</loc>
         <lastmod>2018-03-22T14:06:19.715Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bbiao.me/categories/Kali-Linux/</loc>
+        <lastmod>2018-05-13T11:57:54.172Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bbiao.me/categories/Python/</loc>
+        <lastmod>2018-05-23T01:50:18.674Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.bbiao.me/categories/python/</loc>
+        <lastmod>2018-05-23T04:40:29.926Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
