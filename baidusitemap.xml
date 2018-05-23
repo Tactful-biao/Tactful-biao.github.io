@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://www.bbiao.me/2017/10/23/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E8%AF%A2%E7%81%AB%E8%BD%A6%E7%A5%A8/</loc>
+    <lastmod>2018-05-23T01:50:18.674Z</lastmod>
+    <data>
+        <display>
+        <title>命令行查询火车票</title>
+        <pubTime>2017-10-23T13:29:03.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>12306</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="https://www.bbiao.me/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.bbiao.me/2017/08/02/%E6%8A%8Akali-linux%E8%A3%85%E5%9C%A8U%E7%9B%98%E9%87%8C/</loc>
     <lastmod>2018-05-13T11:57:54.172Z</lastmod>
     <data>
@@ -195,9 +217,9 @@
         
         <tag>爬虫</tag>
          
-        <tag>Qzone</tag>
-         
         <tag>python</tag>
+         
+        <tag>Qzone</tag>
          
          
            
@@ -285,9 +307,9 @@
         <title>WordPress安装环境与配置的选择</title>
         <pubTime>2017-07-18T13:41:51.000Z</pubTime>
         
-        <tag>vps</tag>
-         
         <tag>WordPress</tag>
+         
+        <tag>vps</tag>
          
         <tag>Lamp</tag>
          
@@ -426,28 +448,6 @@
         <tag>爬虫</tag>
          
         <tag>email</tag>
-         
-         
-           
-             
-              <breadCrumb title="Python" url="https://www.bbiao.me/categories/Python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.bbiao.me/2017/10/23/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E8%AF%A2%E7%81%AB%E8%BD%A6%E7%A5%A8/</loc>
-    <lastmod>2017-10-23T13:44:28.601Z</lastmod>
-    <data>
-        <display>
-        <title>命令行查询火车票</title>
-        <pubTime>2017-10-23T13:29:03.000Z</pubTime>
-        
-        <tag>Python</tag>
-         
-        <tag>12306</tag>
          
          
            
