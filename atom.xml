@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.bbiao.me/"/>
-  <updated>2018-05-04T01:51:49.541Z</updated>
+  <updated>2018-05-23T04:33:25.279Z</updated>
   <id>https://www.bbiao.me/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分享两个有趣的思路</title>
+    <link href="https://www.bbiao.me/2018/05/23/%E5%88%86%E4%BA%AB%E4%B8%A4%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E6%80%9D%E8%B7%AF/"/>
+    <id>https://www.bbiao.me/2018/05/23/分享两个有趣的思路/</id>
+    <published>2018-05-23T03:51:20.000Z</published>
+    <updated>2018-05-23T04:33:25.279Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>思路在编程过程中十分的重要，一个人能否写出高质量的代码，关键就在于是否有一个清晰的思路。这里分享两个我最近一段时间遇到的两个比较有意思的解决问题的思路。</p></blockquote><h2 id="两个思路"><a href="#两个思路" class="headerlink" title="两个思路"></a>两个思路</h2><h3 id="思路一-方法一"><a href="#思路一-方法一" class="headerlink" title="思路一 (方法一)"></a>思路一 (方法一)</h3><p>这是我做的《基于lucene的全文搜索引擎》课程作业，其中添加了电影搜索功能，前端接受一个关键字，后端通过python脚本去获取数据，然后再返回给前端。效果如下：</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_005ae5e9adc377cd7e6.png" alt="1"></p><p>数据是通过种子帝(www.btdtdy.org)获取的。一般获取数据的方法是输入关键词，通过构造请求链接，然后获取数据，解析数据。但是该网站的请求链接比较特殊，它把关键字加密了，如下图我们搜索的 钢铁侠 请求链接里的search后面的关键词显然被加密了。想要请求它的内容就需要知道它的加密方式。</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_00654e5ecde6c684a8d.png" alt="2"></p><p>一般加密都是通过前端加密。我们通过分析请求发现s.php?id=243这个链接里面定义了加密方式是Base64</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_007880adaace23e0e2f.png" alt="3"></p><p>我们使用python通过测试如下：</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_0085f897adb4f68460e.png" alt="4"></p><ul><li>先导入base64模块</li><li>定义关键字</li><li>把关键字编码为utf-8</li><li>使用b64encode编码后的关键词</li><li>解码关键词</li></ul><p>通过上面的操作，我们就得到了加密后的关键词。</p><p>通过对比我们发现url中的关键词是：<font color="red">b-6ZKi6Z0B5L6g</font></p><p>我们加密得到的是            <font color="red">6ZKi6Z0B5L6g</font></p><p>经过比较我们发现前面的b-是固定不变的。这样我们就相当于破解了它的加密方式。接下的请求和解析就很简单了，这里就不在介绍了，我们接下来介绍第二种方法。</p><h3 id="思路一-方法二"><a href="#思路一-方法二" class="headerlink" title="思路一 (方法二)"></a>思路一 (方法二)</h3><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_010bcb01e28778c22d9.png" alt="5"></p><p>在实际的测试中，我发现了上图中框起来的地方。做过网站的应该都清楚rss，RSS订阅能更快地获取信息，网站提供RSS输出，有利于让用户获取网站内容的最新更新。网络用户可以在客户端借助于支持RSS的聚合工具软件，在不打开网站内容页面的情况下阅读支持RSS输出的网站内容。</p><p>我们打开这个页面之后发现，我们想要的内容都在这里面（种子链接详情页，种子标题）而且关键词也没有加密，这样的话，我们就可以直接请求这个xml的文件，然后从里面提取我们想要的内容就可以了呀：</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_0115a18b6657988d3b2.png" alt="6"></p><p>为了防止偶然，我们有换了一个关键词，发现完全OK。这样的话，我们只需要构造这个请求就可以获取我们想要的东西。</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_0122179ed0a2862f16d.png" alt="7"></p><blockquote><p>方法一和方法二都能够拿到数据，方法一采用的是硬肛的方法，而方法二明显巧妙了许多。方法二比方法一要简单很多，不仅没有加密而且数据规则，方便提取。所以在行动前多思考，我相信方法一并不是所有人都能够想的出来，还要分析请求。所以一定要多思考、多分析。</p></blockquote><h2 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h2><p>这是我搭建代理池的时候遇到的问题，代理池需要大量的代理，代理网站越多，获取到的代理就越多，国内免费的代理就那么几个，而且都被别人爬烂了，质量十分的低。而国外的就不一样，由于墙的关系，很大一部分人都被拦住了，而我刚好有国外的服务器，搭建了爬虫环境，所以这一层对我没用。</p><p>这里推荐一个国外的代理网站(<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![8][8]</div><div class="line"></div><div class="line">正当我准备把这500个热乎乎的ip收入囊中的时候，问题来了，我发现它的端口号是加了密的，WTF？！！！如下图：</div><div class="line"></div><div class="line">![9][9]</div><div class="line"></div><div class="line">上图是复制出来的源代码，通过正则表达式匹配到的ip，红框圈起来的就是端口号，这是什么鬼？！难道就这么放弃吗？放弃是不可能放弃的，这辈子也不会放弃的。就因为它有难度，所以挡住了绝大多数的爬虫，如果我能爬下来，那岂不是美滋滋。</div><div class="line"></div><div class="line">继续分析， 在源代码里发现了这个，如下图：</div><div class="line"></div><div class="line">![10][10]</div><div class="line"></div><div class="line">这一段看起来骨骼惊奇的代码，一看就不简单。</div><div class="line"></div><div class="line">把它复制出来，然后稍微整理一下，如下图：</div><div class="line"></div><div class="line">![11][11]</div><div class="line"></div><div class="line">* 1-20行是赋值出来的字符串</div><div class="line">* 22行是端口加密的字符串</div><div class="line"></div><div class="line">通过比较发现它们之间果然有“见不得人的勾当” ，比如</div><div class="line"></div><div class="line">&lt;font color=&quot;red&quot;&gt;(g7g7f6^g7q7)  对应于上面的g7g7f6=8^g7q7; g7q7=1221；&lt;/font&gt;</div><div class="line"></div><div class="line">通过python运算8^1221^1221得到结果8，如上图右半部分。</div><div class="line"></div><div class="line">其中的+不是加法运算，而是连接运算。它把每一个数字连接起来，最终组合成端口号：上图中组合出来的端口号为8080。</div><div class="line"></div><div class="line">请仔细观察上图中的这一部分：</div><div class="line"></div><div class="line">![12][12]</div><div class="line"></div><div class="line">它是从等号右面从0-9，比如：</div><div class="line">8^1221^1221 = 8</div><div class="line">0^7693^7693 = 0</div><div class="line">……</div><div class="line"></div><div class="line">从上面可以发现，^后面的都可以不要，只需要判断端口加密字符串中包含上面哪一个字符串，如果包含b2t0l2那么它就是0，如果包含z6l2w3，那么它就是1。</div><div class="line"></div><div class="line">这样就可以把上面的内容整合成下面的样子，通过正则匹配可以轻松的截取出来：</div><div class="line"></div><div class="line">![13][13]</div><div class="line"></div><div class="line">这样的话，我们就可以很轻松的算出端口号。</div><div class="line"></div><div class="line">你以为这样就结束了？！ 并没有</div><div class="line"></div><div class="line">&lt;hr&gt;</div><div class="line"></div><div class="line">我发现上面的字符串并不是固定的，它是动态变化的，这一次请求是：</div></pre></td></tr></table></figure></p><p>r8d4=7693;h8c3=1203;c3i9=8380;w3v2=3981;i9u1=5597;y5j0=9372;d4h8=9969;z6l2=1350;g7q7=1221;k1o5=7185;b2t0l2=0^r8d4;z6l2w3=1^h8c3;n4a1v2=2^c3i9;p6w3q7=3^w3v2;u1p6n4=4^i9u1;l2x4k1=5^y5j0;s9r8y5=6^d4h8;k1q7g7=7^z6l2;g7g7f6=8^g7q7;f6h8a1=9^k1o5;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">下一次请求就变成：</div></pre></td></tr></table></figure></p><p>w3l2=2592;s9o5=3288;u1h8=6497;j0s9=7893;e5c3=1467;d4r8=8884;k1k1=8142;x4q7=4302;b2w3=2286;m3d4=1753;p6x4c3=0^w3l2;g7a1y5=1^s9o5;n4f6j0=2^u1h8;q7r8n4=3^j0s9;r8b2e5=4^e5c3;s9q7s9=5^d4r8;d4k1m3=6^k1k1;o5s9w3=7^x4q7;u1h8o5=8^b2w3;v2j0r8=9^m3d4;<br>```</p><p>这显然是不一样的。WTF？！！！</p><font color="red">这….</font><p>说过不放弃，就是不放弃。继续分析，发现虽然它加密字符串每次都在变，但是我们已经知道了它的构造方法，那么我们就跟着动态变化就是了。我们每次请求的时候，动态提取解密字符串，然后拿着它去解密端口号。</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_01814a53cedde8c4b97.png" alt="14"></p><p>通过上面的方法，我们可以得到一个列表如下图：</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_0194b4a9f4e76025221.png" alt="15"></p><p>列表的对应位置刚好是解密字符串的值。</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_020cda4ae4dcd68f7d9.png" alt="16"></p><ul><li>ips 是通过正则表达式匹配到的ip</li><li>base是通过正则表达式提取的解密字符串列表</li><li>ports是通过正则表达式提取的端口的加密字符串</li><li>aa 是把加密的端口号通过+划分开</li><li>内层for循环解密端口号</li><li>xs 是组装好的端口号</li><li>result是ip加端口号</li></ul><p>上面的代码运行结果如下：</p><p><img src="https://moetu.fastmirror.org/images/2018/05/23/_02165d264ec9feedf81.png" alt="17"></p><p>项目地址：<a href="https://github.com/Tactful-biao/scrapy/blob/master/ip.py" target="_blank" rel="external">github地址</a></p><blockquote><p>上面是我最近遇到的两个比较有意思的问题，以及我的解决思路，希望能给你带来一定的启发。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;思路在编程过程中十分的重要，一个人能否写出高质量的代码，关键就在于是否有一个清晰的思路。这里分享两个我最近一段时间遇到的两个比较有意思的解决问题的思路。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;两个思路&quot;&gt;&lt;a href=&quot;#两个思路&quot;
+      
+    
+    </summary>
+    
+      <category term="python" scheme="https://www.bbiao.me/categories/python/"/>
+    
+    
+      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="思路" scheme="https://www.bbiao.me/tags/%E6%80%9D%E8%B7%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>校园内网实现穿梭</title>
@@ -97,9 +127,9 @@
       <category term="脚本" scheme="https://www.bbiao.me/categories/%E8%84%9A%E6%9C%AC/"/>
     
     
-      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
-    
       <category term="脚本" scheme="https://www.bbiao.me/tags/%E8%84%9A%E6%9C%AC/"/>
+    
+      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
     
   </entry>
   
@@ -183,9 +213,9 @@
     
       <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
     
-      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
-    
       <category term="Qzone" scheme="https://www.bbiao.me/tags/Qzone/"/>
+    
+      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
     
   </entry>
   
@@ -397,9 +427,9 @@
       <category term="网络爬虫" scheme="https://www.bbiao.me/categories/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
-    
       <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
     
   </entry>
   
@@ -455,9 +485,9 @@
       <category term="Python" scheme="https://www.bbiao.me/categories/Python/"/>
     
     
-      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
-    
       <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
     
   </entry>
   
@@ -567,33 +597,6 @@
     
     
       <category term="kali linux" scheme="https://www.bbiao.me/tags/kali-linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论备份的重要性！！！</title>
-    <link href="https://www.bbiao.me/2017/07/28/%E8%AE%BA%E5%A4%87%E4%BB%BD%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%EF%BC%81%EF%BC%81%EF%BC%81/"/>
-    <id>https://www.bbiao.me/2017/07/28/论备份的重要性！！！/</id>
-    <published>2017-07-28T13:58:30.000Z</published>
-    <updated>2017-10-14T14:06:07.788Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="程序员一定要有备份的意识！！！"><a href="#程序员一定要有备份的意识！！！" class="headerlink" title="程序员一定要有备份的意识！！！"></a><font color="rad">程序员一定要有备份的意识！！！</font></h2><h2 id="程序员一定要有备份的意识！！！-1"><a href="#程序员一定要有备份的意识！！！-1" class="headerlink" title="程序员一定要有备份的意识！！！"></a><font color="rad">程序员一定要有备份的意识！！！</font></h2><h2 id="程序员一定要有备份的意识！！！-2"><a href="#程序员一定要有备份的意识！！！-2" class="headerlink" title="程序员一定要有备份的意识！！！"></a><font color="rad">程序员一定要有备份的意识！！！</font></h2><blockquote><h2 id="悲惨经历"><a href="#悲惨经历" class="headerlink" title="悲惨经历"></a>悲惨经历</h2></blockquote><p>无论是什么，特别是数据，一定要记得备份，还要记得不要备份在一个地方。云盘，网盘，硬盘，U盘都要备份。不要等到数据丢失的时候再后悔。讲一下博主今天的经历吧。</p><p>今天，下午我照常登录我的服务器（Ubuntu14.04），然后我看有一条提示，匆匆看到了更新两个字，就把命令打上运行了，也没多想。运行的过程中我才意识到，我刚刚运行的命令是在更新系统，从Ubuntu14.04 —&gt; Ubuntu16.06。我逐渐意识到事情的严重性，因为我的博客就是以Ubuntu14.04为基础进行搭建的，当然Ubuntu16.04也可以搭建。但是这种升级升上去的，很多配置都会改变，特别有一点是在Ubuntu14.04下，使用的是PHP5-FPM,而在Ubuntu16.04下使用的是PHP7.0，并且默认没有PHP5-FPM。看着升级完的系统，我尝试搜索我的博客，打开后提示404 Not Found。我就知道会出现问题。但是我还是冷静了下来，思考着解决办法。<br>我的思路是这样的：首先，Ubuntu16.04也是可以搭建WordPress的，唯一的区别在于PHP版本的不同，以及配置的不同，我打算重新配置PHP，使新系统和我的WordPress能够成功连接。于是我就查找一些按照Ubuntu16.04的方法搭建wordpress的方法，再进行到一步防火墙的配置的时候。按照他的方法进行配置的，结果把我自己也给拦到墙外面了 <img class="github-emoji" title="cry" alt="cry" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f622.png?v8" height="20" width="20"> ，真是欲哭无泪啊。然后自己就死活连接不上服务器。通过Digitalocean的管理页面的Console连接上了服务器，也把防火墙关掉了，但是在其他地方还是连接不上服务器。也没法进行操作，无奈之下，我只好把服务器rebuild了 </p><blockquote><h2 id="补救措施"><a href="#补救措施" class="headerlink" title="补救措施"></a>补救措施</h2></blockquote><p>我用最短的时间把博客进行了恢复，从零开始恢复。<br>这多亏了，我之前的备份，我重新搭建了LEMP环境，重新安装WordPress，我把我之前备份的WordPress文件对新安装的文件进行了替换。这样只能把原先的插件以及主题，网站配置恢复，数据还是没法恢复。因为数据是存放在数据库里面的。<br>数据库在之前我也进行了备份，可以安装PHPMyAdmin，通过它把数据库文件导出，恢复的时候，只需要还使用它进行导入就可以了。这样你的数据，文章，评论，等等都可以恢复原样了。<br>虽然我有备份文件，但是恢复的时候还是少了两篇文章 <img class="github-emoji" title="cry" alt="cry" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f622.png?v8" height="20" width="20"> 。之所以少，是因为我备份的时候，这两篇文章还没有写，不过我会尽快补上的。<br>给大家推荐一个WordPress备份的神器：backupwordpress<br>这个可以设置定时备份，还支持备份完发送到邮箱，还可以直接下载到本地（推荐），强烈推荐，不定时手工备份，然后随手下载到本地，以备不时之需。博主就是下载到本地，这次恢复真是有惊无险。</p><blockquote><h3 id="再次强调，一定要进行备份！"><a href="#再次强调，一定要进行备份！" class="headerlink" title="再次强调，一定要进行备份！"></a>再次强调，一定要进行备份！</h3></blockquote><p>因为意外可能随时都会发生，唯有做了备份，才能把损失降到最小，备份也是有原则的，备份至少要分三份，不要备份在同一个地方，如果你都备份在电脑里面，如果电脑损坏了，备份再多份也没用，最好在电脑、U盘、网盘各备份一份。这样最为保险。</p><p>特别是站长，服务器管理者，备份是首要任务，试想一下，自己辛辛苦苦经营的网站，因为某些未知错误，从这个世界上消失了（如果你没有备份的话），你自己想一下这该是怎样的一种心情？</p><blockquote><p>做好备份也很简单，首先安装backupwordpress，把网站所有文件和数据库一起备份，然后下载到本地。<br>在服务器上安装PHPMyAdmin，把数据库再进行导出。<br>如果你的服务器出现问题，你需要重建，只需要把WordPress文件进行替换，当然替换后文件相应的权限还是需要更改的，然后安装PHPMyAdmin，把数据库进行导入。你的网站就可以在很短的时间内进行恢复了。</p></blockquote><hr><blockquote><p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;程序员一定要有备份的意识！！！&quot;&gt;&lt;a href=&quot;#程序员一定要有备份的意识！！！&quot; class=&quot;headerlink&quot; title=&quot;程序员一定要有备份的意识！！！&quot;&gt;&lt;/a&gt;&lt;font color=&quot;rad&quot;&gt;程序员一定要有备份的意识！！！&lt;/font&gt;&lt;
-      
-    
-    </summary>
-    
-      <category term="服务器" scheme="https://www.bbiao.me/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
-    
-      <category term="PHPMyAdmin" scheme="https://www.bbiao.me/tags/PHPMyAdmin/"/>
-    
-      <category term="备份" scheme="https://www.bbiao.me/tags/%E5%A4%87%E4%BB%BD/"/>
     
   </entry>
   
