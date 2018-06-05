@@ -3,6 +3,28 @@
 
 
     
+  <url>
+    <loc>https://www.bbiao.me/2018/06/05/%E6%95%B0%E6%8D%AE%E4%B9%8B%E7%BE%8E/</loc>
+    <lastmod>2018-06-05T14:01:34.305Z</lastmod>
+    <data>
+        <display>
+        <title>数据之美</title>
+        <pubTime>2018-06-05T08:21:40.000Z</pubTime>
+        
+        <tag>数据分析</tag>
+         
+        <tag>FineBI</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="https://www.bbiao.me/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>https://www.bbiao.me/2018/05/23/%E5%88%86%E4%BA%AB%E4%B8%A4%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E6%80%9D%E8%B7%AF/</loc>
@@ -239,9 +261,9 @@
         
         <tag>爬虫</tag>
          
-        <tag>Qzone</tag>
-         
         <tag>python</tag>
+         
+        <tag>Qzone</tag>
          
          
            
@@ -331,11 +353,11 @@
         
         <tag>vps</tag>
          
-        <tag>WordPress</tag>
-         
         <tag>Lamp</tag>
          
         <tag>Lemp</tag>
+         
+        <tag>WordPress</tag>
          
         <tag>经验</tag>
          
@@ -377,11 +399,11 @@
         <title>开博总结</title>
         <pubTime>2017-07-14T09:14:06.000Z</pubTime>
         
-        <tag>博客</tag>
-         
         <tag>总结</tag>
          
         <tag>感悟</tag>
+         
+        <tag>博客</tag>
          
          
            
@@ -423,11 +445,11 @@
         <title>使用linux-apache-mysql-php-lamp搭建wordpress</title>
         <pubTime>2017-07-16T05:24:36.000Z</pubTime>
         
+        <tag>WordPress</tag>
+         
         <tag>Apache</tag>
          
         <tag>LEMP</tag>
-         
-        <tag>WordPress</tag>
          
         <tag>博客搭建</tag>
          
@@ -605,9 +627,9 @@
         <title>超详细！linux-nginx-mysql-php（lemp）环境搭建wordpress</title>
         <pubTime>2017-07-09T14:21:41.000Z</pubTime>
         
-        <tag>LEMP</tag>
-         
         <tag>WordPress</tag>
+         
+        <tag>LEMP</tag>
          
         <tag>Nginx</tag>
          
@@ -723,9 +745,9 @@
         <title>使用Python对账单进行分析</title>
         <pubTime>2017-07-23T06:54:42.000Z</pubTime>
         
-        <tag>Python</tag>
-         
         <tag>Mateplotlib</tag>
+         
+        <tag>Python</tag>
          
         <tag>数据分析</tag>
          
