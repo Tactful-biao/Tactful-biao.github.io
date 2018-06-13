@@ -653,11 +653,9 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2></blockquote>
 <p>这次对QQ空间的爬取总体来说收获还是很大的，文章中只是大体介绍了一下过程，具体细节我希望各位能够亲自动手去做一下，授人以鱼不如授人以渔，要想学好程序，不动手是肯定不行的。当然，博主水平有限，语言表达也不是很好，有些地方表达的不清楚，有错误的地方希望各位多多指教。不了解不清楚的地方可以在文章下方或者留言板中给博主留言！</p>
 <p>另外数据爬取下来的主要目的是为了分析，不然爬取数据的意义并不大，要能够从数据中提取出有价值的东西来，这样才有意义，后面博主可能会再发一篇关于空间数据分析的文章。等有时间再写吧。</p>
-<font color="red">项目已经重构，文章也相应的做了修改，同时还添加了批量删除说说和批量删除留言的功能。 github上已经同步更新。 同时欢迎关注我的公众号: 一个简单程序员 (文章下方有二维码)，可以通过回复“QQ空间”获取完整的新老版本的代码。</font>
+<font color="red">项目已经重构，文章也相应的做了修改，同时还添加了批量删除说说和批量删除留言的功能。 github上已经同步更新。 同时欢迎关注我的公众号: 一个简单程序猿 (文章下方有二维码)，可以通过回复“QQ空间”获取完整的新老版本的代码。</font>
 
-<blockquote>
-<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3></blockquote>
-<p><a href="https://github.com/Tactful-biao/Spiders/tree/master/Qzone" target="_blank" rel="external">My GitHub</a><br>项目我会一直完善的，最新的爬取功能我会添加到github上，欢迎各位的star哦！</p>
+
 <blockquote>
 <p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</p>
 </blockquote>
@@ -2066,9 +2064,9 @@
             
             <tag> Python </tag>
             
-            <tag> 数据分析 </tag>
-            
             <tag> Matplotlib </tag>
+            
+            <tag> 数据分析 </tag>
             
         </tags>
         
@@ -2170,9 +2168,9 @@
             
             <tag> Python </tag>
             
-            <tag> Mateplotlib </tag>
-            
             <tag> 数据分析 </tag>
+            
+            <tag> Mateplotlib </tag>
             
         </tags>
         
