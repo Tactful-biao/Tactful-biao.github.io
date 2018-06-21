@@ -3,6 +3,7 @@
 
 
     
+    
   <url>
     <loc>https://www.bbiao.me/2017/11/23/%E7%88%AC%E5%8F%96QQ%E7%A9%BA%E9%97%B4/</loc>
     <lastmod>2018-06-13T02:20:53.815Z</lastmod>
@@ -138,7 +139,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>https://www.bbiao.me/2018/03/22/Scrapy%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
@@ -697,9 +697,9 @@
         
         <tag>Python</tag>
          
-        <tag>Matplotlib</tag>
-         
         <tag>数据分析</tag>
+         
+        <tag>Matplotlib</tag>
          
          
            
@@ -745,11 +745,11 @@
         <title>使用Python对账单进行分析</title>
         <pubTime>2017-07-23T06:54:42.000Z</pubTime>
         
+        <tag>Mateplotlib</tag>
+         
         <tag>Python</tag>
          
         <tag>数据分析</tag>
-         
-        <tag>Mateplotlib</tag>
          
          
            
