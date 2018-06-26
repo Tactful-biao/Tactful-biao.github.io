@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.bbiao.me/"/>
-  <updated>2018-06-05T14:20:53.206Z</updated>
+  <updated>2018-06-26T07:00:43.490Z</updated>
   <id>https://www.bbiao.me/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于Flask的资源搜索平台的搭建</title>
+    <link href="https://www.bbiao.me/2018/06/26/%E5%9F%BA%E4%BA%8EFlask%E7%9A%84%E8%B5%84%E6%BA%90%E6%90%9C%E7%B4%A2%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%90%AD%E5%BB%BA/"/>
+    <id>https://www.bbiao.me/2018/06/26/基于Flask的资源搜索平台的搭建/</id>
+    <published>2018-06-26T04:59:27.000Z</published>
+    <updated>2018-06-26T07:00:43.490Z</updated>
+    
+    <content type="html"><![CDATA[<p>Python是一门简单又强大的一门编程语言，如果能够熟练使用它的话，会给你节省大量的时间。它可以做运维、web开发、应用开发、大数据、数据挖掘、科学计算、机器学习、人工智能、自然语言处理……还可以写很长很长……</p><p>之前一直在用它做爬虫，写一些常用的脚本，经常在命令行下运行代码，虽然有些功能很使用，但是对不熟悉计算机的朋友来说，十分的不友好，大家都喜欢有界面的，动动手指，点点鼠标就能够完成操作。</p><p>这就是图形化，有界面的操作。这就是为什么Windows操作系统这么普及，而Linux操作系统用的少的原因。因为它对用户的要求比较低。</p><p>在这里我使用Python搭建一个图形化的查询系统。该系统我之前是使用Java和Python共同实现的，现在重构了(完全使用Python实现)。之前使用Java和JSP实现前端和数据库的读取。后端数据的获取是使用的Python。</p><p>环境介绍：</p><ul><li>系统环境：Ubuntu 16.04</li><li>python版本：python 3.5</li><li>相应库：reqquests、pymysq、flask、BeautifulSoup、re、wtforms</li></ul><p>下图为搜索页面(未使用css，界面稍微简陋了一点)</p><p><img src="https://i.loli.net/2018/06/26/5b31c8d1515c7.png" alt="1"></p><p>思路如下：</p><ul><li>获取数据</li><li>存入mysql数据库</li><li>前端接收关键词</li><li>从数据库读取内容</li><li>前端展示</li></ul><p>思路清晰了，就可以逐步进行实现了。</p><h3 id="首先是获取数据"><a href="#首先是获取数据" class="headerlink" title="首先是获取数据"></a>首先是获取数据</h3><p>数据从两个地方获取</p><p><a href="http://btdb.to" target="_blank" rel="external">http://btdb.to</a></p><p><a href="https://m.zhongziso.com" target="_blank" rel="external">https://m.zhongziso.com</a></p><p>这两个网址都是获取种子下载链接的地方，数据源来自与它们，这样我们就可以搭建属于自己的”万能搜索神器”了。</p><p>下面是获取资源名称(title)、资源大小(size)、资源链接(link)、资源分享的时间(time)， 然后存入数据库，如果你想要获取的资源更加全面，那么你就可以从多个资源站去获取资源，然后汇总到你的资源库里面。这里我是从两个资源站获取的 ，下面只展示了一个，另外一个同理。</p><p><img src="https://i.loli.net/2018/06/26/5b31c9701d4f5.png" alt="2"></p><p>下面是程序运行的结果（我们以钢铁侠为例）可以看到我们想要的内容都包含在里面：</p><p><img src="https://i.loli.net/2018/06/26/5b31c970c07ab.png" alt="3"></p><h3 id="第二步：存入MySql数据库"><a href="#第二步：存入MySql数据库" class="headerlink" title="第二步：存入MySql数据库"></a>第二步：存入MySql数据库</h3><p>首先，先解释一下，为什么要存到数据库里面？每次搜索都直接去资源站去请求不好吗？可以是可以，但是我们也要考虑资源消耗的问题，一般资源不会更新的太快，如果我们每次都去请求，会给对方的服务器造成很大的压力，并且对自己的服务器也会造成很大的压力，所以我们通过存入数据库，做了一个缓存工作。每次搜索之前，我们会先到数据库里去查看一下该关键词是否已经存在，如果存在，直接把数据库里的内容取出来，这样速度即快又能节省系统开销。当然，我们也不是一直不更新资源，我们可以设置一周更新一次(在数据库中给资源加上时限)，或者通过其他的办法。</p><p>数据库设计如下：</p><p><img src="https://i.loli.net/2018/06/26/5b31c96f2bf05.png" alt="4"></p><p>这里设计了两个表（keyword、movie），keyword里面存放的是关键词的权值——同一个关键词被搜索会增加num的值，这样可以做一个热词(热搜，推荐)展示的功能。数据库我是没学过的(自学了一点)，所以设计方面可能存在问题，仅供参考！</p><h3 id="第三步：前端接收关键词"><a href="#第三步：前端接收关键词" class="headerlink" title="第三步：前端接收关键词"></a>第三步：前端接收关键词</h3><p>前端使用Flask实现，为什么不使用Django呢？杀鸡焉用牛刀。主要是Flask十分的简单。Flask使用jinja2模板，通过表单提交参数。下图是上面首页的前端代码。其中就是jinja2的用法。</p><p><img src="https://i.loli.net/2018/06/26/5b31c9707cfb4.png" alt="5"></p><h3 id="第四步-从数据库读取内容"><a href="#第四步-从数据库读取内容" class="headerlink" title="第四步 从数据库读取内容"></a>第四步 从数据库读取内容</h3><p>首先定义一个表单处理的类，因为只传递一个search的参数，StringField类型，vaildators.DataRequired()是不接收空参数。</p><p>然后定义了一个处理逻辑，接收GET、POST请求，GET请求返回主页，POST请求把结果展示在result.html中。POST内部主要是数据库操作，首先判断关键词是否在数据库中，如果在更新关键词的权重，如果不在，那么就去请求两个资源站获取资源存入数据库，然后再把从数据库读取到的结果传给result.html。如下图：</p><p><img src="https://i.loli.net/2018/06/26/5b31e3053bf8c.png" alt="6"></p><p>这里再次使用了jinja2的参数传递，它可以传递字典、列表、字符串等，这里有需要注意的，return render_template(‘result.html’, data=movie.cursor.fetchall(), kwd=keyword, length=le, form=form)</p><p>这里传递的有data， kwd， length， form四个参数</p><ul><li>data是从数据库读取到的内容，如下(元组类型)：</li></ul><p><img src="https://i.loli.net/2018/06/26/5b31e33e3a227.png" alt="7"></p><ul><li>kwd是查询的关键词，它是用来做关键词高亮处理的：</li><li>length是元组的长度(即数据库包含几条数据)：</li><li>form表单再提交，考虑到result界面还可以再搜索：</li></ul><p><img src="https://i.loli.net/2018/06/26/5b31e33852246.png" alt="8"></p><p>上图中使用jinja2语法，定义了一个for循环从传递的data中读取内容，然后写入网页，其中我们通过关键词替换的方法嵌入html代码，这里需要注意的是要加上| safe，否则的话我的的标签不会被解析，而是会被当成字符串来处理。如下：</p><p><img src="https://i.loli.net/2018/06/26/5b31e3aa47961.png" alt="9"></p><h3 id="第五步也就是最后一步：-前端展示"><a href="#第五步也就是最后一步：-前端展示" class="headerlink" title="第五步也就是最后一步： 前端展示"></a>第五步也就是最后一步： 前端展示</h3><p>做好了前面的之后，前端展示是十分简单的，运行程序：</p><p><img src="https://i.loli.net/2018/06/26/5b31c8d1515c7.png" alt="10"></p><p>输入关键词点击搜索：</p><p><img src="https://i.loli.net/2018/06/26/5b31e427e223c.png" alt="11"></p><p>换个关键词试试：</p><p><img src="https://i.loli.net/2018/06/26/5b31e40bccc88.png" alt="12"></p><p>代码我已经同步到<a href="https://link.zhihu.com/?target=https%3A//github.com/Tactful-biao/Spiders/tree/master/movies" target="_blank" rel="external">Github</a> 欢迎star！</p><p>水平有限，文采不好，有错误的地方欢迎指正，有不明白的地方欢迎交流。</p><p>文章首发我的公众号：一个简单程序猿<br>文章下方有二维码，欢迎关注。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Python是一门简单又强大的一门编程语言，如果能够熟练使用它的话，会给你节省大量的时间。它可以做运维、web开发、应用开发、大数据、数据挖掘、科学计算、机器学习、人工智能、自然语言处理……还可以写很长很长……&lt;/p&gt;
+&lt;p&gt;之前一直在用它做爬虫，写一些常用的脚本，经常在命
+      
+    
+    </summary>
+    
+      <category term="Python" scheme="https://www.bbiao.me/categories/Python/"/>
+    
+    
+      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
+    
+      <category term="Flask" scheme="https://www.bbiao.me/tags/Flask/"/>
+    
+      <category term="资源" scheme="https://www.bbiao.me/tags/%E8%B5%84%E6%BA%90/"/>
+    
+  </entry>
   
   <entry>
     <title>数据之美</title>
@@ -574,32 +606,6 @@
       <category term="wordcloud" scheme="https://www.bbiao.me/tags/wordcloud/"/>
     
       <category term="词云" scheme="https://www.bbiao.me/tags/%E8%AF%8D%E4%BA%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kali-linux破解wifi密码</title>
-    <link href="https://www.bbiao.me/2017/08/05/kali-linux%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/"/>
-    <id>https://www.bbiao.me/2017/08/05/kali-linux破解wifi密码/</id>
-    <published>2017-08-05T13:03:39.000Z</published>
-    <updated>2017-12-03T09:51:23.402Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>现在的人都离不开网络，感觉离开网络整个人就被这个世界隔离了。而流量又那么的昂贵，所有WI-FI的作用变的举足轻重，几乎绝大多数的WI-FI都是要密码的，这就让我们很头疼，市面上也有很多破解WI-FI的软件，最知名的就数某万能钥匙，手机电脑版的都有，操作方便，但是电脑版的在使用的过程中需要先连接上网络，然后从云端获取指定WI-FI的密码，如果数据库中没有该密码，就不能进行破解。<br>今天，我们来简单介绍一下在kali linux下怎么在无网络环境的情况下进行WI-FI密码破解：</p></blockquote><font color="rad">破解别人WI-FI是违法行为，仅限于学习！大家知道怎么破解的，然后就能知道怎么防范，知己知彼，百战不殆！</font><blockquote><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2></blockquote><ul><li>装有kali linux的计算机(物理机上，虚拟机的话需要有额外的网卡)</li><li>使用Aircrack-ng进行破解</li><li>支持监控模式的网卡，现在的笔记本一般都支持</li><li>字典文件（没有网络的情况下，就是靠从字典里暴力破解）</li><li>耐心（如果密码很复杂，可能破解的时间要长）</li></ul><blockquote><h2 id="Aircrack-ng"><a href="#Aircrack-ng" class="headerlink" title="Aircrack-ng"></a>Aircrack-ng</h2></blockquote><p>Aircrack-ng是一个与802.11标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP和WPA/WPA2-PSK破解。Aircrack-ng可以工作在任何支持监听模式的无线网卡上并嗅探802.11a，802.11b，802.11g的数据。该程序可运行在Linux和Windows上。Linux版本已经被移植到了Zaurus和Maemo系统平台, 并概念验证可移植到iPhone。<br>总之Aircrack-ng是一个用来测试WIFI安全性的强大工具。<br>Aircrack-ng包包含有如下模块：</p><p><img src="https://i.loli.net/2017/12/03/5a23c7c9d074b.png" alt="1"></p><p><a href="https://www.aircrack-ng.org/" target="_blank" rel="external">Aircrack-NG官方网站</a><br>在kali linux里给我们默认了一份字典，在/usr/share/wordlists/rockyou.txt.gz<br>下面的操作都是在没有网络环境的情况下进行的，如果你连着WI-FI就先把ＷI-FI断掉。</p><blockquote><h3 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h3></blockquote><p>我使用自家的WIFI进行演示。<br>首先需要把破解密码的字典给解压出来，使用如下命令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gzip -d /usr/share/wordlists/rockyou<span class="selector-class">.txt</span><span class="selector-class">.gz</span></div></pre></td></tr></table></figure></p><p>紧接着在终端中输入：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">airmon-ng</span></div></pre></td></tr></table></figure></p><p>如果出现如下画面，则表示你的网卡是支持监控模式的，如果输入命令之后，没有反应，则表示你的网卡是不支持监控模式的：</p><p><img src="https://i.loli.net/2017/12/03/5a23c886e8220.png" alt="3"></p><p>下一步当然是开启无线网卡的监控模式啦(这里根据你自己的情况来，我的网卡显示的是wlan0，你的显示的是什么就写什么)：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng <span class="literal">start</span> wlan0</div></pre></td></tr></table></figure></p><p><img src="https://i.loli.net/2017/12/03/5a23c888182a4.png" alt="4"></p><p>可以看到（mac80211 monitor mode vif enabled …）就表示开启成功，并且网卡信息也变成可wlan0mon，可以使用ifconfig进行查看。<br>下面查看wifi网络，就是扫描你周边的wifi：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airodump-ng wlan0mon</div></pre></td></tr></table></figure></p><p>可以看到你周边的wifi的详细信息，包括信号强度、加密类型、频道等，，你需要记住要破解的wifi的频道号和BSSID，然后就可以按Ctrl-C结束了，第一个FAST_E984就是我家的WIFI：</p><p><img src="https://i.loli.net/2017/12/03/5a23c8885d7de.png" alt="5"></p><p>下一步是抓取握手包，使用网卡的监听模式抓取周围的无线网络数据包。其中，对我们最重要的数据包是：包含密码的包（也叫握手包），当有新用户断开或者自动连接wifi时，会发生握手包。<br>使用如下命令进行抓包：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">airodump-ng</span> <span class="selector-tag">-c</span> <span class="selector-tag">1</span> <span class="selector-tag">--bssid</span> <span class="selector-tag">D4</span><span class="selector-pseudo">:83</span><span class="selector-pseudo">:04</span><span class="selector-pseudo">:5E</span><span class="selector-pseudo">:E9</span><span class="selector-pseudo">:84</span> <span class="selector-tag">-w</span> ~/ <span class="selector-tag">wlan0mon</span></div></pre></td></tr></table></figure></p><blockquote><p>-c 是指频道号，在上面的图中的CH的值<br>-bssid 指定路由器的bssid<br>-w 把数据包写入到指定位置</p></blockquote><p><img src="https://i.loli.net/2017/12/03/5a23c888c435b.png" alt="6"></p><p>紧接着，我们就等着用户连接/重新连接wifi了，运气好的话可能很快就可以。运气不好的话可能要等很长时间。这不是我们想要的结果，当然还有其他的方法可以做，aircrack-ng下有一个aireplay-ng模块，它可以强制用户断开wifi连接，原理是:给连接到的wifi的一个设备发送一个deauth（反认证）包，让那个设备断开wifi，随后它自己就会再次连接wifi。<br>但是这种方法生效的前提是：wifi网络中至少要有一个连接的设备。从上图中可以看到有哪些网络设备连接到该路由上了，SIATTON就是连接设备的MAC地址，记住一个。<br>另外再打开一个新的终端，并执行如下命令：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">aireplay-ng</span> <span class="selector-tag">-0</span> 2 <span class="selector-tag">-a</span> <span class="selector-tag">D4</span><span class="selector-pseudo">:83</span><span class="selector-pseudo">:04</span><span class="selector-pseudo">:5E</span><span class="selector-pseudo">:E9</span><span class="selector-pseudo">:84</span> <span class="selector-tag">-c</span> <span class="selector-tag">A0</span><span class="selector-pseudo">:18</span><span class="selector-pseudo">:28</span><span class="selector-pseudo">:A2</span><span class="selector-pseudo">:0E</span><span class="selector-pseudo">:E9</span> <span class="selector-tag">wlan0mon</span></div></pre></td></tr></table></figure></p><blockquote><p>-0 表示发起deauthentication攻击<br>-a 表示指定无线路由器bssid<br>-c 指定强制断开的设备<br>如何成功的话可以看到在第一行后面会多出来 [WPA handshake:D4:83:04:5E:E9:84]</p></blockquote><p><img src="https://i.loli.net/2017/12/03/5a23c8895a2db.png" alt="7"></p><p>我们前面的所做都是为了得到这个握手包，得到之后就可以把无线网卡的监控模式关闭了，否则没法正常连接网络：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airmon-ng <span class="built_in">stop</span> wlan0mon</div></pre></td></tr></table></figure></p><p>可以看到（mac80211 station mode vif enabled on [py0]wlan0）,这样则表示切换成wlan0模式了。</p><p><img src="https://i.loli.net/2017/12/03/5a23c88992f82.png" alt="8"></p><p>下一步就是对密码进行破解了：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng -a2 -b <span class="string">D4:</span><span class="number">83</span>:<span class="number">04</span>:<span class="number">5</span><span class="string">E:</span><span class="string">E9:</span><span class="number">84</span> -w <span class="regexp">/usr/</span>share<span class="regexp">/wordlists/</span>rockyou.txt ~<span class="comment">/*.cap</span></div></pre></td></tr></table></figure></p><blockquote><p>-a2 代表WPA握手包<br>-b 表示要破解的wifi 的BSSID<br>-w 指定字典文件<br>最后的是你抓取到的握手包的所在位置，在上面我们抓包的时候把它放在了根目录下.<br>可以看到我们已经破解得到了密码，KEY FOUND中显示的内容就是我们破解得到的密码(如果密码很简单，可以在很短的时间内破解掉)：<br><img src="https://i.loli.net/2017/12/03/5a23c889a000e.png" alt="9"></p></blockquote><p>测试成功的关键是有一个靠谱的字典文件，字典越全面，破解成功的可能性越大，电脑性能越好，破解速度越快。<br>关于如何防范最简单的方法就是把密码设置的足够复杂，足够长。<br>还有就是不要使用WEP加密方式，这种方式最容易被破解。</p><p>参考：<a href="http://topspeedsnail.com/kali-linux-crack-wifi-wpa/" target="_blank" rel="external">http://topspeedsnail.com/kali-linux-crack-wifi-wpa/</a></p><p>这里给出一个相对全面一点的字典下载地址：</p><p><a href="https://pan.baidu.com/s/1jIdmIHK?errno=0&amp;errmsg=Auth%20Login%20Sucess&amp;&amp;bduss=&amp;ssnerror=0#list/path=/" target="_blank" rel="external">百度网盘下载地址</a></p><blockquote><p>如果你感觉文章对你有所帮助，文章下方有打赏按钮，请您随意打赏，以支持作者继续写作！</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;现在的人都离不开网络，感觉离开网络整个人就被这个世界隔离了。而流量又那么的昂贵，所有WI-FI的作用变的举足轻重，几乎绝大多数的WI-FI都是要密码的，这就让我们很头疼，市面上也有很多破解WI-FI的软件，最知名的就数某万能钥匙，手机电脑版的都有，
-      
-    
-    </summary>
-    
-      <category term="Kali Linux" scheme="https://www.bbiao.me/categories/Kali-Linux/"/>
-    
-    
-      <category term="kali linux" scheme="https://www.bbiao.me/tags/kali-linux/"/>
     
   </entry>
   
