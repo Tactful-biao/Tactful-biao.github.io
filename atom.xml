@@ -187,9 +187,9 @@
       <category term="脚本" scheme="https://www.bbiao.me/categories/%E8%84%9A%E6%9C%AC/"/>
     
     
-      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
-    
       <category term="脚本" scheme="https://www.bbiao.me/tags/%E8%84%9A%E6%9C%AC/"/>
+    
+      <category term="python" scheme="https://www.bbiao.me/tags/python/"/>
     
   </entry>
   
@@ -489,9 +489,9 @@
       <category term="网络爬虫" scheme="https://www.bbiao.me/categories/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
+    
+      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -547,9 +547,9 @@
       <category term="Python" scheme="https://www.bbiao.me/categories/Python/"/>
     
     
-      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
+    
+      <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
