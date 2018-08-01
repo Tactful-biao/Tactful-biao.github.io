@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.png?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,AI,人工智能," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="BiaoBiao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="现在是人工智能兴起的时代，到处都在谈人工智能。今天就从人工智能的角度给你的颜值打个分。 在这里，我会把整个实现过程写出来。 先介绍一下用到了哪些东西(用Python3实现)  百度的人脸识别api Flask PIL requests  操作很简单，主要是利用的百度的人脸识别库，然后自己做了一个简单的图片上传和图片处理以及信息提取加工。 百度的人脸识别api申请的地址，需要有百度账号: 传送门 然">
+<meta name="keywords" content="Python,AI,人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让人工智能给你的颜值打个分">
+<meta property="og:url" content="https://www.bbiao.me/2018/08/01/让人工智能给你的颜值打个分/index.html">
+<meta property="og:site_name" content="BiaoBiao&#39;s Blog">
+<meta property="og:description" content="现在是人工智能兴起的时代，到处都在谈人工智能。今天就从人工智能的角度给你的颜值打个分。 在这里，我会把整个实现过程写出来。 先介绍一下用到了哪些东西(用Python3实现)  百度的人脸识别api Flask PIL requests  操作很简单，主要是利用的百度的人脸识别库，然后自己做了一个简单的图片上传和图片处理以及信息提取加工。 百度的人脸识别api申请的地址，需要有百度账号: 传送门 然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a15128895.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a1e4289d0.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a218a5af7.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a26667eb7.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a2959c8b8.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a305ea23f.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a30651c78.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a3479ea90.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a3a1293c2.png">
+<meta property="og:image" content="https://i.loli.net/2018/08/01/5b61a3c97b5a9.jpg">
+<meta property="og:updated_time" content="2018-08-01T12:16:01.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="让人工智能给你的颜值打个分">
+<meta name="twitter:description" content="现在是人工智能兴起的时代，到处都在谈人工智能。今天就从人工智能的角度给你的颜值打个分。 在这里，我会把整个实现过程写出来。 先介绍一下用到了哪些东西(用Python3实现)  百度的人脸识别api Flask PIL requests  操作很简单，主要是利用的百度的人脸识别库，然后自己做了一个简单的图片上传和图片处理以及信息提取加工。 百度的人脸识别api申请的地址，需要有百度账号: 传送门 然">
+<meta name="twitter:image" content="https://i.loli.net/2018/08/01/5b61a15128895.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.bbiao.me/2018/08/01/让人工智能给你的颜值打个分/"/>
+
+
+
+
+
+  <title>让人工智能给你的颜值打个分 | BiaoBiao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fee97e23773a167f1760cc93047daa13";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/Tactful-biao/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BiaoBiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maomi">
+          <a href="/maomi/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            萌宠专区
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-board">
+          <a href="/board/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-hand-o-right"></i> <br />
+            
+            给我留言
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-say">
+          <a href="/say/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-envira"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.bbiao.me/2018/08/01/让人工智能给你的颜值打个分/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="标标">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/aa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BiaoBiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">让人工智能给你的颜值打个分</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T19:59:17+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2018/08/01/让人工智能给你的颜值打个分/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2018/08/01/让人工智能给你的颜值打个分/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,657
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>现在是人工智能兴起的时代，到处都在谈人工智能。今天就从人工智能的角度给你的颜值打个分。</p>
+<p>在这里，我会把整个实现过程写出来。</p>
+<p>先介绍一下用到了哪些东西(用Python3实现)</p>
+<ul>
+<li>百度的人脸识别api</li>
+<li>Flask</li>
+<li>PIL</li>
+<li>requests</li>
+</ul>
+<p>操作很简单，主要是利用的百度的人脸识别库，然后自己做了一个简单的图片上传和图片处理以及信息提取加工。</p>
+<p>百度的人脸识别api申请的地址，需要有百度账号: <a href="https://link.zhihu.com/?target=https%3A//ai.baidu.com/tech/face/detect" target="_blank" rel="external">传送门</a></p>
+<p>然后在控制台创建一个应用即可：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a15128895.png" alt="创建应用"></p>
+<p>在应用列表中可以看到你创建的应用：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a1e4289d0.png" alt="应用列表"></p>
+<p>通过查看百度的人脸识别的文档，我们就可以写代码了。</p>
+<p>想要使用百度的api，申请只是第一步，后面还需要获取access_token，文档给出的方法如下：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a218a5af7.png" alt="调用方法"></p>
+<p>官网给的方法相对比较繁琐，我使用request改写了一下如下(注意把url里面的Key换成你申请的)。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def get_access_token():</div><div class="line">    url = <span class="string">'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;grant_type=client_credentials&amp;'</span> \</div><div class="line">          <span class="string">'client_id=【你申请的API Key】&amp;client_secret=【你申请的Secret Key】'</span></div><div class="line">    <span class="keyword">data</span> = requests.<span class="keyword">get</span>(url, headers).json()</div><div class="line">    <span class="keyword">return</span> <span class="keyword">data</span>[<span class="string">'access_token'</span>]</div></pre></td></tr></table></figure>
+<p>拿到这个key之后，就可以进行下一步的请求了，继续看文档：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a26667eb7.png" alt="请求文档"></p>
+<p>文档中说要使用post方法进行请求，请求的url给出了，url的参数是上面获取到的access_token，请求的头部要包含”Content-Type”: “application/json”</p>
+<p>下面是主体部分，也就是对上传的图片的要求，以及你想要获取的内容的一下说明：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a2959c8b8.png" alt="请求参数"></p>
+<p>文档说图片的大小不能大于10M，上传的类型包含三种，一种是URL。还有就是图片通过Base64编码后得到的编码信息。其中face_field是你想要返回的内容等等，文档里面说的都很清楚，这里不做过多介绍。</p>
+<p>首先，我们不采用图片url的方式，我们直接使用对图片进行base64编码的形式进行处理。编码的过程如下：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">with <span class="title">open</span>(<span class="params"><span class="string">'static/'</span> + filename, <span class="string">'rb'</span></span>) <span class="keyword">as</span> f:</span></div><div class="line"><span class="function">    <span class="keyword">base</span> </span>= base64.b64encode(f.read())</div><div class="line">    image = str(<span class="keyword">base</span>, encoding=<span class="string">'utf-8'</span>)</div></pre></td></tr></table></figure>
+<p>请求的参数构造如下：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">params</span> = &#123;</div><div class="line">    <span class="string">'image'</span>: <span class="built_in">image</span>,</div><div class="line">    <span class="string">'image_type'</span>: imageType,</div><div class="line">    <span class="string">'face_field'</span>: <span class="string">'age,beauty,gender,face_type,face_shape,expression,landmark'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中image是我们上面编码过的结果，imageType是BASE64，face_field是我们想要它返回给我们的内容，包括年龄，颜值，性别，人物类型，脸型，表情，检测的点。</p>
+<p>然后通过返回给我们的数据，提取(完整代码如下)相应的内容：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">def get_content(filename):</div><div class="line">    request_url = <span class="string">"https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token="</span>+get_access_token()</div><div class="line">    with open(<span class="string">'static/'</span> + filename, <span class="string">'rb'</span>) as f:</div><div class="line">        base = base64.b64encode(f.read())</div><div class="line">        image = str(base, encoding=<span class="string">'utf-8'</span>)</div><div class="line"></div><div class="line">    params = &#123;</div><div class="line">        <span class="string">'image'</span>: image,</div><div class="line">        <span class="string">'image_type'</span>: imageType,</div><div class="line">        <span class="string">'face_field'</span>: <span class="string">'age,beauty,gender,face_type,face_shape,expression,landmark'</span></div><div class="line">    &#125;</div><div class="line">    info = requests.post(request_url, headers=headers, data=params).json()</div><div class="line">    if info[<span class="string">'error_msg'</span>] == <span class="string">'SUCCESS'</span>:</div><div class="line">        # 用于判断是否检测到人脸</div><div class="line">        face = info[<span class="string">'result'</span>][<span class="string">'face_num'</span>]</div><div class="line">        # 年龄, 人脸, 性别</div><div class="line">        age = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'age'</span>]</div><div class="line">        beauty = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'beauty'</span>]</div><div class="line">        # male, female</div><div class="line">        gender = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'gender'</span>][<span class="string">'type'</span>]</div><div class="line"></div><div class="line">        # none 不笑, smile 微笑, laugh 大笑</div><div class="line">        expression = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'expression'</span>][<span class="string">'type'</span>]</div><div class="line"></div><div class="line">        # square 正方形, triangle 三角形, oval 椭圆, heart 心形, round 圆形</div><div class="line">        face_shape = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'face_shape'</span>][<span class="string">'type'</span>]</div><div class="line">        fs = &#123;</div><div class="line">            <span class="string">'square'</span>: <span class="string">'方型脸'</span>,</div><div class="line">            <span class="string">'triangle'</span>: <span class="string">'瓜子脸'</span>,</div><div class="line">            <span class="string">'oval'</span>: <span class="string">'圆型脸'</span>,</div><div class="line">            <span class="string">'heart'</span>: <span class="string">'瓜子脸'</span>,</div><div class="line">            <span class="string">'round'</span>: <span class="string">'圆型脸'</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        # human 真实人脸, cartoon 卡通人脸</div><div class="line">        face_type = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'face_type'</span>][<span class="string">'type'</span>]</div><div class="line"></div><div class="line">        landmark72 = info[<span class="string">'result'</span>][<span class="string">'face_list'</span>][<span class="number">0</span>][<span class="string">'landmark72'</span>]</div><div class="line"></div><div class="line">        img = <span class="symbol">Image</span>.open(<span class="string">'static/'</span> + filename)</div><div class="line">        draw = <span class="symbol">ImageDraw</span>.<span class="symbol">Draw</span>(img)</div><div class="line">        for idx in range(<span class="number">72</span>):</div><div class="line">            xy = landmark72[idx]</div><div class="line">            draw.text((xy[<span class="string">'x'</span>], xy[<span class="string">'y'</span>]), <span class="string">'o'</span>, (<span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>))</div><div class="line">        <span class="symbol">ImageDraw</span>.<span class="symbol">Draw</span>(img)</div><div class="line">        img.save(<span class="string">'static/new_'</span> + filename)</div><div class="line">        if face is <span class="number">1</span>:</div><div class="line">            data = &#123;</div><div class="line">                <span class="string">'age'</span>: age,</div><div class="line">                <span class="string">'beauty'</span>: str(round(beauty, <span class="number">3</span>)) + <span class="string">' (不要灰心, 换个姿势再试试)'</span> if beauty &lt; <span class="number">60</span> else str(round(beauty, <span class="number">3</span>)) + <span class="string">' (哇塞! 颜值很高啊)'</span>,</div><div class="line">                <span class="string">'gender'</span>: <span class="string">'美女你好'</span> if <span class="string">'female'</span> in gender else <span class="string">'帅哥你好'</span>,</div><div class="line">                <span class="string">'expression'</span>: <span class="string">'面无表情(记得要常笑哦)'</span> if <span class="string">'none'</span> in expression else <span class="string">'微笑'</span> if <span class="string">'smile'</span> in expression else <span class="string">'大笑(什么事这么开心)'</span>,</div><div class="line">                <span class="string">'face_shape'</span>: fs[face_shape],</div><div class="line">                <span class="string">'face_type'</span>: <span class="string">'真实人物'</span> if <span class="string">'human'</span> in face_type else <span class="string">'卡通人物'</span></div><div class="line">            &#125;</div><div class="line">            return data</div><div class="line">    else:</div><div class="line">        return <span class="string">'未识别出人脸, 上传的图片尽量不要有遮盖住脸!!!'</span></div></pre></td></tr></table></figure>
+<p>代码中已经给了相应的注释，其中没给注释的一部分是通过提取的72个关键点，然后通过循环，把这些坐标点通过ImageDraw画到了图片上面。下面是返回的info的数据：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a305ea23f.png" alt="info"></p>
+<p>下面是我们从中提取的信息：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a30651c78.png" alt="提取的内容"></p>
+<p>这样我们的基本工作就算完成了，但是这样并不完善，我们打算把它做成Web的形式，这样所有人就都可以用了，Web的话Python主流有Django、Flask、Tornado等，这里我们选择了Flask，主要是它轻量化也比较简单。</p>
+<p>主要通过flask_uploads库实现文件上传，该库的具体用法，大家可以自行去了解。</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a3479ea90.png" alt="文件上传"></p>
+<p>首先接收上传的图片(通过UploadSet指定只接收Images类型)，如果是GET类型，就返回上传的html，如果是POST类型，并且包含photo，就接收上传，通过securefilename，去检查上传图片的安全性，然后再对上传的图片通过时间戳重命名，然后调用我们前面写的get_content, 把图片的地址传给它，就可以进行处理了。</p>
+<p>result.html的内容如下：</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="meta">&lt;!DOCTYPE html&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span> /&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>人脸识别<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></div><div class="line"><span class="xml"></span></div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">"background: beige"</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span></div><div class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"photo"</span>&gt;</span></span></div><div class="line"><span class="xml">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line"><span class="xml">    </span><span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> '未识别' not <span class="keyword">in</span> content and content%&#125;</span><span class="xml"></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"center"</span> <span class="attr">style</span>=<span class="string">"padding-top: 30px"</span>&gt;</span></span></div><div class="line"><span class="xml">            <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; file_url &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">width</span>=<span class="string">"150"</span>&gt;</span> &amp;nbsp;&amp;nbsp; </span><span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> new_url %&#125;</span><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"</span></span></span><span class="template-variable">&#123;&#123; new_url &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">width</span>=<span class="string">"150"</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></div><div class="line"><span class="xml">            <span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">align</span>=<span class="string">"center"</span> <span class="attr">cellpadding</span>=<span class="string">"5"</span> <span class="attr">cellspacing</span>=<span class="string">"0"</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>年龄: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['age'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>颜值: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['beauty'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>性别: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['gender'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>表情: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['expression'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>脸型: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['face_shape'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span>人物类型: <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                    <span class="tag">&lt;<span class="name">td</span> <span class="attr">align</span>=<span class="string">"left"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content['face_type'] &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line"><span class="xml">                <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></div><div class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></div><div class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line"><span class="xml">    </span><span class="template-tag">&#123;% <span class="name"><span class="name">else</span></span> %&#125;</span><span class="xml"></span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">"center"</span> <span class="attr">style</span>=<span class="string">"color: red"</span>&gt;</span></span><span class="template-variable">&#123;&#123; content &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></div><div class="line"><span class="xml">     </span><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p>使用Jinja2模板(前端设计的有点简陋，大家将就的看)，把前面提取到的内容传给它，然后通过网页的形式展示出来。</p>
+<p>效果如下(主要打算在手机端运行，所以电脑端看起来可能有点怪异)：</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a3a1293c2.png" alt="pc"></p>
+<p>手机端的效果如下：我的微信公众号:(一个简单程序猿)可以在线体验。欢迎你的关注，欢迎交流。</p>
+<p><img src="https://i.loli.net/2018/08/01/5b61a3c97b5a9.jpg" alt="mobile"></p>
+<blockquote>
+<p>用着百度的东西，又把李彦宏拉出来可能有点不太厚道，不过AI给它的颜值评的分还算可以。是亲生的。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+    <div>
+      
+	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/gzh.jpg" alt="标标 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的二维码，关注我的公众号，不定期更新内容。</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你的打赏是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="标标 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="标标 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    标标
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.bbiao.me/2018/08/01/让人工智能给你的颜值打个分/" title="让人工智能给你的颜值打个分">https://www.bbiao.me/2018/08/01/让人工智能给你的颜值打个分/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/AI/" rel="tag"><i class="fa fa-tag"></i> AI</a>
+          
+            <a href="/tags/人工智能/" rel="tag"><i class="fa fa-tag"></i> 人工智能</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/26/基于Flask的资源搜索平台的搭建/" rel="next" title="基于Flask的资源搜索平台的搭建">
+                <i class="fa fa-chevron-left"></i> 基于Flask的资源搜索平台的搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/aa.jpg"
+                alt="标标" />
+            
+              <p class="site-author-name" itemprop="name">标标</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tactful-biao/" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=yvv4_vL5_fP7_-mKu7vkqaWn" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/bb1208339113" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2714116747" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://home.ustc.edu.cn/~sfy0822" title="秀个恩爱" target="_blank">秀个恩爱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.keen8.com/" title="Keen8博客" target="_blank">Keen8博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qihaoge.com/" title="七号阁技术博客" target="_blank">七号阁技术博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+		  
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">标标</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">78.7k</span>
+  
+</div>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+-->
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共78.7k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytbPAtWD';
+      var conf = '51de785d4e7a81dec65e5b8ea6039fc9';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: '7U13QSwAEd3bAMJ7A8vD3umk-gzGzoHsz',
+        app_key: '0mzkiyudq6RV9ufX92nesMYh',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
