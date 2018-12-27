@@ -523,9 +523,9 @@
       <category term="网络爬虫" scheme="https://www.bbiao.me/categories/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
-    
       <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
     
   </entry>
   
@@ -581,9 +581,9 @@
       <category term="Python" scheme="https://www.bbiao.me/categories/Python/"/>
     
     
-      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
-    
       <category term="爬虫" scheme="https://www.bbiao.me/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="requests" scheme="https://www.bbiao.me/tags/requests/"/>
     
   </entry>
   
