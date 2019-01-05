@@ -3,6 +3,93 @@
   
     
     <entry>
+      <title><![CDATA[爬取网易云评论]]></title>
+      <url>/2019/01/05/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA/</url>
+      <content type="html"><![CDATA[<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ul>
+<li>找到评论源地址</li>
+<li>构造请求</li>
+</ul>
+<blockquote>
+<p>整体思路就是这些，下面就是围绕这两个大思路进行的。</p>
+</blockquote>
+<h2 id="找评论源地址"><a href="#找评论源地址" class="headerlink" title="找评论源地址"></a>找评论源地址</h2><p>这一步是很简单的，打开网页版网易云音乐的详情页，在Chrome浏览器–&gt;F12–&gt;Network。刷新网页，仔细找一下就能找到下图所示的链接，这里面就包含着我们需要的评论内容。其中commonts是评论，hotComments是热评，我们暂时只获取热评。</p>
+<p><img src="https://i.loli.net/2019/01/05/5c3069b046b1f.png" alt="源链接"></p>
+<h2 id="构造请求"><a href="#构造请求" class="headerlink" title="构造请求"></a>构造请求</h2><p>发现目标之后，就可以进行模拟获取内容了，但是网易云音乐毕竟是大厂，如果就这样简简单单的就被别人拿了数据，那多没面子，所以它加了加密的参数。如果想要拿到它的数据，就必须知道这两个加密参数是怎么来的。如下图：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306a18c4d9f.png" alt="加密参数"></p>
+<p>我们需要搞明白它的加密方式，才能正确的模拟它的访问，一般加密方法都是写在js里面的。于是我们就从js里去寻找他的加密方式。</p>
+<h3 id="加密参数的探索"><a href="#加密参数的探索" class="headerlink" title="加密参数的探索"></a>加密参数的探索</h3><p>在core开头的js里我们通过把js复制到支持搜索的文本编辑器里面，通过查找encSecKey的方式搜索到相关的代码如下：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306a9e52dbb.png" alt="相关代码"></p>
+<p>可以看到两个加密参数都在这里面。分别是bMi1x.encText，另一个是bMi1x.encSecKey。现在问题转移到bMi1x上面来了，bMi1x是通过asrsea加密后得到的，我们暂时先不管asrsea是怎么加密的，我们先把里面的四个参数搞清楚。</p>
+<ul>
+<li>第一个参数：json格式的 i7b</li>
+<li>第二个参数：bvL5Q([“流泪”, “强”]</li>
+<li>第三个参数：bvL5Q(VK4O.md)</li>
+<li>第四个参数：bvL5Q([“爱心”, “女孩”, “惊恐”, “大笑”])</li>
+</ul>
+<blockquote>
+<p>其中第二和第四个参数是固定的，即每次都不会变，我们需要注意的是第一个和第三个参数是不是变化的，我们通过查找VK4O.md发现，它也是一个固定的值</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/01/05/5c306aad4f294.png" alt="VK4O.md"></p>
+<h3 id="Fiddler4-的使用"><a href="#Fiddler4-的使用" class="headerlink" title="Fiddler4 的使用"></a>Fiddler4 的使用</h3><p>那么我们就需要判断i7b到底是什么了。下面说一个简单的方法，通过Fiddler4，可以在线修改js进行调试。</p>
+<p>首先找到core开头的js，右键Save as，保存到本地core.js就像如下这样：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306aba13b5c.png" alt="Save as"><br><img src="https://i.loli.net/2019/01/05/5c306ac724e64.png" alt="6"></p>
+<p>然后通过设置系统代理是流量通过Fiddler，然后重新刷新刚刚那个网易云链接，可以看到许多的链接，找到那个core开头的js(如果没找到，是因为浏览器缓存的问题。把浏览器关掉，重新打开)，点击右边的AutoResponder，将那个js拉过来，然后点击Rule Editor下面那个Find a file，用本地之前保存的那个core.js替换，然后Save就可以了。如下图</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306ad83a937.png" alt="Fiddler"></p>
+<h3 id="参数研究"><a href="#参数研究" class="headerlink" title="参数研究"></a>参数研究</h3><p>紧接着，我们通过Notepad++或者任何支撑编辑的编辑器打开我们本地保存的core.js，查找到bMi1x之前，添加如下内容window.console.log(i7b); 这句话是让浏览器在控制台打印出i7b的内容：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306ad75eda1.png" alt="i7b"></p>
+<p><img src="https://i.loli.net/2019/01/05/5c306ad7b2e15.png" alt="i7b"></p>
+<p>然后点击第二页、第三页可以看到i7b的变化如下：<br><img src="https://i.loli.net/2019/01/05/5c306ad78619b.png" alt="参数变化"></p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b052c3cf.png" alt="参数变化2"></p>
+<p>可以发现：</p>
+<ul>
+<li>rid是歌曲的id</li>
+<li>offset是用来控制翻页的，每次增长20</li>
+<li>total除了第一次是true之外其余都是false</li>
+<li>limit是用来控制数据的条数，一页只显示20条评论。</li>
+</ul>
+<p>下面我们用同样的方法来获取第二、第三、第四个参数的内容（通过把window.console.log内的内容换成其他的参数就可以）：</p>
+<p>经过测试发现第二个参数是:010001</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b054f76d.png" alt="第二个参数"></p>
+<p>第三个参数是: 00e0b509……..</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b05e0b73.png" alt="第三个参数"></p>
+<p>第四个参数是：0CoJUm6Qyw8W8jud</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b059a477.png" alt="第四个参数"></p>
+<p>这样的话，四个参数我们都已经搞明白了，除了第一个参数是规律性变化的外，其他的参数全部都是固定的。</p>
+<h3 id="asrsea-加密的研究"><a href="#asrsea-加密的研究" class="headerlink" title="asrsea 加密的研究"></a>asrsea 加密的研究</h3><p>下面我们只需要把asrsea的加密方法搞定，再把上面的参数加上，我们的任务就算完成了。</p>
+<p>通过查找，发现window.asrsea = d，我把相关的函数挑出来如下：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b05ec3a8.png" alt="asrsea"></p>
+<p>其中我们的两个加密参数params是通过AES加密得到的， encSecKey是通过RSA加密得到的。</p>
+<p>通过分析可以发现，a函数是一个获取a位随机字符的函数，这里是16位。一个简单的方法是把a函数复制到浏览器的控制台，通过调用检测一下：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b05d5938.png" alt="验证"></p>
+<p>可以看到h.encSecKey = c(i, e, f) 其中i就是之前的16位随机数，e是第二个固定的参数， f是第三个固定的参数，那么如果我们把i固定(每次都随机同一个字符串)，那么encSecKey就固定下来了。</p>
+<p>通过上面的加密，转换成python代码就是：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b060837a.png" alt="code"></p>
+<p>我们最终成功获得我们想要的评论：</p>
+<p><img src="https://i.loli.net/2019/01/05/5c306b06305d9.png" alt="finish"></p>
+<blockquote>
+<p>注：上面是完整的分析方法，完整代码在 <a href="https://github.com/Tactful-biao/Spiders/blob/master/music.py" target="_blank" rel="external">代码地址</a>, 代码简单说明文档在 <a href="https://github.com/Tactful-biao/Spiders/blob/master/README.md" target="_blank" rel="external">READNE</a>, 代码实现了参数破解，评论获取，至于保存和翻页没有继续往下写，很简单，感兴趣的可以继续完善下。另外的一些注意事项在代码里面也都注释了。</p>
+<p>如果感兴趣的朋友，欢迎关注我的公众号《一个简单程序猿》，文章下方有二维码，欢迎你的关注。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> Python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+            <tag> 网易云音乐 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[让人工智能给你的颜值打个分]]></title>
       <url>/2018/08/01/%E8%AE%A9%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%BB%99%E4%BD%A0%E7%9A%84%E9%A2%9C%E5%80%BC%E6%89%93%E4%B8%AA%E5%88%86/</url>
       <content type="html"><![CDATA[<p>现在是人工智能兴起的时代，到处都在谈人工智能。今天就从人工智能的角度给你的颜值打个分。</p>
@@ -2719,92 +2806,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[centos7-搭建shadowsocks科学上网]]></title>
-      <url>/2017/07/16/centos7%E6%90%AD%E5%BB%BAshadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</url>
-      <content type="html"><![CDATA[<blockquote>
-<h3 id="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"><a href="#在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。" class="headerlink" title="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"></a>在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的<a href="http://localhost:4000/2017/07/15/digital-ocean%E6%B3%A8%E5%86%8C%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_blank" rel="external">这篇文章</a>来查看。</h3></blockquote>
-<h3 id="首先，我们登录我们的远程桌面："><a href="#首先，我们登录我们的远程桌面：" class="headerlink" title="首先，我们登录我们的远程桌面："></a>首先，我们登录我们的远程桌面：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/1.PNG" alt="1"></p>
-<h3 id="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"><a href="#下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。" class="headerlink" title="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"></a>下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。</h3><blockquote>
-<p>yum install epel-release<br> yum update<br> yum install python-setuptools m2crypto supervisor<br> easy_install pip<br> pip install shadowsocks</p>
-</blockquote>
-<h3 id="输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json"><a href="#输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json" class="headerlink" title="输入完上面的命令之后，继续执行命令：vi /etc/shadowsocks.json"></a>输入完上面的命令之后，继续执行命令：<font color="Violet">vi /etc/shadowsocks.json</font></h3><h3 id="此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为复制内容——-</p>
-<p><font color="Lime">{<br>    “server”:”0.0.0.0”,<br>    “server_port”:8388,<br>    “local_port”:1080,<br>    “password”:”yourpassword”,<br>    “timeout”:600,<br>    “method”:”aes-256-cfb”<br>}</font><br>——以上为复制内容——–</p>
-<p><img src="http://ot4elod26.bkt.clouddn.com/2.PNG" alt="2"></p>
-<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）</h3><p>###继续执行命令：<font color="Violet">vi /etc/supervisord.conf</font></p>
-<h3 id="此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为粘贴内容—–</p>
-<p><font size="4" color="Lime">[program:shadowsocks]<br>command=ssserver -c /etc/shadowsocks.json<br>autostart=true<br>autorestart=true<br>user=root<br>log_stderr=true<br>logfile=/var/log/shadowsocks.log</font><br>—–以上为粘贴内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/3.PNG" alt="3"></p>
-<h3 id="复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="继续执行命令：-vi-etc-rc-local"><a href="#继续执行命令：-vi-etc-rc-local" class="headerlink" title="继续执行命令： vi /etc/rc.local"></a>继续执行命令： <font color="Lime">vi /etc/rc.local</font></h3><h3 id="此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>——以下为复制内容—–</p>
-<p><font size="4" color="Lime">service supervisord start</font><br>——以上为复制内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/4.PNG" alt="4"></p>
-<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="最后执行命令：reboot"><a href="#最后执行命令：reboot" class="headerlink" title="最后执行命令：reboot"></a>最后执行命令：<font color="Lime">reboot</font></h3><h3 id="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。"><a href="#此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。" class="headerlink" title="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。"></a>此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/5.PNG" alt="5"></p>
-<blockquote>
-<h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2></blockquote>
-<h3 id="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"><a href="#至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。" class="headerlink" title="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"></a>至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。</h3><h3 id="Android客户端下载链接"><a href="#Android客户端下载链接" class="headerlink" title="Android客户端下载链接"></a>Android客户端下载链接</h3><p><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank" rel="external">https://play.google.com/store/apps/details?id=com.github.shadowsocks</a></p>
-<h3 id="推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。"><a href="#推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。" class="headerlink" title="推荐在Google Play下载，自动适配你的系统版本，以免出现问题。"></a>推荐在Google Play下载，自动适配你的系统版本，以免出现问题。</h3><p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">https://github.com/shadowsocks/shadowsocks-android/releases</a></p>
-<h3 id="电脑客户端端下载链接（Windows、Mac-OS-X）"><a href="#电脑客户端端下载链接（Windows、Mac-OS-X）" class="headerlink" title="电脑客户端端下载链接（Windows、Mac OS X）"></a>电脑客户端端下载链接（Windows、Mac OS X）</h3><p><a href="http://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">http://sourceforge.net/projects/shadowsocksgui/files/dist/</a><br><strong>小提醒</strong>：Windows 7用户下载Shadowsocks-win-x.x.x.zip，Windows 8用户下载Shadowsocks-win-dotnet4.0-x.x.x.zip。</p>
-<h3 id="iOS客户端端下载链接"><a href="#iOS客户端端下载链接" class="headerlink" title="iOS客户端端下载链接"></a>iOS客户端端下载链接</h3><p><a href="https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8" target="_blank" rel="external">https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8</a></p>
-<h3 id="Android手机客户端配置示例（以上述服务端配置为例）："><a href="#Android手机客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="Android手机客户端配置示例（以上述服务端配置为例）："></a>Android手机客户端配置示例（以上述服务端配置为例）：</h3><blockquote>
-<p>注意：已经root手机的小伙伴请勿授予root权限，以免发生未知问题。<br>服务器：你的VPS IP地址（非0.0.0.0）<br>远程端口：8388<br>本地端口：1080<br>密码：yourpassword<br>加密方法：AES-256-CFB<br>路由：绕过局域网及中国大陆地址<br>全局代理：勾选<br>UDP转发：建议勾选，如有问题则取消勾选<br>自动连接：勾选</p>
-</blockquote>
-<h2 id="电脑客户端配置示例（以上述服务端配置为例）："><a href="#电脑客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="电脑客户端配置示例（以上述服务端配置为例）："></a>电脑客户端配置示例（以上述服务端配置为例）：</h2><h3 id="（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）"><a href="#（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）" class="headerlink" title="（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）"></a>（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）</h3><blockquote>
-<p>服务器 IP：你的VPS IP地址（非0.0.0.0）<br>服务器端口：8388<br>密码：yourpassword<br>加密：aes-256-cfb<br>代理端口：1080<br>备注：随便写</p>
-</blockquote>
-<h2 id="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"><a href="#这里是电脑版的shadowsocks软件，安装好刚打开的样子。" class="headerlink" title="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"></a>这里是电脑版的shadowsocks软件，安装好刚打开的样子。</h2><p><img src="https://moetu.fastmirror.org/images/2017/12/26/66e2af6fed9b491a5.png" alt="16"></p>
-<p>###填上你的vps的IP地址配置你的ss：<br><img src="https://moetu.fastmirror.org/images/2017/12/26/7c8ee330f09118ded.png" alt="17"></p>
-<p><img src="http://ot4elod26.bkt.clouddn.com/8.PNG" alt="8"></p>
-<h3 id="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："><a href="#配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：" class="headerlink" title="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："></a>配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/12.png" alt="12"></p>
-<h3 id="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："><a href="#如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：" class="headerlink" title="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："></a>如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/9.PNG" alt="9"></p>
-<h3 id="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："><a href="#然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：" class="headerlink" title="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："></a>然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/10.png" alt="10"></p>
-<h3 id="进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。"><a href="#进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。" class="headerlink" title="进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。"></a>进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/11.png" alt="11"></p>
-<h3 id="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："><a href="#现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：" class="headerlink" title="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："></a>现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/13.PNG" alt="13"><br><img src="http://ot4elod26.bkt.clouddn.com/14.PNG" alt="14"><br><img src="http://ot4elod26.bkt.clouddn.com/15.PNG" alt="15"></p>
-<blockquote>
-<h2 id="答疑阶段"><a href="#答疑阶段" class="headerlink" title="答疑阶段"></a>答疑阶段</h2></blockquote>
-<h3 id="1-为什么选择CentOS？"><a href="#1-为什么选择CentOS？" class="headerlink" title="1. 为什么选择CentOS？"></a>1. <strong>为什么选择CentOS？</strong></h3><blockquote>
-<p><strong>作为服务器，永远都是稳定压倒一切。而CentOS简单易用，上手快速，业界公认的稳定，且易于维护，是服务器操作<br>系统首选。</strong></p>
-</blockquote>
-<h3 id="2-为什么是Python版本的Shadowsocks？"><a href="#2-为什么是Python版本的Shadowsocks？" class="headerlink" title="2. 为什么是Python版本的Shadowsocks？"></a>2. <strong>为什么是Python版本的Shadowsocks？</strong></h3><blockquote>
-<p><strong>Python版的Shadowsocks易部署，后期升级维护都非常方便，相当适合新手，支持的特性也最多，稳定性好，运行效率高。</strong></p>
-</blockquote>
-<h3 id="3-为什么使用supervisord"><a href="#3-为什么使用supervisord" class="headerlink" title="3.为什么使用supervisord?"></a>3.<strong>为什么使用supervisord?</strong></h3><blockquote>
-<p><strong>与繁琐的带参执行方式相比，service命令在CentOS系统里使用起来更加灵活方便，比如：<br>①启动Shadowsocks服务端：service supervisord start<br>②关闭Shadowsocks服务端：service supervisord stop<br>③重启shadowsocks服务端：service supervisord restart</strong></p>
-</blockquote>
-<h3 id="4-如何配置多账户？"><a href="#4-如何配置多账户？" class="headerlink" title="4. 如何配置多账户？"></a>4. <strong>如何配置多账户？</strong></h3><blockquote>
-<p><strong>小提示：Shadowsocks支持一个账户在多个终端同时使用，一般人没有配置多账户的必要。所以如果你看不懂，那你还是别折腾了。</strong><br>——分割线——-<br><strong>{<br>    “server”:”0.0.0.0”,<br>    “port_password”:{<br>        “8388”:”password1”,<br>        “8389”:”password2”,<br>        “8390”:”password3”,<br>        “8391”:”password4”<br>    },<br>    “timeout”:300,<br>    “method”:”aes-256-cfb”<br>} </strong><br>——-分割线———<br><strong>友情提醒：GFW目前是根据流量检测分析匹配统计学模型的方式来判断你是否在翻墙，换言之，你用什么方式翻墙并不重要，重要的是你和服务器之间的流量特征是否像是在翻墙。一旦匹配，既对你进行有罪推论，轻则限速，重则彻底封锁IP。在IPv4地址已经枯竭的今天，可用的美国IP地址会越来越少，所以不建议将自己的账号分享多人使用，以防被封</strong></p>
-</blockquote>
-<h3 id="5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"><a href="#5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？" class="headerlink" title="5.为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"></a>5.<strong>为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？</strong></h3><blockquote>
-<h3 id="出现这种情况有多种可能性："><a href="#出现这种情况有多种可能性：" class="headerlink" title="出现这种情况有多种可能性："></a>出现这种情况有多种可能性：</h3></blockquote>
-<p>①shadowsocks长时间保持不间断连接会被GFW根据流量模型分析判断出你可能在翻墙(原理见上面的友情提醒)，于是进行主动干扰，轻则限速，重则切断你和服务端的连接。解决方法：切换一下你的网络，比如从Wi-Fi切换到3G或者从3G切换到Wi-Fi或者直接断开网络连接，等待10分钟以后，一般即可恢复正常。PS：每天晚上睡觉前关闭手机的网络连接会大大减小此种情况发生的概率；而将自己的VPS分享给多人使用则可能大大增加此种情况发生的概率，请自行斟酌。值得说明的是，VPN最容易受到此类干扰，而shadowsocks作为可自定义端口的私有协议代理已经是最不容易被干扰的翻墙方式之一了。</p>
-<p>②机房的QoS策略。解决方法：将shadowsocks服务端的server_port改为常见端口。</p>
-<p>③本地线路抽风，你所使用宽带运营商的国际出口出现问题。比如最近南方电信部分地区国际出口严重不稳定(电信人为限制)。解决方法：<1>先尝试一下DigitalOcean的新加坡节点或者Linode的日本节点；<2>如果当地有“国际精品网”业务，开通后可立即完美解决这个问题；<3>如果不愿意给电信交保护费，那么就换家运营商吧，移动和联通都没问题。</3></2></1></p>
-<p>④VPS间歇性抽风。无论你选择哪家供应商的VPS，都可能遇到有时候线路抽风、VPS速度慢或者不正常。不同的是，越是价位高的VPS出现抽风情况的可能性越低，越是价位高的VPS出现抽风情况时能保证的最低连接速度越高。出现这种情况的可能性比较低，我手头的无论是搬瓦工还是DigitalOcean以及Linode暂时未遇到线路抽风情况。</p>
-<p>⑤搬瓦工的年付VPS为OpenVZ架构，同一母机下的VPS越多，同一时间段使用的人越多，速度就越慢。解决方法：一分价钱一分货，将VPS更换为DigitalOcean或者Linode。</p>
-<p>⑥中国的国际出口带宽有限，晚高峰时段可能出现网络拥堵，速度多少会受影响，但这种情况起码白天的速度应该是没问题的。</p>
-<p>⑦如果你在VPS上搭建了VPN并且经常使用，尤其是OpenVPN，请立即停止使用。VPN协议特征明显，GFW可以非常容易的检测到，从而盯上你的IP，轻则限速，重则彻底屏蔽。常见VPN协议根据易受干扰的程度从大到小依次为：OpenVPN &gt; PPTP &gt; L2TP &gt; IPSec，尤其是OpenVPN，GFW已经可以实现对其定点清除(同样遭此待遇的还有SSH翻墙)。如果你想让自己VPS的IP快速报废，那么就请尽情的使用搬瓦工的控制面板搭建OpenVPN吧。重要提醒：在不明所以的情况下尽量不要在自己的VPS上搭建其他杂七乱八的翻墙服务尤其是一些早已过时和落后的翻墙方式，翻墙手段宜新不宜旧，只搭一个Shadowsocks是最能保证你翻墙效果和服务器稳定的好策略。</p>
-<p>⑧其他：偶尔的速度慢或者连不上都是正常的，但如果经常性的速度奇慢或者连不上那就不正常了。</p>
-<blockquote>
-<h2 id="错误排查"><a href="#错误排查" class="headerlink" title="错误排查"></a>错误排查</h2></blockquote>
-<h3 id="已经成功的小伙伴可以直接略过这部分了。"><a href="#已经成功的小伙伴可以直接略过这部分了。" class="headerlink" title="已经成功的小伙伴可以直接略过这部分了。"></a>已经成功的小伙伴可以直接略过这部分了。</h3><blockquote>
-<h3 id="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"><a href="#温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。" class="headerlink" title="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"></a>温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。</h3></blockquote>
-<h3 id="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"><a href="#服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。" class="headerlink" title="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"></a>服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。</h3><h3 id="遇到问题的小伙伴请先认真仔细阅读这两篇文章"><a href="#遇到问题的小伙伴请先认真仔细阅读这两篇文章" class="headerlink" title="遇到问题的小伙伴请先认真仔细阅读这两篇文章"></a>遇到问题的小伙伴请先认真仔细阅读这两篇文章</h3><p><a href="http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml" target="_blank" rel="external">http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml</a><br><a href="http://linux.vbird.org/linux_basic/0310vi.php" target="_blank" rel="external">http://linux.vbird.org/linux_basic/0310vi.php</a><br>上面的链接为vi编辑器基本用法扫盲（新手必读）</p>
-<h3 id="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"><a href="#最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。" class="headerlink" title="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"></a>最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。</h3><h3 id="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查："><a href="#如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查：" class="headerlink" title="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查："></a>如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查：</h3><h3 id="1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="1. 执行命令service supervisord start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>1. 执行命令<font color="Lime">service supervisord start</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="2. 执行命令ssserver -c /etc/shadowsocks.json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>2. 执行命令<font color="Lime">ssserver -c /etc/shadowsocks.json</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。"><a href="#3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。" class="headerlink" title=" 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi /etc/shadowsocks.json环节，请重新检查该文件配置。"></a><strong> 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在<font color="Lime">vi /etc/shadowsocks.json</font>环节，请重新检查该文件配置。</strong></h3><h3 id="4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"><a href="#4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。" class="headerlink" title="4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"></a><strong>4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。</strong></h3><blockquote>
-<h3 id="有问题可以留言，大家一起研究。"><a href="#有问题可以留言，大家一起研究。" class="headerlink" title="有问题可以留言，大家一起研究。"></a>有问题可以留言，大家一起研究。</h3><h2 id="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"><a href="#如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。" class="headerlink" title="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"></a>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</h2></blockquote>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> ss </tag>
-            
-            <tag> 梯子 </tag>
-            
-            <tag> 科学上网 </tag>
-            
-            <tag> 翻墙 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[使用linux-apache-mysql-php-lamp搭建wordpress]]></title>
       <url>/2017/07/16/%E4%BD%BF%E7%94%A8linux-apache-mysql-php-lamp%E6%90%AD%E5%BB%BAwordpress/</url>
       <content type="html"><![CDATA[<blockquote>
@@ -2899,6 +2900,92 @@
             <tag> WordPress </tag>
             
             <tag> 博客搭建 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[centos7-搭建shadowsocks科学上网]]></title>
+      <url>/2017/07/16/centos7%E6%90%AD%E5%BB%BAshadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</url>
+      <content type="html"><![CDATA[<blockquote>
+<h3 id="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"><a href="#在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。" class="headerlink" title="在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的这篇文章来查看。"></a>在国内访问Google越来越难了，免费的不安全，网速又太慢。花钱购买的话又不能保证安全性，于是索性自己搭一个梯子。我选择的是CentOS7搭建Shadowsocks，使用的是digitalocean创建的vps，详情可以查看我的<a href="http://localhost:4000/2017/07/15/digital-ocean%E6%B3%A8%E5%86%8C%E5%92%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_blank" rel="external">这篇文章</a>来查看。</h3></blockquote>
+<h3 id="首先，我们登录我们的远程桌面："><a href="#首先，我们登录我们的远程桌面：" class="headerlink" title="首先，我们登录我们的远程桌面："></a>首先，我们登录我们的远程桌面：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/1.PNG" alt="1"></p>
+<h3 id="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"><a href="#下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入-y-后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。" class="headerlink" title="下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。"></a>下面的命令，需要一行一行的执行，每输入一行命令，回车执行，如果没有报错，即为执行成功，出现确认提示的时候，输入 y 后，回车即可。每行命令可以复制后在putty里右键粘贴，回车执行。</h3><blockquote>
+<p>yum install epel-release<br> yum update<br> yum install python-setuptools m2crypto supervisor<br> easy_install pip<br> pip install shadowsocks</p>
+</blockquote>
+<h3 id="输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json"><a href="#输入完上面的命令之后，继续执行命令：vi-etc-shadowsocks-json" class="headerlink" title="输入完上面的命令之后，继续执行命令：vi /etc/shadowsocks.json"></a>输入完上面的命令之后，继续执行命令：<font color="Violet">vi /etc/shadowsocks.json</font></h3><h3 id="此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时按-i-键进入编辑模式，putty黑框的左下角会出现-–-INSERT-–-字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围-1-65535-，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时按 i 键进入编辑模式，putty黑框的左下角会出现 – INSERT – 字样，然后一次性复制下面的内容（复制之前记得修改8388和yourpassword为你自己的端口号和密码，此端口号不是你的SSH端口号，而是你在手机或电脑上的shadowsocks客户端连接VPS上搭建的服务端的端口号，范围 1 - 65535 ，只要不和现有的端口号如SSH端口冲突都可以，记下你修改的端口号和密码，待会儿在配置手机和电脑的客户端时还要用到），在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为复制内容——-</p>
+<p><font color="Lime">{<br>    “server”:”0.0.0.0”,<br>    “server_port”:8388,<br>    “local_port”:1080,<br>    “password”:”yourpassword”,<br>    “timeout”:600,<br>    “method”:”aes-256-cfb”<br>}</font><br>——以上为复制内容——–</p>
+<p><img src="http://ot4elod26.bkt.clouddn.com/2.PNG" alt="2"></p>
+<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。（“-”的输入方法为“Shift-字母L右侧的分号键”）" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。（“ : ”的输入方法为“Shift+字母L右侧的分号键”）</h3><p>###继续执行命令：<font color="Violet">vi /etc/supervisord.conf</font></p>
+<h3 id="此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到很多英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到很多英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件尾部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>—–以下为粘贴内容—–</p>
+<p><font size="4" color="Lime">[program:shadowsocks]<br>command=ssserver -c /etc/shadowsocks.json<br>autostart=true<br>autorestart=true<br>user=root<br>log_stderr=true<br>logfile=/var/log/shadowsocks.log</font><br>—–以上为粘贴内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/3.PNG" alt="3"></p>
+<h3 id="复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按下回车键给文件尾部留出空行，然后按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按下回车键给文件尾部留出空行，然后按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="继续执行命令：-vi-etc-rc-local"><a href="#继续执行命令：-vi-etc-rc-local" class="headerlink" title="继续执行命令： vi /etc/rc.local"></a>继续执行命令： <font color="Lime">vi /etc/rc.local</font></h3><h3 id="此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"><a href="#此时你应该能看到几行英文内容，按-i-键再次进入编辑模式，putty黑框的左下角会出现-—-INSERT-—-字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里" class="headerlink" title="此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里"></a>此时你应该能看到几行英文内容，按 i 键再次进入编辑模式，putty黑框的左下角会出现 — INSERT — 字样，用方向键将光标调整至文件中部的空行处，然后一次性复制下面的内容，在putty里右键，此时复制的内容应该已经粘贴到了putty里</h3><p>——以下为复制内容—–</p>
+<p><font size="4" color="Lime">service supervisord start</font><br>——以上为复制内容—–<br><img src="http://ot4elod26.bkt.clouddn.com/4.PNG" alt="4"></p>
+<h3 id="复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。"><a href="#复制完成后，按-Esc-键退出编辑模式，此时putty黑框左下角的-—-INSERT-—-字样消失，按下-键，输入-wq-后回车，此时文件保存完毕并退出了vi编辑器。" class="headerlink" title="复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。"></a>复制完成后，按 Esc 键退出编辑模式，此时putty黑框左下角的 — INSERT — 字样消失，按下 : 键，输入 wq 后回车，此时文件保存完毕并退出了vi编辑器。</h3><h3 id="最后执行命令：reboot"><a href="#最后执行命令：reboot" class="headerlink" title="最后执行命令：reboot"></a>最后执行命令：<font color="Lime">reboot</font></h3><h3 id="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。"><a href="#此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可-不是报错-。" class="headerlink" title="此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。"></a>此时，你的VPS重新启动，服务端已经完全配置完毕，putty会弹出一个连接已断开的提示框，关闭即可(不是报错)。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/5.PNG" alt="5"></p>
+<blockquote>
+<h2 id="Shadowsocks客户端配置"><a href="#Shadowsocks客户端配置" class="headerlink" title="Shadowsocks客户端配置"></a>Shadowsocks客户端配置</h2></blockquote>
+<h3 id="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"><a href="#至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。" class="headerlink" title="至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。"></a>至此，shadowsocks的服务端已经部署完成。剩下的就是下载客户端安装到你的手机和电脑上，记得修改客户端的相关设置保持和你的服务端参数一致哦。</h3><h3 id="Android客户端下载链接"><a href="#Android客户端下载链接" class="headerlink" title="Android客户端下载链接"></a>Android客户端下载链接</h3><p><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank" rel="external">https://play.google.com/store/apps/details?id=com.github.shadowsocks</a></p>
+<h3 id="推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。"><a href="#推荐在Google-Play下载，自动适配你的系统版本，以免出现问题。" class="headerlink" title="推荐在Google Play下载，自动适配你的系统版本，以免出现问题。"></a>推荐在Google Play下载，自动适配你的系统版本，以免出现问题。</h3><p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">https://github.com/shadowsocks/shadowsocks-android/releases</a></p>
+<h3 id="电脑客户端端下载链接（Windows、Mac-OS-X）"><a href="#电脑客户端端下载链接（Windows、Mac-OS-X）" class="headerlink" title="电脑客户端端下载链接（Windows、Mac OS X）"></a>电脑客户端端下载链接（Windows、Mac OS X）</h3><p><a href="http://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">http://sourceforge.net/projects/shadowsocksgui/files/dist/</a><br><strong>小提醒</strong>：Windows 7用户下载Shadowsocks-win-x.x.x.zip，Windows 8用户下载Shadowsocks-win-dotnet4.0-x.x.x.zip。</p>
+<h3 id="iOS客户端端下载链接"><a href="#iOS客户端端下载链接" class="headerlink" title="iOS客户端端下载链接"></a>iOS客户端端下载链接</h3><p><a href="https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8" target="_blank" rel="external">https://itunes.apple.com/cn/app/shadowsocks/id665729974?mt=8</a></p>
+<h3 id="Android手机客户端配置示例（以上述服务端配置为例）："><a href="#Android手机客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="Android手机客户端配置示例（以上述服务端配置为例）："></a>Android手机客户端配置示例（以上述服务端配置为例）：</h3><blockquote>
+<p>注意：已经root手机的小伙伴请勿授予root权限，以免发生未知问题。<br>服务器：你的VPS IP地址（非0.0.0.0）<br>远程端口：8388<br>本地端口：1080<br>密码：yourpassword<br>加密方法：AES-256-CFB<br>路由：绕过局域网及中国大陆地址<br>全局代理：勾选<br>UDP转发：建议勾选，如有问题则取消勾选<br>自动连接：勾选</p>
+</blockquote>
+<h2 id="电脑客户端配置示例（以上述服务端配置为例）："><a href="#电脑客户端配置示例（以上述服务端配置为例）：" class="headerlink" title="电脑客户端配置示例（以上述服务端配置为例）："></a>电脑客户端配置示例（以上述服务端配置为例）：</h2><h3 id="（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）"><a href="#（示例客户端版本：Shadowsocks-win-2-1-6-zip-144-9-kB-，系统Windows-7，如遇无法启动的情况，请右键以管理员身份运行）" class="headerlink" title="（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）"></a>（示例客户端版本：Shadowsocks-win-2.1.6.zip (144.9 kB)，系统Windows 7，如遇无法启动的情况，请右键以管理员身份运行）</h3><blockquote>
+<p>服务器 IP：你的VPS IP地址（非0.0.0.0）<br>服务器端口：8388<br>密码：yourpassword<br>加密：aes-256-cfb<br>代理端口：1080<br>备注：随便写</p>
+</blockquote>
+<h2 id="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"><a href="#这里是电脑版的shadowsocks软件，安装好刚打开的样子。" class="headerlink" title="这里是电脑版的shadowsocks软件，安装好刚打开的样子。"></a>这里是电脑版的shadowsocks软件，安装好刚打开的样子。</h2><p><img src="https://moetu.fastmirror.org/images/2017/12/26/66e2af6fed9b491a5.png" alt="16"></p>
+<p>###填上你的vps的IP地址配置你的ss：<br><img src="https://moetu.fastmirror.org/images/2017/12/26/7c8ee330f09118ded.png" alt="17"></p>
+<p><img src="http://ot4elod26.bkt.clouddn.com/8.PNG" alt="8"></p>
+<h3 id="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："><a href="#配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：" class="headerlink" title="配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理："></a>配置完成之后，鼠标放在ss客户端上点击鼠标右键，启动系统代理：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/12.png" alt="12"></p>
+<h3 id="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："><a href="#如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：" class="headerlink" title="如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装："></a>如果使用Google浏览器的话，还需要额外安装一个插件，名字叫SwitchySharp，在Chrome网上应用店进行下载安装，安装如下，选择第一个安装：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/9.PNG" alt="9"></p>
+<h3 id="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："><a href="#然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：" class="headerlink" title="然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项："></a>然后在Google浏览器右上角可以看到一个地球的图标，即使我们安装的插件点击它，再选择选项：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/10.png" alt="10"></p>
+<h3 id="进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。"><a href="#进行设置，只需要设置Socks代理：127-0-0-1，端口：1080-选择SOCKS-v5-情景模式名称随意设置。保存即可。" class="headerlink" title="进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。"></a>进行设置，只需要设置Socks代理：127.0.0.1，端口：1080 选择SOCKS v5 情景模式名称随意设置。保存即可。</h3><p><img src="http://ot4elod26.bkt.clouddn.com/11.png" alt="11"></p>
+<h3 id="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："><a href="#现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：" class="headerlink" title="现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了："></a>现在我们测试一下，Yutubee，Google，YaHoo都可以正常访问了，说明我们的梯子搭建成功了：</h3><p><img src="http://ot4elod26.bkt.clouddn.com/13.PNG" alt="13"><br><img src="http://ot4elod26.bkt.clouddn.com/14.PNG" alt="14"><br><img src="http://ot4elod26.bkt.clouddn.com/15.PNG" alt="15"></p>
+<blockquote>
+<h2 id="答疑阶段"><a href="#答疑阶段" class="headerlink" title="答疑阶段"></a>答疑阶段</h2></blockquote>
+<h3 id="1-为什么选择CentOS？"><a href="#1-为什么选择CentOS？" class="headerlink" title="1. 为什么选择CentOS？"></a>1. <strong>为什么选择CentOS？</strong></h3><blockquote>
+<p><strong>作为服务器，永远都是稳定压倒一切。而CentOS简单易用，上手快速，业界公认的稳定，且易于维护，是服务器操作<br>系统首选。</strong></p>
+</blockquote>
+<h3 id="2-为什么是Python版本的Shadowsocks？"><a href="#2-为什么是Python版本的Shadowsocks？" class="headerlink" title="2. 为什么是Python版本的Shadowsocks？"></a>2. <strong>为什么是Python版本的Shadowsocks？</strong></h3><blockquote>
+<p><strong>Python版的Shadowsocks易部署，后期升级维护都非常方便，相当适合新手，支持的特性也最多，稳定性好，运行效率高。</strong></p>
+</blockquote>
+<h3 id="3-为什么使用supervisord"><a href="#3-为什么使用supervisord" class="headerlink" title="3.为什么使用supervisord?"></a>3.<strong>为什么使用supervisord?</strong></h3><blockquote>
+<p><strong>与繁琐的带参执行方式相比，service命令在CentOS系统里使用起来更加灵活方便，比如：<br>①启动Shadowsocks服务端：service supervisord start<br>②关闭Shadowsocks服务端：service supervisord stop<br>③重启shadowsocks服务端：service supervisord restart</strong></p>
+</blockquote>
+<h3 id="4-如何配置多账户？"><a href="#4-如何配置多账户？" class="headerlink" title="4. 如何配置多账户？"></a>4. <strong>如何配置多账户？</strong></h3><blockquote>
+<p><strong>小提示：Shadowsocks支持一个账户在多个终端同时使用，一般人没有配置多账户的必要。所以如果你看不懂，那你还是别折腾了。</strong><br>——分割线——-<br><strong>{<br>    “server”:”0.0.0.0”,<br>    “port_password”:{<br>        “8388”:”password1”,<br>        “8389”:”password2”,<br>        “8390”:”password3”,<br>        “8391”:”password4”<br>    },<br>    “timeout”:300,<br>    “method”:”aes-256-cfb”<br>} </strong><br>——-分割线———<br><strong>友情提醒：GFW目前是根据流量检测分析匹配统计学模型的方式来判断你是否在翻墙，换言之，你用什么方式翻墙并不重要，重要的是你和服务器之间的流量特征是否像是在翻墙。一旦匹配，既对你进行有罪推论，轻则限速，重则彻底封锁IP。在IPv4地址已经枯竭的今天，可用的美国IP地址会越来越少，所以不建议将自己的账号分享多人使用，以防被封</strong></p>
+</blockquote>
+<h3 id="5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"><a href="#5-为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？" class="headerlink" title="5.为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？"></a>5.<strong>为什么我的shadowsocks在刚搭建好的时候速度很快用了几天后速度就变慢了甚至网页都很难刷出来？</strong></h3><blockquote>
+<h3 id="出现这种情况有多种可能性："><a href="#出现这种情况有多种可能性：" class="headerlink" title="出现这种情况有多种可能性："></a>出现这种情况有多种可能性：</h3></blockquote>
+<p>①shadowsocks长时间保持不间断连接会被GFW根据流量模型分析判断出你可能在翻墙(原理见上面的友情提醒)，于是进行主动干扰，轻则限速，重则切断你和服务端的连接。解决方法：切换一下你的网络，比如从Wi-Fi切换到3G或者从3G切换到Wi-Fi或者直接断开网络连接，等待10分钟以后，一般即可恢复正常。PS：每天晚上睡觉前关闭手机的网络连接会大大减小此种情况发生的概率；而将自己的VPS分享给多人使用则可能大大增加此种情况发生的概率，请自行斟酌。值得说明的是，VPN最容易受到此类干扰，而shadowsocks作为可自定义端口的私有协议代理已经是最不容易被干扰的翻墙方式之一了。</p>
+<p>②机房的QoS策略。解决方法：将shadowsocks服务端的server_port改为常见端口。</p>
+<p>③本地线路抽风，你所使用宽带运营商的国际出口出现问题。比如最近南方电信部分地区国际出口严重不稳定(电信人为限制)。解决方法：<1>先尝试一下DigitalOcean的新加坡节点或者Linode的日本节点；<2>如果当地有“国际精品网”业务，开通后可立即完美解决这个问题；<3>如果不愿意给电信交保护费，那么就换家运营商吧，移动和联通都没问题。</3></2></1></p>
+<p>④VPS间歇性抽风。无论你选择哪家供应商的VPS，都可能遇到有时候线路抽风、VPS速度慢或者不正常。不同的是，越是价位高的VPS出现抽风情况的可能性越低，越是价位高的VPS出现抽风情况时能保证的最低连接速度越高。出现这种情况的可能性比较低，我手头的无论是搬瓦工还是DigitalOcean以及Linode暂时未遇到线路抽风情况。</p>
+<p>⑤搬瓦工的年付VPS为OpenVZ架构，同一母机下的VPS越多，同一时间段使用的人越多，速度就越慢。解决方法：一分价钱一分货，将VPS更换为DigitalOcean或者Linode。</p>
+<p>⑥中国的国际出口带宽有限，晚高峰时段可能出现网络拥堵，速度多少会受影响，但这种情况起码白天的速度应该是没问题的。</p>
+<p>⑦如果你在VPS上搭建了VPN并且经常使用，尤其是OpenVPN，请立即停止使用。VPN协议特征明显，GFW可以非常容易的检测到，从而盯上你的IP，轻则限速，重则彻底屏蔽。常见VPN协议根据易受干扰的程度从大到小依次为：OpenVPN &gt; PPTP &gt; L2TP &gt; IPSec，尤其是OpenVPN，GFW已经可以实现对其定点清除(同样遭此待遇的还有SSH翻墙)。如果你想让自己VPS的IP快速报废，那么就请尽情的使用搬瓦工的控制面板搭建OpenVPN吧。重要提醒：在不明所以的情况下尽量不要在自己的VPS上搭建其他杂七乱八的翻墙服务尤其是一些早已过时和落后的翻墙方式，翻墙手段宜新不宜旧，只搭一个Shadowsocks是最能保证你翻墙效果和服务器稳定的好策略。</p>
+<p>⑧其他：偶尔的速度慢或者连不上都是正常的，但如果经常性的速度奇慢或者连不上那就不正常了。</p>
+<blockquote>
+<h2 id="错误排查"><a href="#错误排查" class="headerlink" title="错误排查"></a>错误排查</h2></blockquote>
+<h3 id="已经成功的小伙伴可以直接略过这部分了。"><a href="#已经成功的小伙伴可以直接略过这部分了。" class="headerlink" title="已经成功的小伙伴可以直接略过这部分了。"></a>已经成功的小伙伴可以直接略过这部分了。</h3><blockquote>
+<h3 id="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"><a href="#温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。" class="headerlink" title="温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。"></a>温馨提醒：在怀疑教程的任何一个地方之前，请先怀疑你自己。</h3></blockquote>
+<h3 id="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"><a href="#服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。" class="headerlink" title="服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。"></a>服务端搭建成功的唯一衡量标准是在手机或者电脑客户端正确配置后能否顺利的访问被屏蔽的网站，无论是电脑还是手机，只要有一个终端能够成功翻墙即视为服务端搭建成功，出现所谓的可以连接但无法上网其实还是服务端或者客户端的配置有问题，认真按照下面的步骤一步步排错吧。</h3><h3 id="遇到问题的小伙伴请先认真仔细阅读这两篇文章"><a href="#遇到问题的小伙伴请先认真仔细阅读这两篇文章" class="headerlink" title="遇到问题的小伙伴请先认真仔细阅读这两篇文章"></a>遇到问题的小伙伴请先认真仔细阅读这两篇文章</h3><p><a href="http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml" target="_blank" rel="external">http://linux.chinaunix.net/doc/office/2005-01-24/898.shtml</a><br><a href="http://linux.vbird.org/linux_basic/0310vi.php" target="_blank" rel="external">http://linux.vbird.org/linux_basic/0310vi.php</a><br>上面的链接为vi编辑器基本用法扫盲（新手必读）</p>
+<h3 id="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"><a href="#最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按-i-键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。" class="headerlink" title="最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。"></a>最容易出现问题的地方，就是vi编辑器的使用，如果你在执行vi命令后没有按 i 键进入编辑模式就直接复制粘贴，会造成粘贴内容的首行被覆盖，从而导致错误；或者你在粘贴内容后，没有以正确的方式保存退出，同样会出现问题。</h3><h3 id="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查："><a href="#如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好-参照上面的Android手机客户端配置示例-。然后用putty登入你的VPS后通过以下方式逐步排查：" class="headerlink" title="如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查："></a>如果你在执行完reboot命令后，手机端无法连接，请先确保你的手机端配置正确，并且网络环境良好(参照上面的Android手机客户端配置示例)。然后用putty登入你的VPS后通过以下方式逐步排查：</h3><h3 id="1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#1-执行命令service-supervisord-start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-rc-local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="1. 执行命令service supervisord start，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>1. 执行命令<font color="Lime">service supervisord start</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/rc.local这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"><a href="#2-执行命令ssserver-c-etc-shadowsocks-json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi-etc-supervisord-conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。" class="headerlink" title="2. 执行命令ssserver -c /etc/shadowsocks.json，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。"></a><strong>2. 执行命令<font color="Lime">ssserver -c /etc/shadowsocks.json</font>，执行完毕后如果没有报错，手机端也可以正常连接，那么问题出在vi /etc/supervisord.conf这个环节，请重新检查该文件配置；如果手机端依然无法连接，请继续往下看。</strong></h3><h3 id="3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。"><a href="#3-如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi-etc-shadowsocks-json环节，请重新检查该文件配置。" class="headerlink" title=" 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在vi /etc/shadowsocks.json环节，请重新检查该文件配置。"></a><strong> 3. 如果依次进行完以上两步后，手机端依然无法连接，那么问题出在<font color="Lime">vi /etc/shadowsocks.json</font>环节，请重新检查该文件配置。</strong></h3><h3 id="4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"><a href="#4-如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。" class="headerlink" title="4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。"></a><strong>4.如果以上三个文件的配置问题都解决后，执行reboot命令后，手机端依然无法连接，那么说明你在教程最开始的5行命令没有正确执行，在搬瓦工和DigitalOcean以及Linode官网的控制面板里重装VPS系统后，按照教程认认真真仔仔细细的重新来过吧。</strong></h3><blockquote>
+<h3 id="有问题可以留言，大家一起研究。"><a href="#有问题可以留言，大家一起研究。" class="headerlink" title="有问题可以留言，大家一起研究。"></a>有问题可以留言，大家一起研究。</h3><h2 id="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"><a href="#如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。" class="headerlink" title="如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。"></a>如果你感觉文章对你有所帮助，文章下方有打赏按钮，您随意打赏。支持作者继续创作。</h2></blockquote>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> ss </tag>
+            
+            <tag> 梯子 </tag>
+            
+            <tag> 科学上网 </tag>
+            
+            <tag> 翻墙 </tag>
             
         </tags>
         
@@ -3015,11 +3102,11 @@
         
         <tags>
             
+            <tag> 博客 </tag>
+            
             <tag> 总结 </tag>
             
             <tag> 感悟 </tag>
-            
-            <tag> 博客 </tag>
             
         </tags>
         
